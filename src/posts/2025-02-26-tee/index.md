@@ -11,8 +11,8 @@ categories:
   - security
 postimage:
   src: "post.png"
-  alt: "Surveyor "
-featured: false
+  alt: "In the machine"
+featured: true
 ---
 
 ## Introduction
