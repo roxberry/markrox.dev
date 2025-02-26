@@ -5,7 +5,7 @@ subtitle: "A trusted execution environment (TEE) helps to protect user-executed 
 comments: true
 date: 2025-02-25 21:00:00
 author: Mark Roxberry
-excerpt: "With partnership funding from Microsoft, I created a proof of concept for a major client to design, develop and implement an Intel SGX-enabled solution in an Azure Confidential Computing environment. This practical engagement demonstrated the substantial enhancement of data-in-use protection afforded by a Trusted Execution Environment (TEE), even within a cloud environment managed by third-party operators."
+excerpt: "With partnership funding from Microsoft, I created a proof of concept for a major client to design, develop and implement an Intel SGX-enabled solution in an Azure Confidential Computing environment."
 tags: [security, architecture]
 categories:
   - security
