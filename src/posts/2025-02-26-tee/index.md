@@ -17,7 +17,7 @@ featured: false
 
 ## Introduction
 
-With partnership funding from Microsoft, I created a proof of concept for a major client to design, develop and implement an **Intel SGX (Software Guard Extension)** solution in an **Azure Confidential Computing** environment. This practical engagement demonstrated the substantial enhancement of data-in-use protection afforded by a **Trusted Execution Environment (TEE)**, even within a cloud environment managed by third-party operators.
+With partnership funding from Microsoft, I created a proof of concept for a major client to design, develop and implement an **Intel SGX (Software Guard Extensions)** solution in an **Azure Confidential Computing** environment. This practical engagement demonstrated the substantial enhancement of data-in-use protection afforded by a **Trusted Execution Environment (TEE)**, even within a cloud environment managed by third-party operators.
 
 A cornerstone of this solution involved **attestation**, which provides cryptographic proof that an enclave is genuine and operates on genuine SGX hardware. By integrating attestation into the application, our client could confidently entrust sensitive data and keys to the enclave, knowing it was running in a verified secure environment.
 
