@@ -3,7 +3,7 @@ layout: post
 title: "Briefing: An AI-Powered Tool to Stay Informed and Master Knowledge"
 subtitle: "How Artificial Intelligence Simplifies Expert-Level Insights for Professionals"
 comments: true
-date: 2024-12-11 21:00:00
+date: 2025-12-11 21:00:00
 author: Mark Roxberry
 excerpt: "In today’s fast-paced world, professionals need efficient ways to stay updated and gain expertise in their fields. Enter Briefing, an AI-driven platform that curates and organizes the most relevant articles and insights on topics like cybersecurity, geopolitics, and more. By leveraging AI for structured content aggregation and translation, Briefing makes it simple to access and absorb critical information, empowering users to become experts with ease. This post dives into the inspiration, architecture, and vision behind Briefing, a project designed for the knowledge-driven era."
 tags: []
@@ -12,7 +12,7 @@ categories:
 postimage:
   src: "post.png"
   alt: "Surveyor "
-featured: true
+featured: false
 
 ---
 
