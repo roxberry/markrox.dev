@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: checkout gh-pages  branch # checkout gh-pages  branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
@@ -31,14 +31,14 @@ jobs:
           echo "markrox.dev" > CNAME
           
       - name: checkout main  branch #checkout main  branch into temp folder.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: main
           path: temp
           persist-credentials: false
           
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache-name: cache-node-modules
         with:
@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-
           
       - name: Gatsby Cache Folder
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         id: gatsby-cache-folder
         with:
           path: .cache
@@ -60,7 +60,7 @@ jobs:
             ${{ runner.os }}-cache-gatsby
   
       - name: Gatsby Public Folder
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         id: gatsby-public-folder
         with:
           path: public/
