@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "license": "0BSD",
     "scripts": {
-      "develop": "gatsby clean && gatsby develop",
-      "start": "gatsby develop",
-      "build": "gatsby clean && gatsby build",
-      "build:incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
-      "serve": "gatsby clean && gatsby serve",
-      "clean": "gatsby clean"
+        "develop": "gatsby clean && gatsby develop",
+        "start": "gatsby develop",
+        "build": "gatsby clean && gatsby build",
+        "build:incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
+        "serve": "gatsby clean && gatsby serve",
+        "clean": "gatsby clean"
     },
     "dependencies": {
       "@fortawesome/free-brands-svg-icons": "^6.6.0",
@@ -47,14 +47,14 @@
       "typography-theme-wordpress-2016": "^0.16.19"
     },
     "engines": {
-      "node": ">=22"
+        "node": ">=22"
     },
     "repository": {
-      "type": "git",
-      "url": "https://github.com/roxberry/markrox.dev.git"
+        "type": "git",
+        "url": "https://github.com/roxberry/markrox.dev.git"
     },
     "bugs": {
-      "url": "https://github.com/roxberry/markrox.dev/issues"
+        "url": "https://github.com/roxberry/markrox.dev/issues"
     }
   }
   
