@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "Weekly Progress Update: GenSearch, PCI DSS, Angular UX, and AI Training"
@@ -14,7 +13,6 @@ postimage:
   src: "post.png"
   alt: "Weekly Highlights"
 featured: true
-
 ---
 
 ## Weekly Progress Update
