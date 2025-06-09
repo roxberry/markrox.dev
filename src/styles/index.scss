@@ -1,6 +1,9 @@
-@import "variables";
-@import "flexbox";
-@import "flexbox-wide";
+@use "variables" as *;
+@use "flexbox" as *;
+@use "flexbox-wide" as *;
+@use "media" as *;
+@use "pager" as *;
+
 // for debugging styles, uncomment for outlining.
 // *:hover { 
 //   outline:1px blue solid;
@@ -436,7 +439,3 @@ blockquote {
 ::-webkit-scrollbar {
     display: none;
 }
-
-@import "media";
-
-@import "pager";
