@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Azure Generative Search POC: Fully formatted facts, Agentic, MCP, MEF"
+title: "Azure Generative Search POC: Fully formatted facts, Agentic, MCP, MFE"
 subtitle: "Showcasing GenSearch breakthroughs, secure AI, and hands-on innovation"
 comments: true
 date: 2025-06-08 12:00:00
