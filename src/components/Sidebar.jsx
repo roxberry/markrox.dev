@@ -4,9 +4,9 @@ import Social from "./Social"
 import Footer from "./Footer"
 import Categories from "./Tags"
 
-const SideBar = () => {
+const SideBar = ({ onHide }) => {
     return (
-        <aside>
+        <aside className="side-bar">
             <section>
                 <StaticImage
                     className="profile"

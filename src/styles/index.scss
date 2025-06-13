@@ -436,6 +436,90 @@ blockquote {
     }
 }
 
+.article-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #232323;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1.125rem;
+  min-height: 0;
+}
+
+.sidebar-toggle-main {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.375em 0.75em;
+  font-size: 0.75em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.375em;
+}
+
+.sharing-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.56em;
+}
+
+.sharing-buttons a {
+  color: #b0b0b0;
+  text-decoration: none;
+  font-size: 0.94em;
+  transition: color 0.2s;
+}
+
+.sharing-buttons a:hover {
+  color: #fff;
+}
+
+.copy-link-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.375em;
+  font-size: 0.75em;
+  cursor: pointer;
+}
+
+.copy-link-btn:active {
+  background: #666;
+}
+
+.theme-toggle-group {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.theme-toggle-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.375em;
+  font-size: 0.75em;
+  cursor: pointer;
+  margin-left: 0.5em;
+}
+.theme-toggle-btn:active {
+  background: #666;
+}
+
+// Theme styles
+body[data-theme="dark"] {
+  background: #181818;
+  color: #eee;
+}
+body[data-theme="light"] {
+  background: #fff;
+  color: #222;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
