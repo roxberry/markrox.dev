@@ -26,6 +26,8 @@ const Layout = props => {
         return "system";
     });
 
+    const [showToast, setShowToast] = useState(false);
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             window.localStorage.setItem("sidebarVisible", sidebarVisible);
@@ -42,6 +44,14 @@ const Layout = props => {
             }
         }
     }, [theme]);
+
+    const handleCopyLink = () => {
+        if (typeof window !== "undefined") {
+            navigator.clipboard.writeText(window.location.href);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000);
+        }
+    };
 
     return (
         <div className="container">
@@ -87,11 +97,7 @@ const Layout = props => {
                         <button
                             className="copy-link-btn"
                             aria-label="Copy link"
-                            onClick={() => {
-                                if (typeof window !== "undefined") {
-                                    navigator.clipboard.writeText(window.location.href);
-                                }
-                            }}
+                            onClick={handleCopyLink}
                         >
                             <span role="img" aria-label="Copy link"><FontAwesomeIcon icon={faLink} /></span>
                         </button>
@@ -112,6 +118,9 @@ const Layout = props => {
                           </button>
                         </div> */}
                     </div>
+                    {showToast && (
+                        <div className="copy-toast">Link copied!</div>
+                    )}
                     {props.children}
                 </article>
             </main>

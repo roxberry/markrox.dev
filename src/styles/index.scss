@@ -529,3 +529,25 @@ body[data-theme="light"] {
     display: none !important;
   }
 }
+
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  top: 2.5rem;
+  transform: translateX(-50%);
+  background: #232323;
+  color: #fff;
+  padding: 0.5em 1.5em;
+  border-radius: 6px;
+  font-size: 1em;
+  z-index: 2000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  opacity: 0.95;
+  animation: fadeOutToast 2s forwards;
+}
+
+@keyframes fadeOutToast {
+  0% { opacity: 0.95; }
+  80% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
