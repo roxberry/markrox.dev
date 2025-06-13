@@ -523,3 +523,9 @@ body[data-theme="light"] {
 ::-webkit-scrollbar {
     display: none;
 }
+
+@media (max-width: 800px) {
+  .sidebar-toggle-main {
+    display: none !important;
+  }
+}

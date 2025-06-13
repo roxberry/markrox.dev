@@ -59,6 +59,31 @@ const Layout = props => {
                             {sidebarVisible ? <><span style={{ marginRight: 4 }}>Full view</span> <span role="img" aria-label="expand"><FontAwesomeIcon icon={faExpand} /></span></> : <><span style={{ marginRight: 4 }}>Show sidebar</span> <span role="img" aria-label="sidebar"><FontAwesomeIcon icon={faCompress} /></span></>}
                         </button>
                         <div className="theme-toggle-group">
+                            <div className="sharing-buttons">
+                                <a
+                                    href={`https://twitter.com/intent/tweet?url=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on Twitter"
+                                >
+                                    <span role="img" aria-label="Twitter"><FontAwesomeIcon icon={faXTwitter} /></span>
+                                </a>
+                                <a
+                                    href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Share on Facebook"
+                                >
+                                    <span role="img" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} /></span>
+                                </a>
+                                <a
+                                    href={`mailto:?subject=Check this out&body=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
+                                    aria-label="Share by Email"
+                                >
+                                    <span role="img" aria-label="Email"><FontAwesomeIcon icon={faEnvelope} /></span>
+                                </a>
+                            </div>
+                        </div>
                         <button
                             className="copy-link-btn"
                             aria-label="Copy link"
@@ -70,31 +95,6 @@ const Layout = props => {
                         >
                             <span role="img" aria-label="Copy link"><FontAwesomeIcon icon={faLink} /></span>
                         </button>
-                        <div className="sharing-buttons">
-                            <a
-                                href={`https://twitter.com/intent/tweet?url=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on Twitter"
-                            >
-                                <span role="img" aria-label="Twitter"><FontAwesomeIcon icon={faXTwitter} /></span>
-                            </a>
-                            <a
-                                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Share on Facebook"
-                            >
-                                <span role="img" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} /></span>
-                            </a>
-                            <a
-                                href={`mailto:?subject=Check this out&body=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ''}`}
-                                aria-label="Share by Email"
-                            >
-                                <span role="img" aria-label="Email"><FontAwesomeIcon icon={faEnvelope} /></span>
-                            </a>
-                            </div>
-                        </div>
                         {/* <div className="theme-toggle-group">
                           <button
                             className="theme-toggle-btn"
