@@ -1,6 +1,7 @@
 import React from "react"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
+import GoogleAdBanner from "../components/GoogleAdBanner"
 import Pager from "../components/Pager"
 import TagList from "../components/TagList"
 import { StaticImage, GatsbyImage } from "gatsby-plugin-image"
@@ -30,6 +31,7 @@ class BlogIndex extends React.Component {
         return (
             <Layout location={this.props.location} title={siteTitle}>
                 <Seo title="Welcome!" />
+                <GoogleAdBanner />
                 {/* <section>
                     <h1 className="sectionTitle">Featured Projects</h1>
                     <div className="flexbox-widex">
