@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmarkrox_dev=self.webpackChunkmarkrox_dev||[]).push([[125],{3331:function(e,n,l){l.r(n);var t=l(6540),a=l(5957);n.default=()=>t.createElement(a.A,null,t.createElement("section",null,t.createElement("h1",null,"Page not found")))}}]);
+//# sourceMappingURL=component---src-pages-404-js-77c482a67d06b0a6e959.js.map
