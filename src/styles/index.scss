@@ -357,6 +357,15 @@ aside section {
     // text-align: center;
 }
 
+@media (max-width: 600px) {
+  .overlay {
+    position: unset !important;
+    bottom: -30px; // move overlay further down for mobile
+    font-size: 16px;
+    padding-bottom: 20px;
+  }
+}
+
 .innerOverlayText {
     padding: 20px;
 }

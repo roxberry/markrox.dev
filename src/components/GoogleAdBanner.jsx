@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 const GoogleAdBanner = ({ sidebarVisible }) => {
     const [showAd, setShowAd] = useState(true);
+    const adRef = React.useRef(null);
 
     useEffect(() => {
         setShowAd(false);
@@ -12,6 +13,8 @@ const GoogleAdBanner = ({ sidebarVisible }) => {
     }, [sidebarVisible]);
 
     useEffect(() => {
+        let observer;
+        let pollTimeout;
         if (showAd) {
             try {
                 if (typeof window !== "undefined" && window.adsbygoogle) {
@@ -20,11 +23,37 @@ const GoogleAdBanner = ({ sidebarVisible }) => {
             } catch (e) {
                 console.error("Adsbygoogle error:", e);
             }
+            // Use MutationObserver to watch for data-ad-status changes
+            if (adRef.current && typeof MutationObserver !== 'undefined') {
+                observer = new MutationObserver((mutationsList) => {
+                    for (const mutation of mutationsList) {
+                        if (
+                            mutation.type === 'attributes' &&
+                            mutation.attributeName === 'data-ad-status' &&
+                            adRef.current.getAttribute('data-ad-status') === 'unfilled'
+                        ) {
+                            setShowAd(false);
+                        }
+                    }
+                });
+                observer.observe(adRef.current, { attributes: true, attributeFilter: ['data-ad-status'] });
+            }
+            // Fallback: after 3s, hide if still unfilled or empty
+            pollTimeout = setTimeout(() => {
+                if (adRef.current && (adRef.current.offsetHeight < 40 || adRef.current.getAttribute('data-ad-status') === 'unfilled')) {
+                    setShowAd(false);
+                }
+            }, 3000);
         }
+        return () => {
+            if (observer) observer.disconnect();
+            if (pollTimeout) clearTimeout(pollTimeout);
+        };
     }, [showAd]);
 
     return showAd ? (
         <ins
+            ref={adRef}
             className="adsbygoogle"
             style={{
                 display: "block",
