@@ -6,7 +6,7 @@ comments: true
 date: 2024-03-10 21:00:00
 author: Mark Roxberry
 excerpt: "Innovations and Adventures in AI, Data Management, and Ethical Hacking"
-tags: [ai, security]
+tags: [AI, security]
 postimage:
   src: "post.png"
   alt: ""

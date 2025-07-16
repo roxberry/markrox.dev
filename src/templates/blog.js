@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from '../components/Layout'
 import Seo from '../components/Seo'
+import GoogleAdBanner from "../components/GoogleAdBanner"
 import TagList from "../components/TagList"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from 'gatsby'
@@ -51,6 +52,7 @@ const Blog = (props) => {
                     )
 
                 }
+                <GoogleAdBanner />
 
                 <div className="blogBody" dangerouslySetInnerHTML={{__html: post.html}}></div>
 

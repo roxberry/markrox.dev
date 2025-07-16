@@ -1,6 +1,8 @@
 import React from "react"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
+import GoogleAdBanner from "../components/GoogleAdBanner"
+import Pager from "../components/Pager"
 import TagList from "../components/TagList"
 import PropTypes from "prop-types"
 
@@ -14,10 +16,27 @@ const Tags = ({ pageContext, data }) => {
     const { edges, totalCount } = data.allMarkdownRemark
     const tagHeader = `${totalCount} post${totalCount === 1 ? "" : "s"
         } tagged with "${tag}"`
+    // const { currentPage, numPages } = this.props.pageContext
+    // const isFirst = currentPage === 1
+    // const isLast = currentPage === numPages
+    // const prevPage = currentPage - 1 === 1 ? "/" : "/" + (currentPage - 1).toString()
+    // const nextPage = "/" + (currentPage + 1).toString()
 
+    let pager;
+    // if (numPages > 1) {
+    //     pager = <Pager
+    //         isFirst={isFirst}
+    //         isLast={isLast}
+    //         prevPage={prevPage}
+    //         nextPage={nextPage}
+    //         currentPage={currentPage}
+    //         numPages={numPages}
+    //     />;
+    // }
     return (
         <Layout>
             <Seo title={tag} />
+            <GoogleAdBanner />
             <section>
                 <h1><FontAwesomeIcon icon={['fas', 'tags']} />&nbsp;&nbsp;{tagHeader}</h1>
                 <div className="flexbox">
@@ -28,7 +47,7 @@ const Tags = ({ pageContext, data }) => {
                         return (
                             <div key={node.fields.slug + i.toString()}>
                                 <Link to={node.fields.slug}><h1 className="postTitle">{node.frontmatter.title}</h1></Link>
-                                <div className="postedInfo">posted on {node.frontmatter.date} | tags: [ <TagList tags= { node.frontmatter.tags } /> ]</div>
+                                <div className="postedInfo">posted on {node.frontmatter.date} | tags: [ <TagList tags={node.frontmatter.tags} /> ]</div>
                                 <Link to={node.fields.slug}>
                                     {postImage && postImage.src && (
                                         <div className="postImage">
@@ -36,9 +55,10 @@ const Tags = ({ pageContext, data }) => {
                                                 image={postImage.src.childImageSharp.gatsbyImageData}
                                                 alt={postImage.alt}
                                                 layout="fullWidth"
+                                                formats={["auto", "webp"]}
                                             />
                                             <div className="overlay">
-                                                <div className="innerOverlayText" dangerouslySetInnerHTML={{__html: node.frontmatter.excerpt }}></div>
+                                                <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: node.frontmatter.excerpt }}></div>
                                             </div>
                                         </div>
                                     )}
@@ -46,6 +66,7 @@ const Tags = ({ pageContext, data }) => {
                             </div>
                         )
                     })}
+                    {pager}
                 </div>
                 {/* <ul>
           const { slug } = node.fields

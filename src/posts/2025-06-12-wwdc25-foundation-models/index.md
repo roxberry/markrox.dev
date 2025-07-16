@@ -6,7 +6,7 @@ comments: true
 date: 2025-06-11
 author: Mark Roxberry
 excerpt: Apple’s Foundation Models API, announced at WWDC25, brings on-device generative intelligence to every app. This post explores why it's bigger than Siri and marks the next stage of AI proliferation—from the cloud to your phone.
-tags: [LLM, Apple, on-device AI]
+tags: [LLM, Apple, SLM, AI]
 categories:
   - innovation
   - artificial intelligence

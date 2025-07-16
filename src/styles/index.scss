@@ -551,3 +551,19 @@ body[data-theme="light"] {
   80% { opacity: 0.95; }
   100% { opacity: 0; }
 }
+
+.tagList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.projectsContainer {
+  max-width: 870px;
+  margin: 0 auto;
+}
+
+.project-card {
+  min-width: 270px;
+  max-width: 270px;
+  flex: 0 0 270px;
+}

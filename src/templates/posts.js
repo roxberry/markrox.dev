@@ -1,4 +1,4 @@
-import React from "react"
+import React, { createRef } from "react"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
 import GoogleAdBanner from "../components/GoogleAdBanner"
@@ -7,7 +7,50 @@ import TagList from "../components/TagList"
 import { StaticImage, GatsbyImage } from "gatsby-plugin-image"
 import { Link, graphql } from "gatsby"
 
+
 class BlogIndex extends React.Component {
+    projectCarouselRef = createRef();
+    state = {
+        showLeft: false,
+        showRight: false,
+    };
+
+    componentDidMount() {
+        this.updateScrollButtons();
+        if (this.projectCarouselRef.current) {
+            this.projectCarouselRef.current.addEventListener('scroll', this.updateScrollButtons);
+            window.addEventListener('resize', this.updateScrollButtons);
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.projectCarouselRef.current) {
+            this.projectCarouselRef.current.removeEventListener('scroll', this.updateScrollButtons);
+            window.removeEventListener('resize', this.updateScrollButtons);
+        }
+    }
+
+    updateScrollButtons = () => {
+        const el = this.projectCarouselRef.current;
+        if (!el) return;
+        const { scrollLeft, scrollWidth, clientWidth } = el;
+        this.setState({
+            showLeft: scrollLeft > 5,
+            showRight: scrollLeft + clientWidth < scrollWidth - 5,
+        });
+    };
+
+    scrollProjects = (direction) => {
+        const container = this.projectCarouselRef.current;
+        if (!container) return;
+        const scrollAmount = 300;
+        container.scrollBy({
+            left: direction === 'right' ? scrollAmount : -scrollAmount,
+            behavior: 'smooth',
+        });
+        setTimeout(this.updateScrollButtons, 350); // update after scroll
+    };
+
     render() {
         const { data } = this.props
         const siteTitle = data.site.siteMetadata.title
@@ -31,54 +74,125 @@ class BlogIndex extends React.Component {
         return (
             <Layout location={this.props.location} title={siteTitle}>
                 <Seo title="Welcome!" />
-                <GoogleAdBanner />
-                {/* <section>
+                <section>
                     <h1 className="sectionTitle">Featured Projects</h1>
-                    <div className="flexbox-widex">
-                        <div className="project-card-wide">
-                            <div className="project-card-image">
-                                <StaticImage
-                                    formats={["AUTO"]}
-                                    src="../images/projects/hactu8.png"
-                                    alt="project"
-                                    placeholder="NONE"
-                                    background="#282828"
-                                    loading="eager"
-                                    layout="constrained"
-                                    width={250}
-                                />
-                            </div>
-                            <div className="project-card-wide-text">
-                                <h3>HACTU8.COM</h3>
-                                <span>A cutting-edge initiative dedicated to ethical hacking in the domains of robotics, AI, IoT, and consumer hardware.</span>
-                                <div className="project-card-link">
-                                    <a href="https://hactu8.com" target="_blank" rel="noreferrer">Visit the project &gt;</a>
+                    <div className="projectsContainer" style={{ position: 'relative' }}>
+                        {/* Left Arrow */}
+                        {this.state.showLeft && (
+                            <button
+                                aria-label="Scroll left"
+                                onClick={() => this.scrollProjects('left')}
+                                style={{
+                                    position: 'absolute',
+                                    left: '25px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    zIndex: 2,
+                                    background: 'rgba(0,0,0,0.5)',
+                                    border: 'none',
+                                    borderRadius: '50%',
+                                    width: 36,
+                                    height: 36,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                                }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 15L8 10L13 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        )}
+                        {/* Right Arrow */}
+                        {this.state.showRight && (
+                            <button
+                                aria-label="Scroll right"
+                                onClick={() => this.scrollProjects('right')}
+                                style={{
+                                    position: 'absolute',
+                                    right: '25px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    zIndex: 2,
+                                    background: 'rgba(0,0,0,0.5)',
+                                    border: 'none',
+                                    borderRadius: '50%',
+                                    width: 36,
+                                    height: 36,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                                }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        )}
+                        <div
+                            className="flexbox-wide project-carousel"
+                            ref={this.projectCarouselRef}
+                            style={{
+                                display: 'flex',
+                                flexWrap: 'nowrap',
+                                overflowX: 'auto',
+                                gap: '1.5rem',
+                                paddingBottom: '1rem',
+                                scrollbarWidth: 'thin',
+                            }}
+                        >
+                            <div className="project-card">
+                                <div className="project-card-image">
+                                    <StaticImage
+                                        formats={["AUTO"]}
+                                        src="../images/projects/hactu8@2x.jpg"
+                                        alt="project"
+                                        placeholder="NONE"
+                                        background="#282828"
+                                        loading="eager"
+                                        layout="constrained"
+                                        width={250}
+                                    />
+                                </div>
+                                <div className="project-card-tall-text">
+                                    <h3>OWASP HACTU8</h3>
+                                    <span>A cutting-edge initiative dedicated to ethical hacking in the domains of robotics, AI, IoT, and consumer hardware.</span>
+                                    <div className="project-card-link">
+                                        <a href="https://hactu8.com" target="_blank" rel="noreferrer">Visit the project &gt;</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="project-card-wide">
-                            <div className="project-card-image">
-                                <StaticImage
-                                    formats={["AUTO"]}
-                                    src="../images/projects/briefing-logo.webp"
-                                    alt="project"
-                                    placeholder="NONE"
-                                    background="#282828"
-                                    loading="eager"
-                                    layout="constrained"
-                                    width={250}
-                                />
-                            </div>
-                            <div className="project-card-wide-text">
-                                <h3>Briefing</h3>
-                                <span>A knowledge tool designed to help professionals master knowledge by delivering curated, topic-specific content.</span>
-                                <div className="project-card-link">
-                                    <a href="https://briefing.driveapplied.com" target="_blank" rel="noreferrer">Visit the project &gt;</a>
+                            <div className="project-card">
+                                <div className="project-card-image">
+                                    <StaticImage
+                                        formats={["AUTO"]}
+                                        src="../images/projects/briefing-logo.webp"
+                                        alt="project"
+                                        placeholder="NONE"
+                                        background="#282828"
+                                        loading="eager"
+                                        layout="constrained"
+                                        width={250}
+                                    />
+                                </div>
+                                <div className="project-card-tall-text">
+                                    <h3>Briefing</h3>
+                                    <span>A knowledge tool designed to help professionals master knowledge by delivering curated, topic-specific content.</span>
+                                    <div className="project-card-link">
+                                        <a href="https://briefing.driveapplied.com" target="_blank" rel="noreferrer">Visit the project &gt;</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>  */}
+                </section>
+                <GoogleAdBanner />
                 <section>
                     <h1 className="sectionTitle">Latest Posts</h1>
                     <div className="flexbox">

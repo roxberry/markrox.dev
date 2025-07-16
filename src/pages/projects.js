@@ -10,7 +10,7 @@ const ProjectsPage = () => {
 
             <section>
                 <h1 className="sectionTitle">Projects</h1>
-                <div className="flexbox-widex">
+                <div className="flexbox-wide">
                     {/* <div className="project-card-wide">
                         <div className="project-card-image">
                             <StaticImage

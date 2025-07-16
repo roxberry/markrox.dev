@@ -62,7 +62,7 @@
 
     & {
         text-align: center;
-        min-height: 425px;
+        // min-height: 425px;
     }
 }
 
@@ -108,6 +108,11 @@
 .project-card-wide-text {
     font-size: 20px;
     padding-left: 20px;
+}
+
+.project-card-tall-text {
+    font-size: 20px;
+    text-align: left;
 }
 
 .project-card-link {
