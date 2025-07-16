@@ -557,13 +557,45 @@ body[data-theme="light"] {
   overflow-y: auto;
 }
 
+article section {
+    // display: none;
+    // width: 90%;
+    // margin-left: 1rem;
+    // margin-right: 1rem;
+    // width: calc(100% - 2rem);
+        width: calc(100% - 2rem);    
+
+}
+
+.featured-projects {
+}
+
 .projectsContainer {
   max-width: 870px;
   margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
+
+// @media (max-width: 900px) {
+//   .projectsContainer {
+//     max-width: 90%;
+//     padding-left: 0.5rem;
+//     padding-right: 0.5rem;
+//   }
+// }
+
 
 .project-card {
   min-width: 270px;
   max-width: 270px;
   flex: 0 0 270px;
 }
+
+// @media (max-width: 600px) {
+//   .project-card {
+//     min-width: 80vw;
+//     max-width: 80vw;
+//     flex: 0 0 80vw;
+//   }
+// }
