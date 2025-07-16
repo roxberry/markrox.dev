@@ -146,7 +146,7 @@ class BlogIndex extends React.Component {
                         <div className="project-card-image">
                             <StaticImage
                                 formats={["AUTO"]}
-                                src="../images/projects/hactu8.png"
+                                src="../images/projects/hactu8.jpg"
                                 alt="project"
                                 placeholder="NONE"
                                 background="#282828"
