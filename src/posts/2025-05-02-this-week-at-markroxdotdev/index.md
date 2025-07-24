@@ -6,7 +6,7 @@ comments: true
 date: 2025-05-02 16:00:00
 author: Mark Roxberry
 excerpt: A summary of key achievements this week, including GenSearch POC milestones, PCI DSS project advances, Angular UI improvements, and continued AI certification and research.
-tags: [GenSearch, PCI DSS, Angular, Azure, AI, Certification, Development]
+tags: [GenSearch, PCI DSS, Angular, azure, AI, certification, development]
 categories:
   - status
 postimage:
