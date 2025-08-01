@@ -84,13 +84,10 @@ const Tags = ({ pageContext, data }) => {
             */}
                 {/* <Link to="/ta`gs">All tags</Link> */}
             </section>
-            <section>
-                <h1 className="sectionTitle">Recommended Products</h1>
-                <AmazonSiteStripe
-                    amazonProducts={amazonProducts}
-                    layout="horizontal" // or "vertical"
-                />
-            </section>
+            <AmazonSiteStripe
+                amazonProducts={amazonProducts}
+                layout="horizontal"
+            />
         </Layout>
     )
 }

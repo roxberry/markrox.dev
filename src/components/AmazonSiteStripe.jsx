@@ -20,49 +20,52 @@ const AmazonSiteStripeWIP = ({
         : { display: "flex", gap: 24, flexDirection: "column" };
 
     return (
-        <div style={{ padding: "20px", borderRadius: "8px", border: "1px solid #ccc", backgroundColor: "#282828" }}>
-            <div style={containerStyle}>
-                {amazonProducts.map((product, idx) => (
-                    <a
-                        key={product.asin || idx}
-                        href={buildUrl(product)}
-                        target="_blank"
-                        rel="nofollow sponsored"
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: 240,
-                            height: 340, // adjust as needed for your image + text
-                            margin: 10,
-                            textDecoration: "none",
-                            border: "1px solid #ccc",
-                            borderRadius: 4,
-                            boxSizing: "border-box",
-                            background: "#282828",
-                        }}
-                    >
-                        <div style={{ padding: 50, flex: "0 0 auto" }}>
-                            <img
-                                src={product.imageUrl || "https://via.placeholder.com/120x240?text=Amazon+Product"}
-                                alt={product.name || "Product Name"}
-                                style={{ display: "block", margin: "0 auto", maxWidth: "100%", maxHeight: "100%" }}
-                            />
-                        </div>
-                        <p style={{ margin: "0 0 20px 0", flex: "0 0 auto", padding: "0 5px", textAlign: "center" }}>
-                            {product.name || "Product Name"}
-                        </p>
-                    </a>
-                ))}
+        <section>
+            <h1 className="sectionTitle">Recommended Products</h1>
+            <div style={{ padding: "20px", borderRadius: "8px", border: "1px solid #ccc", backgroundColor: "#282828" }}>
+                <div style={containerStyle}>
+                    {amazonProducts.map((product, idx) => (
+                        <a
+                            key={product.asin || idx}
+                            href={buildUrl(product)}
+                            target="_blank"
+                            rel="nofollow sponsored"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                width: 240,
+                                height: 340, // adjust as needed for your image + text
+                                margin: 10,
+                                textDecoration: "none",
+                                border: "1px solid #ccc",
+                                borderRadius: 4,
+                                boxSizing: "border-box",
+                                background: "#282828",
+                            }}
+                        >
+                            <div style={{ padding: 50, flex: "0 0 auto" }}>
+                                <img
+                                    src={product.imageUrl || "https://via.placeholder.com/120x240?text=Amazon+Product"}
+                                    alt={product.name || "Product Name"}
+                                    style={{ display: "block", margin: "0 auto", maxWidth: "100%", maxHeight: "100%" }}
+                                />
+                            </div>
+                            <p style={{ margin: "0 0 20px 0", flex: "0 0 auto", padding: "0 5px", textAlign: "center" }}>
+                                {product.name || "Product Name"}
+                            </p>
+                        </a>
+                    ))}
+                </div>
+                <p>As an Amazon Associate, I earn from qualifying purchases.</p>
             </div>
-            <p>As an Amazon Associate, I earn from qualifying purchases.</p>
-        </div>
+        </section>
     );
 };
 
 const AmazonSiteStripe = (props) => {
-  return <></>;
+    return <></>;
 };
 
 export default AmazonSiteStripe

@@ -122,13 +122,10 @@ class BlogIndex extends React.Component {
                         </div>
                     </div>
                 </section>
-                <section>
-                    <h1 className="sectionTitle">Recommended Products</h1>
-                    <AmazonSiteStripe
-                        amazonProducts={amazonProducts}
-                        layout="horizontal"
-                    />
-                </section>
+                <AmazonSiteStripe
+                    amazonProducts={amazonProducts}
+                    layout="horizontal"
+                />
                 <section>
                     <h1 className="sectionTitle">Latest Posts</h1>
                     <div className="flexbox">
