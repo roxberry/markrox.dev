@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styles/ads.scss"
 
-const AmazonSiteStripe = ({
+const AmazonSiteStripeWIP = ({
     amazonProducts = [],
     tag = "markroxdev-20",
     layout = "vertical", // or "horizontal"
@@ -59,6 +59,10 @@ const AmazonSiteStripe = ({
             <p>As an Amazon Associate, I earn from qualifying purchases.</p>
         </div>
     );
+};
+
+const AmazonSiteStripe = (props) => {
+  return <></>;
 };
 
 export default AmazonSiteStripe
