@@ -1,7 +1,8 @@
 import React, { createRef } from "react"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
-import GoogleAdBanner from "../components/GoogleAdBanner"
+import AmazonSiteStripe from "../components/AmazonSiteStripe"
+import amazonProducts from "../config/amazonProducts"
 import Pager from "../components/Pager"
 import TagList from "../components/TagList"
 import { StaticImage, GatsbyImage } from "gatsby-plugin-image"
@@ -122,7 +123,11 @@ class BlogIndex extends React.Component {
                     </div>
                 </section>
                 <section>
-                    <GoogleAdBanner />
+                    <h1 className="sectionTitle">Recommended Products</h1>
+                    <AmazonSiteStripe
+                        amazonProducts={amazonProducts}
+                        layout="horizontal"
+                    />
                 </section>
                 <section>
                     <h1 className="sectionTitle">Latest Posts</h1>

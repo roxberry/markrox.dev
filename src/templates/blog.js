@@ -1,26 +1,26 @@
 import React from 'react'
 import Layout from '../components/Layout'
 import Seo from '../components/Seo'
-import GoogleAdBanner from "../components/GoogleAdBanner"
 import TagList from "../components/TagList"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from 'gatsby'
+import AmazonSiteStripe from "../components/AmazonSiteStripe"
+import amazonProducts from "../config/amazonProducts"
 
 const Blog = (props) => {
-    
+
     const post = props.data.markdownRemark
     const postImage = post.frontmatter.postimage
     // const seoImage = null;
     const seoImage = postImage && postImage.src
-    ? postImage.src.childImageSharp.resize
-    : null
+        ? postImage.src.childImageSharp.resize
+        : null
     const pathName = props.location.pathname
-
 
     return (
 
         <Layout>
-            <Seo           
+            <Seo
                 title={post.frontmatter.title}
                 description={post.frontmatter.description || post.excerpt}
                 image={seoImage}
@@ -28,36 +28,42 @@ const Blog = (props) => {
             </Seo>
             <section>
                 <h1 className="postTitle">{post.frontmatter.title}</h1>
-                <div className="postedInfo">posted on {post.frontmatter.date}  | tags: [ <TagList tags= { post.frontmatter.tags } /> ]</div>
+                <div className="postedInfo">posted on {post.frontmatter.date}  | tags: [ <TagList tags={post.frontmatter.tags} /> ]</div>
                 {/* by {post.frontmatter.author}</div> */}
 
                 {
                     postImage && postImage.src && (
-                        <blockquote className="postQuote" dangerouslySetInnerHTML={{__html: post.frontmatter.subtitle }}></blockquote>
+                        <blockquote className="postQuote" dangerouslySetInnerHTML={{ __html: post.frontmatter.subtitle }}></blockquote>
                     )
                 }
                 {
                     postImage && postImage.src && (
                         <div className="postImage">
                             <GatsbyImage
-                            image={postImage.src.childImageSharp.gatsbyImageData}
-                            alt={postImage.alt}
-                            layout="fullWidth"
-                            formats={["auto","webp"]}
+                                image={postImage.src.childImageSharp.gatsbyImageData}
+                                alt={postImage.alt}
+                                layout="fullWidth"
+                                formats={["auto", "webp"]}
                             />
                             <div className="overlay">
-                                <div className="innerOverlayText" dangerouslySetInnerHTML={{__html: post.frontmatter.excerpt }}></div>
+                                <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: post.frontmatter.excerpt }}></div>
                             </div>
                         </div>
                     )
 
                 }
-                <GoogleAdBanner />
-
-                <div className="blogBody" dangerouslySetInnerHTML={{__html: post.html}}></div>
-
+                <div className="blogBody" dangerouslySetInnerHTML={{ __html: post.html }}></div>
+                <section>
+                    <h1 className="sectionTitle">Recommended Products</h1>
+                    <AmazonSiteStripe
+                        amazonProducts={amazonProducts}
+                        layout="horizontal" // or "vertical"
+                    />
+                </section>
                 <div className="disclaimer">This post and/or images used in it may have been created or enhanced using generative AI tools for clarity and organization. However, all ideas, technical work, solutions, integrations, and other aspects described here are entirely my own.</div>
-            </section>        
+            </section>
+
+
         </Layout>
     )
 }

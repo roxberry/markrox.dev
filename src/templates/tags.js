@@ -1,10 +1,11 @@
 import React from "react"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
-import GoogleAdBanner from "../components/GoogleAdBanner"
 import Pager from "../components/Pager"
 import TagList from "../components/TagList"
 import PropTypes from "prop-types"
+import AmazonSiteStripe from "../components/AmazonSiteStripe"
+import amazonProducts from "../config/amazonProducts"
 
 // Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -36,7 +37,6 @@ const Tags = ({ pageContext, data }) => {
     return (
         <Layout>
             <Seo title={tag} />
-            <GoogleAdBanner />
             <section>
                 <h1><FontAwesomeIcon icon={['fas', 'tags']} />&nbsp;&nbsp;{tagHeader}</h1>
                 <div className="flexbox">
@@ -82,7 +82,14 @@ const Tags = ({ pageContext, data }) => {
               This links to a page that does not yet exist.
               You'll come back to it!
             */}
-                {/* <Link to="/tags">All tags</Link> */}
+                {/* <Link to="/ta`gs">All tags</Link> */}
+            </section>
+            <section>
+                <h1 className="sectionTitle">Recommended Products</h1>
+                <AmazonSiteStripe
+                    amazonProducts={amazonProducts}
+                    layout="horizontal" // or "vertical"
+                />
             </section>
         </Layout>
     )

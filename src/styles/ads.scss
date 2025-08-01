@@ -1,0 +1,6 @@
+@use "variables" as *;
+
+.productName {
+    background-color: $brand-disclaimer;
+    color: $disclaimer-color;
+}
