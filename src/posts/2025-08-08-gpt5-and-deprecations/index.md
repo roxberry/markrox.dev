@@ -10,8 +10,8 @@ tags: [AI, architecture, security]
 categories:
   - AI Strategy
 postimage:
-  src: “post.jpg"
-  alt: “GPT-5"
+  src: "post.jpg"
+  alt: "GPT-5"
 featured: true
 ---
 
@@ -46,12 +46,12 @@ Token usage, cost, and behavior—expect differences.
 
 OpenAI’s GPT-4/5 aren’t available for local deployment. But you can run open-weight alternatives:
 
-| Tool / Platform                | Local Deployable Models                     | Use Case                                 |
-|-——————————|———————————————|-——————————————|
-| **Ollama**                    | LLaMA 3, Mistral, Gemma, Phi-3              | Fast local prototyping, privacy use       |
-| **Hugging Face + Transformers** | LLaMA, Mistral, Falcon, Gemma, others     | Fine-tune, scale, private GPU hosting     |
-| **Azure AI Foundry Local**    | Phi-3, Mistral, LLaMA, limited GPT routing  | Secure enterprise environments             |
-| **LM Studio / WebUI / vLLM / TGI** | Many open-weight LLMs                | UI, high-throughput hosting options        |
+| Tool / Platform                 | Local Deployable Models                    | Use Case                                  |
+|---------------------------------|---------------------------------------------|-------------------------------------------|
+| **Ollama**                      | LLaMA 3, Mistral, Gemma, Phi-3              | Fast local prototyping, privacy use       |
+| **Hugging Face + Transformers** | LLaMA, Mistral, Falcon, Gemma, others       | Fine-tune, scale, private GPU hosting     |
+| **Azure AI Foundry Local**      | Phi-3, Mistral, LLaMA, limited GPT routing  | Secure enterprise environments            |
+| **LM Studio / WebUI / vLLM / TGI** | Many open-weight LLMs                    | UI, high-throughput hosting options       |
 
 ##  Beyond Deprecations: A Roadmap
 
