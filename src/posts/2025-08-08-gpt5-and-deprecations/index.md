@@ -1,13 +1,17 @@
 ---
-title: “GPT-5 is here, GPT-4.1 Deprecation & What Comes Next in Generative AI”
-date: “2025-08-08”
-description: “OpenAI has retired GPT-4.1 and older models. Here’s what it means, how to migrate, and what to plan for next.”
-tags: [“AI”,”Generative AI”,”Model Versioning”,”GPT-5”,”Azure AI Foundry”]
+layout: post
+title: "GPT-5 is here, GPT-4.1 Deprecation & What Comes Next in Generative AI"
+date: 2025-08-08
+author: Mark Roxberry
+comments: true
+excerpt: "OpenAI has **retired GPT-4.1 and older models**. If your systems rely on these—via OpenAI API, Azure AI Foundry, or local integration—you need to act now."
+description: “OpenAI has retired GPT-4.1 and older models. Here’s what it means, how to migrate, and what to plan for next."
+tags: [AI, architecture, security]
 categories:
   - AI Strategy
 postimage:
-  src: “post.jpg”
-  alt: “GPT-5”
+  src: “post.jpg"
+  alt: “GPT-5"
 featured: true
 ---
 
