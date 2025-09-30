@@ -75,6 +75,51 @@ class BlogIndex extends React.Component {
         return (
             <Layout location={this.props.location} title={siteTitle}>
                 <Seo title="Welcome!" />
+                <AmazonSiteStripe
+                    amazonProducts={amazonProducts}
+                    layout="horizontal"
+                />
+                <section>
+                    {/* <h1 className="sectionTitle">Latest Posts</h1> */}
+                    <div className="flexbox">
+                        {data.allMarkdownRemark.edges.map((edge, i) => {
+                            const postImage = edge.node.frontmatter.postimage
+
+                            return (
+                                <div
+                                    key={edge.node.fields.slug + i.toString()}
+                                    className="post"
+                                >
+                                    <Link to={edge.node.fields.slug}>
+                                        <h1 className="postTitle">{edge.node.frontmatter.title}</h1>
+                                    </Link>
+                                    <div className="postedInfo">
+                                        posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
+                                    </div>
+                                    <Link to={edge.node.fields.slug}>
+
+                                        {postImage && postImage.src && (
+                                            <div className="postImage">
+                                                <GatsbyImage
+                                                    image={postImage.src.childImageSharp.gatsbyImageData}
+                                                    alt={edge.node.frontmatter.title}
+                                                    layout="fullWidth"
+                                                    formats={["auto", "webp"]}
+                                                />
+                                                <div className="overlay">
+                                                    <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }}></div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Link>
+
+
+                                </div>
+                            )
+                        })}
+                        {pager}
+                    </div>
+                </section>
                 <section>
                     <h1 className="sectionTitle">Featured Projects</h1>
                     <div className="flexbox-wide">
@@ -120,51 +165,6 @@ class BlogIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <AmazonSiteStripe
-                    amazonProducts={amazonProducts}
-                    layout="horizontal"
-                />
-                <section>
-                    <h1 className="sectionTitle">Latest Posts</h1>
-                    <div className="flexbox">
-                        {data.allMarkdownRemark.edges.map((edge, i) => {
-                            const postImage = edge.node.frontmatter.postimage
-
-                            return (
-                                <div
-                                    key={edge.node.fields.slug + i.toString()}
-                                    className="post"
-                                >
-                                    <Link to={edge.node.fields.slug}>
-                                        <h1 className="postTitle">{edge.node.frontmatter.title}</h1>
-                                    </Link>
-                                    <div className="postedInfo">
-                                        posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
-                                    </div>
-                                    <Link to={edge.node.fields.slug}>
-
-                                        {postImage && postImage.src && (
-                                            <div className="postImage">
-                                                <GatsbyImage
-                                                    image={postImage.src.childImageSharp.gatsbyImageData}
-                                                    alt={edge.node.frontmatter.title}
-                                                    layout="fullWidth"
-                                                    formats={["auto", "webp"]}
-                                                />
-                                                <div className="overlay">
-                                                    <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }}></div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </Link>
-
-
-                                </div>
-                            )
-                        })}
-                        {pager}
                     </div>
                 </section>
             </Layout>

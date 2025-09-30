@@ -51,7 +51,8 @@ We’re entering a new phase in the generative AI lifecycle. The early days of G
 
 Apple’s Foundation Models are a textbook example of this trend—putting advanced reasoning and generation tools into the hands of developers building **everyday apps**, not just AI research labs.
 
-The implications are profound:  
+The implications are profound:
+
 - AI-enabled personal apps that run offline  
 - Context-aware intelligence tied to user data without exposing it to the cloud  
 - Enhanced accessibility and autonomy in app behavior  

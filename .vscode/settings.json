@@ -34,5 +34,6 @@
         "Configuration"
     ],
     "favorites.currentGroup": "Default",
-    "favorites.sortOrder": "ASC"
+    "favorites.sortOrder": "ASC",
+    "vscode-journal-view.expanded": false
 }
