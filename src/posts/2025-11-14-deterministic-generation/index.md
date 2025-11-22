@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deterministic Generation: Making LLM Skills Actually Reliable"
+title: "Deterministic Generation: Skills Make LLMs Actually Reliable"
 subtitle: "The assumption of an absolute determinism is the essential foundation of every scientific enquiry. - Max Planck"
 comments: true
 date: 2025-11-14
@@ -33,6 +33,8 @@ After enough late-night incidents, you start building defenses.
 ## What Deterministic Generation Actually Means
 
 Deterministic Generation isn't a framework or library. It's a discipline: using explicit schemas, constrained prompts, few-shot examples, and strict validation so your model outputs—especially tool calls—are repeatable and verifiable.
+
+The key insight: the LLM executes skills that are deterministic and lightweight, not context-heavy operations. You're not asking the model to reason deeply about every tool call—you're asking it to match patterns and apply structured templates. Heavy context and reasoning happen in the prompt design and validation layers, not in the skill execution itself.
 
 The implementation varies by provider (Claude Skills, OpenAI function calling, whatever), but the principles stay consistent:
 
@@ -169,16 +171,11 @@ Then iterate. You'll find the patterns that work for your domain.
 
 ## References
 
-### Specs & validators
-
-- [JSON Schema](https://json-schema.org/)
-- [AJV (Another JSON Schema Validator)](https://ajv.js.org/)
-- [python-jsonschema](https://python-jsonschema.readthedocs.io/en/stable/)
-
 ### Model provider docs
 
 - [OpenAI: Function calling guide](https://platform.openai.com/docs/guides/gpt/function-calling)
-- [Anthropic: Claude docs](https://www.anthropic.com/docs/)
+- [Anthropic: Agent Skills](https://www.claude.com/blog/skills)
+- [Anthropic Skills on Github](https://github.com/anthropics/skills)
 - [Google Cloud: Mitigating hallucinations](https://cloud.google.com/vertex-ai/docs/generative-ai/mitigate-hallucinations)
 
 ### Observability
