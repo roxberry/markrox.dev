@@ -34,6 +34,8 @@ After enough late-night incidents, you start building defenses.
 
 Deterministic Generation isn't a framework or library. It's a discipline: using explicit schemas, constrained prompts, few-shot examples, and strict validation so your model outputs, especially tool calls, are repeatable and verifiable.
 
+To be clear: the LLM's text generation remains probabilistic, but by routing through validated tool calls with explicit schemas, the *system's execution* becomes deterministic. Same tool invocation, same parameters, same result. We're moving intelligence from probabilistic reasoning to deterministic execution.
+
 In practice this means treating each LLM-invoked tool call as a subroutine in an operational system, rather than as free-form text generation. The prompt provides a rigid contract; it is never ambiguous. The schema defines the shape of the call, the validation layer ensures the contract is met, and the execution layer either proceeds or gracefully fails back. By decomposing intelligence into predictable, verifiable skills rather than monolithic reasoning sessions, you shift from ‘creative AI assistant’ to ‘operational execution engine’.”
 
 The key insight: the LLM executes skills that are deterministic and lightweight, not context-heavy operations. You're not asking the model to reason deeply about every tool call, instead you're asking it to match patterns and apply structured templates. Heavy context and reasoning happen in the prompt design and validation layers, not in the skill execution itself.
