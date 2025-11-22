@@ -6,7 +6,7 @@ comments: true
 date: 2025-09-29
 author: Mark Roxberry
 excerpt: Exploring how Azure Communication Services, Azure AI Voice Live, and an orchestration layer built on FastAPI can reshape operations at scale.
-tags: [AI, Azure, Voice, MCP, Orchestration, Prototype]
+tags: [AppliedAI, AI, Azure, Voice, MCP, Orchestration, Prototype]
 categories:
   - Architecture
   - Prototypes

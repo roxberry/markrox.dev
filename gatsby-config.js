@@ -15,7 +15,7 @@ module.exports = {
         twitterUsername: "@markroxdotdev",
         author: "Mark Roxberry",
         keywords: ["roxberry", "journal", "development"],
-        featuredTags: ["AI", "architecture", "development", "performance", "robotics", "security", "privacy", "apple"],
+        featuredTags: ["AppliedAI", "AI", "architecture", "development", "performance", "robotics", "security", "privacy", "apple"],
         version: "2025.08.14.01",
     },
     plugins: [

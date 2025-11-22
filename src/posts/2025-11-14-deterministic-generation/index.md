@@ -6,7 +6,7 @@ comments: true
 date: 2025-11-14
 author: Mark Roxberry
 excerpt: After two decades debugging production systems across defense, healthcare, financial services, and gaming, I've learned that "it works most of the time" isn't good enough. Here's how to make LLM-driven skills behave.
-tags: [AI, reliability, tooling, prompt-engineering]
+tags: [AppliedAI, AI, reliability, tooling, prompt-engineering]
 categories:
   - AI Strategy
 postimage:

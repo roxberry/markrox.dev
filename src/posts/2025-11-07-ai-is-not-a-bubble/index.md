@@ -6,7 +6,7 @@ comments: true
 date: 2025-11-07
 author: Mark Roxberry
 excerpt: Each decade replaces friction with abstraction. AI is no different. This is not a bubble; it’s the next architectural leap.
-tags: [AI, Architecture, LLM, Engineering, Cloud]
+tags: [AppliedAI, AI, Architecture, LLM, Engineering, Cloud]
 categories:
   - AI
 postimage:
