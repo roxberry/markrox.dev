@@ -51,7 +51,7 @@ Think of it as defensive programming for AI systems.
 
 ## How I Actually Implement This
 
-I'm going to walk through a product search example here, even though I've been talking about operations systems. Why? Because the patterns are identical, but showing you a casino incident management schema with 40 fields and complex validation rules would obscure the principles. Product search is simple enough to understand immediately, but it demonstrates every technique you'll use for ITSM tickets, security alerts, or any other operational tool calling. Once you see how to make product_search deterministic, you can apply the same discipline to incident_create, user_provision, or alert_escalate.
+I'm going to walk through a product search example here, even though I've been talking about operations systems. Why? Because the patterns are identical, but showing you a hospitality incident management schema with 40 fields and complex validation rules would obscure the principles. Product search is simple enough to understand immediately, but it demonstrates every technique you'll use for ITSM tickets, security alerts, or any other operational tool calling. Once you see how to make product_search deterministic, you can apply the same discipline to incident_create, user_provision, or alert_escalate.
 
 ### Start with the Schema
 
