@@ -12,7 +12,7 @@ categories:
 postimage:
   src: "post.png"
   alt: "AI workflow"
-featured: true
+featured: false
 ---
 
 ## TL;DR

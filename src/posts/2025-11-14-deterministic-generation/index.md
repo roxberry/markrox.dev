@@ -19,7 +19,7 @@ featured: true
 
 Having architected high-availability systems for defense, healthcare, finance, and large-scale gaming, I’ve learned that 24/7 operations leave no room for ‘the AI might have chosen correctly.’ At 3 a.m., you need deterministic, predictable execution.
 
-LLMs are powerful, but they're fundamentally probabilistic. That's fine for creative work—hell, it's a feature. But when you need the model to call external tools, pass structured arguments, or integrate into production workflows? That non-determinism becomes your enemy.
+LLMs are powerful, but they're fundamentally probabilistic (i.e., LLMs sample outputs rather than guaranteeing the same answer). That's fine for creative work; it's a feature. But when you need the model to call external tools, pass structured arguments, or integrate into production workflows? That non-determinism becomes your enemy.
 
 I've seen these failure modes:
 
@@ -33,6 +33,8 @@ After enough late-night incidents, you start building defenses.
 ## What Deterministic Generation Actually Means
 
 Deterministic Generation isn't a framework or library. It's a discipline: using explicit schemas, constrained prompts, few-shot examples, and strict validation so your model outputs—especially tool calls—are repeatable and verifiable.
+
+In practice this means treating each LLM-invoked tool call as a subroutine in an operational system, rather than as free-form text generation. The prompt provides a rigid contract — it is never ambiguous. The schema defines the shape of the call, the validation layer ensures the contract is met, and the execution layer either proceeds or gracefully fails back. By decomposing intelligence into predictable, verifiable skills rather than monolithic reasoning sessions, you shift from ‘creative AI assistant’ to ‘operational execution engine’.”
 
 The key insight: the LLM executes skills that are deterministic and lightweight, not context-heavy operations. You're not asking the model to reason deeply about every tool call—you're asking it to match patterns and apply structured templates. Heavy context and reasoning happen in the prompt design and validation layers, not in the skill execution itself.
 
@@ -161,6 +163,8 @@ The impact has been consistent across implementations:
 
 Over-constraining can hurt. If you lock down every parameter, you lose flexibility for ambiguous user intents. I've found the sweet spot is: constrain what matters for safety and correctness, but leave room for the model to handle natural language variation.
 
+One subtle cost: by constraining the model you may suppress emergent use-cases or unexpected insights. Therefore it’s prudent to separate modules of your system: use an unconstrained LLM for discovery or ideation, and a locked-down skill engine for execution. Over-time the ideation outputs can feed into new deterministic skills if the use-case matures.
+
 Also, schemas need maintenance. As features evolve, your tool definitions evolve. And model upgrades can change behavior—regression tests are your friend.
 
 ## Where to Start
@@ -191,5 +195,4 @@ Then iterate. You'll find the patterns that work for your domain.
 
 ### Image
 
-- Unsplash  
-- …
+- Image generated with DALL·E (OpenAI); edited by Mark Roxberry
