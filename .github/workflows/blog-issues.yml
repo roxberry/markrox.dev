@@ -1,0 +1,497 @@
+issues:
+  # Phase 1: Foundation (Week 1)
+  - title: "Update homepage hero/tagline"
+    labels: ["quick-win", "phase-1"]
+    milestone: "Phase 1 - Foundation"
+    body: |
+      ## Current
+      "Technology, Innovation, & Insight by Mark Roxberry"
+      
+      ## New
+      "Principal Consultant | CISSP, CEH | AI Security & Multi-Agent Architectures"
+      
+      ## Acceptance Criteria
+      - [ ] New tagline visible on homepage
+      - [ ] Removes generic/trademarked text
+      - [ ] Mobile responsive
+      - [ ] Professional positioning clear
+      
+      **Estimated Time:** 15 minutes
+
+  - title: "Write About page content"
+    labels: ["quick-win", "phase-1", "content"]
+    milestone: "Phase 1 - Foundation"
+    body: |
+      ## Content Structure
+      
+      **Paragraph 1: Who I Am**
+      - Principal Consultant & Practice Lead at DSI (20+ years)
+      - CISSP, CEH certifications
+      - OWASP HACTU8 project lead
+      
+      **Paragraph 2: What I Do**
+      - AI security architecture (Azure AI, CAG/RAG)
+      - Multi-agent systems & secure GenAI
+      - Casino 24/7 operations support
+      - Healthcare, defense, financial services clients
+      
+      **Paragraph 3: Current Focus**
+      - Drive Technology, LLC (product development)
+      - AI-powered support systems
+      - Speaking & training (DAMA Philadelphia)
+      
+      ## Acceptance Criteria
+      - [ ] 3 paragraphs written
+      - [ ] Credentials prominent
+      - [ ] Current work highlighted
+      - [ ] Contact info included
+      - [ ] Professional headshot added
+      
+      **Estimated Time:** 1 hour
+
+  - title: "Add professional headshot to site"
+    labels: ["quick-win", "phase-1", "design"]
+    milestone: "Phase 1 - Foundation"
+    body: |
+      ## Requirements
+      - Professional photo (business casual acceptable)
+      - Optimized for web (< 200KB)
+      - Appears on About page
+      - Optional: Homepage hero section
+      
+      ## Acceptance Criteria
+      - [ ] High-quality image added
+      - [ ] Properly sized/optimized
+      - [ ] Alt text included
+      - [ ] Displays correctly on mobile
+      
+      **Estimated Time:** 30 minutes
+
+  - title: "Pin 3 best posts to homepage"
+    labels: ["quick-win", "phase-1", "content"]
+    milestone: "Phase 1 - Foundation"
+    body: |
+      ## Featured Posts Section
+      
+      **Recommended posts to feature:**
+      1. MFA solutions across three platforms post
+      2. Log4Shell security advisory
+      3. Most recent AI/architecture content
+      
+      ## Implementation
+      - Add "Featured" section above blog roll
+      - Include post title, excerpt, read time
+      - Make visually distinct from regular posts
+      
+      ## Acceptance Criteria
+      - [ ] Featured section created
+      - [ ] 3 posts selected and pinned
+      - [ ] Excerpts compelling
+      - [ ] Links working
+      - [ ] Mobile responsive
+      
+      **Estimated Time:** 45 minutes
+
+  - title: "Add newsletter signup form"
+    labels: ["quick-win", "phase-1", "technical"]
+    milestone: "Phase 1 - Foundation"
+    body: |
+      ## Options
+      - **Buttondown** (recommended - simple, privacy-focused)
+      - **Substack** (built-in audience potential)
+      - **ConvertKit** (if scaling up)
+      
+      ## Placement
+      - Bottom of every post
+      - Sidebar (if available)
+      - About page
+      
+      ## Copy Suggestion
+      "Get notified about new posts on AI security, multi-agent architectures, and enterprise AI systems. No spam, unsubscribe anytime."
+      
+      ## Acceptance Criteria
+      - [ ] Provider selected and account created
+      - [ ] Form embedded on site
+      - [ ] Privacy policy link included
+      - [ ] Test subscription works
+      - [ ] Confirmation email configured
+      
+      **Estimated Time:** 1 hour
+
+  # Phase 2: Content (Week 2)
+  - title: "Write deep dive: CAG Architecture for Enterprise AI"
+    labels: ["content", "phase-2", "priority-high"]
+    milestone: "Phase 2 - Content Authority"
+    body: |
+      ## Post Requirements
+      
+      **Topic:** Cache-Augmented Generation (CAG) architecture
+      - What is CAG vs RAG
+      - Why enterprise clients need it
+      - Azure implementation specifics
+      - Multi-agent orchestration integration
+      - Real-world use cases (anonymized)
+      
+      **Target:** 1500-2000 words
+      
+      ## Structure
+      1. Hook: Problem statement
+      2. CAG explanation with diagrams
+      3. Implementation details
+      4. Case study/example
+      5. Best practices
+      6. Conclusion with CTA
+      
+      ## Acceptance Criteria
+      - [ ] 1500+ words written
+      - [ ] Technical accuracy verified
+      - [ ] At least 1 diagram/visual
+      - [ ] Code examples (if relevant)
+      - [ ] SEO optimized (title, meta, headings)
+      - [ ] Proofread and edited
+      
+      **Estimated Time:** 3-4 hours
+
+  - title: "Document OWASP HACTU8 project"
+    labels: ["content", "phase-2", "authority-building"]
+    milestone: "Phase 2 - Content Authority"
+    body: |
+      ## Page Content
+      
+      **OWASP HACTU8 Overview**
+      - What: AI/IoT security testing project
+      - Why: Growing attack surface needs specialized testing
+      - Your role: Project lead
+      - Status: Active development
+      
+      **Key Components**
+      - Project goals
+      - Current tools/methodologies
+      - How to contribute
+      - Link to OWASP page
+      
+      ## Acceptance Criteria
+      - [ ] Standalone project page created
+      - [ ] Clear explanation of project purpose
+      - [ ] Your leadership role highlighted
+      - [ ] Links to OWASP resources
+      - [ ] Call to action for contributors
+      
+      **Estimated Time:** 2 hours
+
+  - title: "Create Projects showcase page"
+    labels: ["content", "phase-2", "portfolio"]
+    milestone: "Phase 2 - Content Authority"
+    body: |
+      ## Projects to Include
+      
+      **1. OWASP HACTU8**
+      - AI/IoT security testing framework
+      - Project lead
+      - [Link to dedicated page]
+      
+      **2. Drive Technology, LLC**
+      - Product development company
+      - A Marshmallow World holiday platform
+      - Revenue projections: $20K (2026) → $150K+ potential
+      
+      **3. DSI Notable Work** (if allowed)
+      - Casino 24/7 operations support systems
+      - Multi-agent AI architectures
+      - Azure-based GenAI implementations
+      - (Anonymized case studies)
+      
+      **4. Community Contributions**
+      - DAMA Philadelphia presentations
+      - Blog at markrox.dev
+      - Technical leadership
+      
+      ## Acceptance Criteria
+      - [ ] Projects page created
+      - [ ] Each project has description
+      - [ ] Visual elements (logos/screenshots)
+      - [ ] Links to relevant resources
+      - [ ] Professional presentation
+      
+      **Estimated Time:** 2 hours
+
+  # Phase 3: Contact & Design (Week 3)
+  - title: "Add Speaking & Training page"
+    labels: ["content", "phase-2", "authority-building"]
+    milestone: "Phase 2 - Content Authority"
+    body: |
+      ## Page Content
+      
+      **Speaking Topics**
+      - AI security architecture
+      - Multi-agent systems design
+      - Secure GenAI implementation
+      - OWASP Top 10 for LLM applications
+      - Cache-Augmented Generation (CAG)
+      
+      **Past Presentations**
+      - DAMA Philadelphia (list topics/dates)
+      - Other venues
+      
+      **Training Services**
+      - AI security workshops
+      - Azure AI architecture
+      - Enterprise security training
+      
+      **CTA**
+      "Interested in having me speak at your event or conduct training? Get in touch."
+      
+      ## Acceptance Criteria
+      - [ ] Page created with clear sections
+      - [ ] Topics listed with descriptions
+      - [ ] Past speaking engagements documented
+      - [ ] Professional photo included
+      - [ ] Contact CTA prominent
+      
+      **Estimated Time:** 1.5 hours
+
+  - title: "Add Contact page with form"
+    labels: ["content", "phase-2", "technical"]
+    milestone: "Phase 2 - Content Authority"
+    body: |
+      ## Form Fields
+      - Name (required)
+      - Email (required)
+      - Organization/Company
+      - Subject/Topic dropdown:
+        - Speaking inquiry
+        - Training opportunity
+        - Collaboration
+        - Other
+      - Message (required)
+      
+      ## Implementation Options
+      - **Formspree** (simple, works with static sites)
+      - **Netlify Forms** (if on Netlify)
+      - **Google Forms** (quick but less professional)
+      
+      ## Page Copy
+      "I'm available for speaking engagements, training workshops, and collaboration opportunities. Currently serving as Principal Consultant at Database Solutions Inc."
+      
+      ## Acceptance Criteria
+      - [ ] Contact form functional
+      - [ ] Spam protection enabled
+      - [ ] Submissions go to your email
+      - [ ] Confirmation message displays
+      - [ ] Mobile responsive
+      
+      **Estimated Time:** 1 hour
+
+  - title: "Implement tag/category filtering"
+    labels: ["design", "phase-3", "ux"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Tag System
+      
+      **Primary Categories:**
+      - AI
+      - Security  
+      - Architecture
+      - Development
+      
+      **Implementation**
+      - Tag buttons/pills at top of blog page
+      - Filter posts by selected tag
+      - Show post count per tag
+      - "All Posts" option to clear filter
+      
+      ## Acceptance Criteria
+      - [ ] Tags visible on blog index
+      - [ ] Clicking tag filters posts
+      - [ ] URL updates with filter (optional)
+      - [ ] Clear filter option available
+      - [ ] Mobile responsive
+      
+      **Estimated Time:** 2 hours
+
+  - title: "Choose and apply accent color"
+    labels: ["design", "phase-3", "quick-win"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Color Recommendations
+      
+      **Professional options:**
+      - Deep blue (#2563eb) - trustworthy, tech
+      - Teal (#14b8a6) - modern, security
+      - Purple (#7c3aed) - innovation, AI
+      - Dark green (#059669) - stable, enterprise
+      
+      ## Application
+      - Primary CTA buttons
+      - Links (hover states)
+      - Tag highlights
+      - Section dividers
+      - Featured post borders
+      
+      ## Acceptance Criteria
+      - [ ] Accent color selected
+      - [ ] Applied consistently across site
+      - [ ] Good contrast ratios (WCAG AA)
+      - [ ] Tested on mobile
+      
+      **Estimated Time:** 30 minutes
+
+  - title: "Typography improvements"
+    labels: ["design", "phase-3", "ux"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Changes Needed
+      
+      **Body text:**
+      - Increase font size: 16px → 18px minimum
+      - Increase line height: 1.5 → 1.7
+      - Max width: 65-75 characters per line
+      
+      **Headings:**
+      - Clear hierarchy (h1 > h2 > h3)
+      - Adequate spacing above/below
+      - Font weight adjustments
+      
+      **Code blocks:**
+      - Syntax highlighting
+      - Copy button
+      - Proper background contrast
+      
+      ## Acceptance Criteria
+      - [ ] Improved readability
+      - [ ] Clear visual hierarchy
+      - [ ] Mobile optimized
+      - [ ] Code blocks styled
+      
+      **Estimated Time:** 1.5 hours
+
+  - title: "Add estimated read times to posts"
+    labels: ["design", "phase-3", "quick-win"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Implementation
+      
+      Calculate: word count ÷ 200 words/minute
+      
+      **Display location:**
+      - Post metadata area (with date/tags)
+      - Blog index cards
+      
+      **Format:** "5 min read" or "12 min read"
+      
+      ## Acceptance Criteria
+      - [ ] Read time calculated correctly
+      - [ ] Displays on all posts
+      - [ ] Shows in blog index
+      - [ ] Styled consistently
+      
+      **Estimated Time:** 1 hour
+
+  - title: "Remove ™ symbol from header"
+    labels: ["design", "phase-3", "quick-win"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Issue
+      "MARKROX.DEV™" feels forced/unnecessary
+      
+      ## Solution
+      Simply "MARKROX.DEV" or "Mark Roxberry"
+      
+      ## Acceptance Criteria
+      - [ ] ™ removed from header
+      - [ ] Cleaner presentation
+      - [ ] Tested across browsers
+      
+      **Estimated Time:** 5 minutes
+
+  - title: "Add certification badges"
+    labels: ["design", "phase-3", "authority-building"]
+    milestone: "Phase 3 - Design & UX"
+    body: |
+      ## Certifications to Display
+      
+      - CISSP (ISC²)
+      - CEH (EC-Council)
+      
+      **Placement:**
+      - About page (prominent)
+      - Footer
+      - Homepage (optional)
+      
+      ## Implementation
+      - Official badge graphics (if allowed by cert bodies)
+      - Or text with verification links
+      - Include cert numbers (if public)
+      
+      ## Acceptance Criteria
+      - [ ] Badges added to About page
+      - [ ] Professional presentation
+      - [ ] Links to verification (if applicable)
+      - [ ] Mobile responsive
+      
+      **Estimated Time:** 30 minutes
+
+  # Phase 4 & 5: Ongoing
+  - title: "Create monthly content calendar template"
+    labels: ["content", "phase-4", "process"]
+    milestone: "Phase 4 - Authority Building"
+    body: |
+      ## Content Schedule
+      
+      **Minimum commitment:** 2 posts per month
+      
+      **Content mix:**
+      - 1 deep technical dive (1500+ words)
+      - 1 industry commentary/quick take (500-800 words)
+      
+      **Topics pipeline:**
+      - AI security trends
+      - CAG/RAG implementations
+      - Multi-agent architectures
+      - OWASP HACTU8 updates
+      - Azure AI patterns
+      - Casino/gaming security insights
+      
+      ## Acceptance Criteria
+      - [ ] Editorial calendar created
+      - [ ] Topics brainstormed (3 months ahead)
+      - [ ] Publishing schedule set
+      - [ ] Reminder system in place
+      
+      **Estimated Time:** 1 hour setup, ongoing
+
+  - title: "Technical SEO audit and fixes"
+    labels: ["technical", "phase-5", "optimization"]
+    milestone: "Phase 5 - Technical Polish"
+    body: |
+      ## Audit Checklist
+      
+      **Performance:**
+      - [ ] Page load speed (< 3 seconds)
+      - [ ] Image optimization
+      - [ ] Minimize CSS/JS
+      
+      **SEO:**
+      - [ ] Meta descriptions on all posts
+      - [ ] Open Graph tags
+      - [ ] Twitter cards
+      - [ ] Structured data (Schema.org)
+      - [ ] XML sitemap
+      - [ ] robots.txt
+      
+      **Mobile:**
+      - [ ] Responsive design verified
+      - [ ] Touch targets adequate size
+      - [ ] Text readable without zoom
+      
+      **Analytics:**
+      - [ ] Google Analytics configured
+      - [ ] Search Console connected
+      - [ ] Core Web Vitals passing
+      
+      ## Acceptance Criteria
+      - [ ] All items checked/fixed
+      - [ ] Lighthouse score > 90
+      - [ ] Mobile-friendly test passed
+      
+      **Estimated Time:** 3-4 hours

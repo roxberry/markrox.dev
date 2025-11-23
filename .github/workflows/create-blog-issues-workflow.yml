@@ -1,0 +1,85 @@
+name: Create Blog Improvement Issues
+
+on:
+  workflow_dispatch: # Allows manual trigger from Actions tab
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create milestones and issues
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const yaml = require('js-yaml');
+            const fs = require('fs');
+            
+            // Read the issues configuration
+            const issuesConfig = yaml.load(fs.readFileSync('blog-issues.yml', 'utf8'));
+            
+            // Create milestones first
+            const milestones = [
+              'Phase 1 - Foundation',
+              'Phase 2 - Content Authority', 
+              'Phase 3 - Design & UX',
+              'Phase 4 - Authority Building',
+              'Phase 5 - Technical Polish'
+            ];
+            
+            const milestoneMap = {};
+            
+            for (const title of milestones) {
+              try {
+                const { data: milestone } = await github.rest.issues.createMilestone({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  description: `Blog improvement ${title.toLowerCase()}`
+                });
+                milestoneMap[title] = milestone.number;
+                console.log(`✓ Created milestone: ${title}`);
+              } catch (error) {
+                // Milestone might already exist
+                const { data: milestones } = await github.rest.issues.listMilestones({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'open'
+                });
+                const existing = milestones.find(m => m.title === title);
+                if (existing) {
+                  milestoneMap[title] = existing.number;
+                  console.log(`✓ Using existing milestone: ${title}`);
+                }
+              }
+            }
+            
+            // Create issues
+            for (const issue of issuesConfig.issues) {
+              try {
+                const issueData = {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: issue.title,
+                  body: issue.body,
+                  labels: issue.labels || []
+                };
+                
+                // Add milestone if it exists
+                if (issue.milestone && milestoneMap[issue.milestone]) {
+                  issueData.milestone = milestoneMap[issue.milestone];
+                }
+                
+                const { data: createdIssue } = await github.rest.issues.create(issueData);
+                console.log(`✓ Created issue #${createdIssue.number}: ${issue.title}`);
+              } catch (error) {
+                console.error(`✗ Failed to create issue: ${issue.title}`);
+                console.error(error.message);
+              }
+            }
+            
+            console.log('\n✅ All issues created successfully!');
