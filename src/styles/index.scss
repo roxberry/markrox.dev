@@ -500,6 +500,25 @@ aside section {
         border-radius: 4px;
 }
 
+.pinnedBadge {
+  display: inline-block;
+  padding: 0.3em 0.65em;
+  margin-left: 0.5rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 0.25rem;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
 .pinned-card .pinned-card-content {
     display: flex;
     flex-direction: column;

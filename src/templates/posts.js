@@ -115,7 +115,7 @@ class BlogIndex extends React.Component {
                                             )}
                                             <div className="pinned-card-content">
                                                 <Link to={edge.node.fields.slug} className="pinnedTitleLink">
-                                                    <h2 className="postTitle">{edge.node.frontmatter.title} <span className="pinnedBadge">Pinned</span></h2>
+                                                    <h2 className="postTitle">{edge.node.frontmatter.title}<span className="pinnedBadge">Pinned</span> </h2>
                                                 </Link>
                                                 <div className="postedInfo">
                                                     posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]

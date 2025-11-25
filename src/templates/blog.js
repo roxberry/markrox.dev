@@ -28,7 +28,12 @@ const Blog = (props) => {
                 pathname={pathName}>
             </Seo>
             <section>
-                <h1 className="postTitle">{post.frontmatter.title}</h1>
+                <h1 className="postTitle">
+                    {post.frontmatter.title}
+                    {post.frontmatter.pinned && (
+                        <span className="pinnedBadge">Pinned</span>
+                    )}
+                </h1>
                 <div className="postedInfo">posted on {post.frontmatter.date}  | tags: [ <TagList tags={post.frontmatter.tags} /> ]</div>
                 {/* by {post.frontmatter.author}</div> */}
 
@@ -79,6 +84,7 @@ export const query = graphql`
             date(formatString: "LL")
             author
             featured
+            pinned
             tags
             postimage
             {
