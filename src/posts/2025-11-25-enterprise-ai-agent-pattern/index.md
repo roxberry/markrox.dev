@@ -117,10 +117,6 @@ One binary. External context. Proximity over specialization.
 
 ## Credits
 
-### Quote
-
-- —
-
 ### Image
 
 - Image generated with DALL·E (OpenAI); edited by Mark Roxberry

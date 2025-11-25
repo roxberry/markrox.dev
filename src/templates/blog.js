@@ -54,9 +54,7 @@ const Blog = (props) => {
 
                 }
                 <div className="blogBody" dangerouslySetInnerHTML={{ __html: post.html }}></div>
-                <div style={{ marginTop: '2rem' }}>
-                    <NewsletterForm provider="netlify" />
-                </div>
+
                 <AmazonSiteStripe
                     amazonProducts={amazonProducts}
                     layout="horizontal"
