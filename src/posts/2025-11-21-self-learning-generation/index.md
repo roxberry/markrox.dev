@@ -54,6 +54,7 @@ This separation produces an architecture with long-term stability, cost control,
 ### High-Level Architecture Diagram
 
 ```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
 flowchart LR
 
 A["Incident Arrives"] --> B["Summarize + Classify via Router"]
@@ -83,6 +84,7 @@ The knowledge layer becomes a governed, versioned asset — the way ITSM should 
 #### CAG Entry Lifecycle Diagram
 
 ```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
 flowchart LR
 
 A["Draft Workplan"] --> B["Execution Trace (MCP)"]
@@ -108,6 +110,7 @@ For ticket triage, diagnostics, escalation, incident templates, and automated re
 ### How Model Router Fits Into the Flow
 
 ```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
 flowchart TB
 
 subgraph Router["Azure AI Model Router"]
@@ -128,6 +131,7 @@ R3 --> B
 ### Full ITSM Automation Pipeline
 
 ```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
 sequenceDiagram
     participant U as User
     participant OR as Orchestrator

@@ -13,6 +13,7 @@ postimage:
   src: "post.png"
   alt: "Abstract growth spectrum visual representing predictable AI workflows"
 featured: true
+pinned: true
 ---
 
 ## The Problem I Keep Seeing

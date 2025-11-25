@@ -79,8 +79,69 @@ class BlogIndex extends React.Component {
                     amazonProducts={amazonProducts}
                     layout="horizontal"
                 />
+                {data.pinnedPosts && data.pinnedPosts.edges && data.pinnedPosts.edges.length > 0 && (
+                    <section>
+                        <h1 className="sectionTitle">Pinned Posts</h1>
+                            <div className="pinned-carousel-container">
+                                {this.state.showLeft && (
+                                    <button
+                                        className="carousel-button left"
+                                        onClick={() => this.scrollProjects('left')}
+                                        aria-hidden={!this.state.showLeft}
+                                        aria-label="Scroll pinned posts left"
+                                    >
+                                        ‹
+                                    </button>
+                                )}
+                                <div className="pinned-carousel" ref={this.projectCarouselRef}>
+                                    {data.pinnedPosts.edges.map((edge, i) => {
+                                const postImage = edge.node.frontmatter.postimage
+                                return (
+                                    <div
+                                            key={edge.node.fields.slug + i.toString()}
+                                                className="post pinned pinned-card"
+                                        >
+                                            {postImage && postImage.src && (
+                                                <Link to={edge.node.fields.slug} className="postThumbLink" aria-label={`Read ${edge.node.frontmatter.title}`}>
+                                                    <div className="postThumb">
+                                                        <GatsbyImage
+                                                            image={postImage.src.childImageSharp.gatsbyImageData}
+                                                            alt={edge.node.frontmatter.title}
+                                                            layout="constrained"
+                                                            formats={["auto", "webp"]}
+                                                        />
+                                                    </div>
+                                                </Link>
+                                            )}
+                                            <div className="pinned-card-content">
+                                                <Link to={edge.node.fields.slug} className="pinnedTitleLink">
+                                                    <h2 className="postTitle">{edge.node.frontmatter.title} <span className="pinnedBadge">Pinned</span></h2>
+                                                </Link>
+                                                <div className="postedInfo">
+                                                    posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
+                                                </div>
+                                                <div className="postExcerpt" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }} />
+                                            </div>
+                                    </div>
+                                )
+                            })}
+                            </div>
+                            {this.state.showRight && (
+                                <button
+                                    className="carousel-button right"
+                                    onClick={() => this.scrollProjects('right')}
+                                    aria-hidden={!this.state.showRight}
+                                    aria-label="Scroll pinned posts right"
+                                >
+                                    ›
+                                </button>
+                            )}
+                        </div>
+                    </section>
+                )}
+
                 <section>
-                    {/* <h1 className="sectionTitle">Latest Posts</h1> */}
+                    <h1 className="sectionTitle">Latest Posts</h1>
                     <div className="flexbox">
                         {data.allMarkdownRemark.edges.map((edge, i) => {
                             const postImage = edge.node.frontmatter.postimage
@@ -181,12 +242,49 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      sort: { frontmatter: {date: DESC} }
-      filter: { frontmatter: { featured: { eq: true } } }
-      limit: $limit
-      skip: $skip
-    ) {
+        pinnedPosts: allMarkdownRemark(
+            sort: { frontmatter: {date: DESC} }
+            filter: { frontmatter: { pinned: { eq: true } } }
+        ) {
+            edges {
+                node {
+                    excerpt
+                    frontmatter {
+                        title
+                        subtitle
+                        date(formatString: "LL")
+                        author
+                        excerpt
+                        featured
+                        tags
+                        postimage {
+                            alt
+                            src {
+                                absolutePath
+                                childImageSharp {
+                                    gatsbyImageData(
+                                        layout: CONSTRAINED
+                                        width: 280
+                                        placeholder: BLURRED
+                                        formats: [AUTO, WEBP, AVIF]
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    fields {
+                        slug
+                    }
+                }
+            }
+        }
+        allMarkdownRemark(
+            sort: { frontmatter: {date: DESC} }
+            # Exclude pinned posts from Latest Posts so they don't duplicate
+            filter: { frontmatter: { featured: { eq: true } } }
+            limit: $limit
+            skip: $skip
+        ) {
       edges {
         node {
           excerpt
@@ -198,19 +296,19 @@ export const pageQuery = graphql`
             excerpt
             featured
             tags
-            postimage {
-              alt
-              src {
-                absolutePath
-                childImageSharp {
-                  gatsbyImageData(
-                    layout: FULL_WIDTH
-                    placeholder: BLURRED
-                    formats: [AUTO, WEBP, AVIF]
-                  )
-                }
-              }
-            }
+                        postimage {
+                            alt
+                            src {
+                                absolutePath
+                                childImageSharp {
+                                    gatsbyImageData(
+                                        layout: FULL_WIDTH
+                                        placeholder: BLURRED
+                                        formats: [AUTO, WEBP, AVIF]
+                                    )
+                                }
+                            }
+                        }
           }
           fields {
             slug

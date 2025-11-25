@@ -19,7 +19,9 @@ const Header = () => {
         <header>
             <div className="top-nav sub-header">
                 <div className="leftSide">
-                    <Link to="/" className="title" activeClassName="active">MARKROX.DEV™<span>Technology, Innovation, & Insight by Mark Roxberry</span>
+                    <Link to="/" className="title" activeClassName="active">
+                        MARKROX.DEV
+                        <span></span>
                         {/* <StaticImage
                             layout="fixed"
                             width={200}

@@ -13,6 +13,7 @@ postimage:
   src: "post.jpg"
   alt: "Rising Skyscrapers"
 featured: true
+pinned: true
 ---
 
 ## TL;DR

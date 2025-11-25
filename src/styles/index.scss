@@ -114,6 +114,10 @@ aside {
 article {
     width: 100%;
     line-height: 1.5;
+    /* ensure flex children don't force the article to grow beyond viewport
+       (helps prevent horizontal overflow in Chrome/Edge when carousels are inside)
+       See: pinned-carousel causing article to expand when it overflows */
+    min-width: 0;
 }
 
 section {
@@ -374,6 +378,23 @@ aside section {
 
 .sectionTitle {
     border-bottom: 2px solid $brand-primary;
+        margin-bottom: 0; /* remove default gap — control spacing via sibling rule */
+        padding-bottom: 0.6rem;
+}
+
+/* ensure a consistent spacing between section title and content */
+.sectionTitle + .flexbox,
+.sectionTitle + .flexbox-wide,
+.sectionTitle + .pinned-carousel-container {
+    margin-top: 3rem; /* consistent gap under all section titles */
+}
+
+@media (max-width: 700px) {
+    .sectionTitle + .flexbox,
+    .sectionTitle + .flexbox-wide,
+    .sectionTitle + .pinned-carousel-container {
+        margin-top: 0.85rem; /* slightly reduced on small screens */
+    }
 }
 
 /* Container needed to position the overlay. Adjust the width as needed */
@@ -381,10 +402,197 @@ aside section {
     margin-bottom: unset;
 }
 
+/* Pinned posts highlight */
+.pinned-posts .post.pinned {
+    border-left: 4px solid $brand-disclaimer;
+    background-color: rgba(255, 255, 255, 0.02);
+    padding-left: 12px;
+    padding-right: 1rem;
+    margin-bottom: 1.5rem;
+}
+.pinned-posts .post.pinned .postTitle {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Pinned posts carousel */
+.pinned-carousel-container {
+    position: relative;
+    margin-top: 0; /* controlled by .sectionTitle + .pinned-carousel-container */
+    margin-bottom: 1rem;
+    /* Prevent the container from expanding the article width in Chrome/Edge
+       when the horizontal carousel has many fixed-width cards. The internal
+       carousel (.pinned-carousel) remains scrollable while the container
+       is constrained to the parent's width. */
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden; /* hide any overflow at the container level */
+}
+
+.pinned-carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    /* allow the carousel to be constrained by the parent width and scroll internally
+       rather than expanding the parent in browsers like Chrome/Edge */
+    min-width: 0;
+    max-width: 100%;
+}
+
+.pinned-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.pinned-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    border-left: 4px solid $brand-disclaimer;
+    background-color: rgba(255,255,255,0.02);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.pinned-card .postImage {
+    max-height: 140px;
+    overflow: hidden;
+}
+
+.pinned-card .postThumb {
+    max-height: 140px;
+    overflow: hidden;
+}
+
+.pinned-card .postThumb .gatsby-image-wrapper {
+    width: 100%;
+    height: 140px;
+}
+.pinned-card .postThumb .gatsby-image-wrapper img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.pinned-card .overlay {
+    opacity: 0.95;
+}
+.pinned-card .innerOverlayText {
+    padding: 8px;
+    font-size: 0.85rem;
+}
+
+.pinned-card-content {
+        padding-top: .5rem;
+}
+
+.pinned-posts .post.pinned .pinnedBadge {
+        display: inline-block;
+        margin-left: .5rem;
+        padding: 2px 6px;
+        background: $brand-primary;
+        color: #fff;
+        font-size: .7rem;
+        border-radius: 4px;
+}
+
+.pinned-card .pinned-card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.pinned-card .postTitle {
+        margin: 0 0 0.25rem 0;
+        font-size: 1.05rem; /* slightly larger than earlier change */
+        line-height: 1.2;
+}
+
+.pinned-card .postExcerpt {
+        font-size: 0.85rem;
+        color: $gray;
+        margin-top: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+        -webkit-box-orient: vertical;
+}
+
+/* subtle gradient overlays to hint at overflow */
+.pinned-carousel-container:before,
+.pinned-carousel-container:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 70px;
+    pointer-events: none;
+}
+.pinned-carousel-container:before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
+.pinned-carousel-container:after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
+
+.pinned-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+}
+
+.pinned-card:focus-within {
+    outline: 2px solid rgba(255,255,255,0.06);
+}
+
+.carousel-button:focus {
+    outline: 2px solid $brand-primary;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.carousel-button.left { left: 8px; }
+.carousel-button.right { right: 8px; }
+
+@media (max-width: 700px) {
+    .pinned-card { flex: 0 0 220px; }
+    .pinned-card .postImage { max-height: 120px; }
+}
+
 .postImage {
     position: relative;
     // width: 50%;
     // max-width: 300px;
+}
+
+.pinned-card .postedInfo {
+    font-size: .75rem;
+    color: $gray;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .gatsby-image-wrapper {

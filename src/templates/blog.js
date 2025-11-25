@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from '../components/Layout'
 import Seo from '../components/Seo'
 import TagList from "../components/TagList"
+import NewsletterForm from "../components/NewsletterForm"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from 'gatsby'
 import AmazonSiteStripe from "../components/AmazonSiteStripe"
@@ -53,6 +54,9 @@ const Blog = (props) => {
 
                 }
                 <div className="blogBody" dangerouslySetInnerHTML={{ __html: post.html }}></div>
+                <div style={{ marginTop: '2rem' }}>
+                    <NewsletterForm provider="netlify" />
+                </div>
                 <AmazonSiteStripe
                     amazonProducts={amazonProducts}
                     layout="horizontal"

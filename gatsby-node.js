@@ -155,3 +155,14 @@ module.exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 }
+
+// Ensure pinned frontmatter is defined in the GraphQL schema so
+// filtering by `frontmatter.pinned` won't cause GraphQLErrors
+module.exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type MarkdownRemarkFrontmatter {
+      pinned: Boolean
+    }
+  `)
+}

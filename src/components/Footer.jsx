@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
+import NewsletterForm from "./NewsletterForm"
 
 const currentYear = new Date().getFullYear();
 
@@ -16,7 +17,12 @@ const Footer = () => {
   `)
   return (
     <footer>
+      <div>
+        <NewsletterForm provider="formspree" action="https://formspree.io/f/xnqlpgoo" />
+      </div>
+      <div>
         © {currentYear} {data.site.siteMetadata.author} (v{data.site.siteMetadata.version})
+      </div>
     </footer>
   )
 }

@@ -13,6 +13,7 @@ postimage:
   src: "post.png"
   alt: "Generative Search POC"
 featured: true
+pinned: true
 ---
 
 Over the past few months, I’ve led the design and development of a Proof of Concept (PoC) engagement co-sponsored by **Microsoft** and a trusted enterprise client. Our mission: deliver a secure, intelligent search assistant that transforms complex document repositories into conversational, explainable insights using Azure’s evolving AI ecosystem.
