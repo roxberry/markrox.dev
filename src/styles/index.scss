@@ -386,7 +386,7 @@ aside section {
 .sectionTitle + .flexbox,
 .sectionTitle + .flexbox-wide,
 .sectionTitle + .pinned-carousel-container {
-    margin-top: 3rem; /* consistent gap under all section titles */
+    // margin-top: 3rem; /* consistent gap under all section titles */
 }
 
 @media (max-width: 700px) {
@@ -418,7 +418,7 @@ aside section {
 /* Pinned posts carousel */
 .pinned-carousel-container {
     position: relative;
-    margin-top: 0; /* controlled by .sectionTitle + .pinned-carousel-container */
+    margin-top: 3rem; /* controlled by .sectionTitle + .pinned-carousel-container */
     margin-bottom: 1rem;
     /* Prevent the container from expanding the article width in Chrome/Edge
        when the horizontal carousel has many fixed-width cards. The internal
