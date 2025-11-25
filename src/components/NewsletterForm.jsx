@@ -9,6 +9,8 @@ import * as styles from "./newsletter.module.scss"
 const NewsletterForm = ({ provider = "formspree", action = "https://formspree.io/f/xnqlpgoo", onSuccess }) => {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState(null)
+  // New state to control modal visibility
+  const [showModal, setShowModal] = useState(false)
 
   const handleSubmit = async (e) => {
     if (provider === "formspree") return // use HTML form submit
@@ -34,46 +36,62 @@ const NewsletterForm = ({ provider = "formspree", action = "https://formspree.io
   }
 
   const validateEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-
+  // Render a button that opens the modal
   return (
     <div className={styles.newsletterForm}>
-      {provider === "formspree" ? (
-        <form method="POST" action={action} className={styles.form}>
-          <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
-            <div className={styles.controls}>
-            <input id="newsletter-email" name="_replyto" type="email" placeholder="Your email" required />
-            <button type="submit">Subscribe</button>
+      {/* Trigger button */}
+      <button type="button" onClick={() => setShowModal(true)} className={styles.openButton}>
+        Subscribe to Newsletter
+      </button>
+
+      {/* Modal overlay */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          {/* Stop propagation to avoid closing when clicking inside content */}
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <button type="button" onClick={() => setShowModal(false)} className={styles.closeButton}>
+              ✕
+            </button>
+            {provider === "formspree" ? (
+              <form method="POST" action={action} className={styles.form}>
+                <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
+                <div className={styles.controls}>
+                  <input id="newsletter-email" name="_replyto" type="email" placeholder="Your email" required />
+                  <button type="submit">Subscribe</button>
+                </div>
+                <p className={styles.hint}>No spam; unsubscribe anytime.</p>
+              </form>
+            ) : provider === "netlify" ? (
+              <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" className={styles.form}>
+                <input type="hidden" name="form-name" value="newsletter" />
+                <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
+                <div className={styles.controls}>
+                  <input id="newsletter-email" name="email" type="email" placeholder="Your email" required />
+                  <button type="submit">Subscribe</button>
+                </div>
+                <p className={styles.hint}>No spam; unsubscribe anytime.</p>
+              </form>
+            ) : (
+              <form className={styles.form} onSubmit={handleSubmit}>
+                <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
+                <div className={styles.controls}>
+                  <input
+                    id="newsletter-email"
+                    name="email"
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <button type="submit" disabled={!validateEmail(email) || status === "pending"}>Subscribe</button>
+                </div>
+                {status === "success" && <p className={styles.success}>Thanks — check your inbox to confirm!</p>}
+                {status === "error" && <p className={styles.error}>There was a problem — please try again later.</p>}
+              </form>
+            )}
           </div>
-          <p className={styles.hint}>No spam; unsubscribe anytime.</p>
-        </form>
-      ) : provider === "netlify" ? (
-        <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" className={styles.form}>
-          <input type="hidden" name="form-name" value="newsletter" />
-          <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
-            <div className={styles.controls}>
-            <input id="newsletter-email" name="email" type="email" placeholder="Your email" required />
-            <button type="submit">Subscribe</button>
-          </div>
-          <p className={styles.hint}>No spam; unsubscribe anytime.</p>
-        </form>
-      ) : (
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <label htmlFor="newsletter-email">Subscribe to my newsletter</label>
-          <div className={styles.controls}>
-            <input
-              id="newsletter-email"
-              name="email"
-              type="email"
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <button type="submit" disabled={!validateEmail(email) || status === "pending"}>Subscribe</button>
-          </div>
-          {status === "success" && <p className={styles.success}>Thanks — check your inbox to confirm!</p>}
-          {status === "error" && <p className={styles.error}>There was a problem — please try again later.</p>}
-        </form>
+        </div>
       )}
     </div>
   )

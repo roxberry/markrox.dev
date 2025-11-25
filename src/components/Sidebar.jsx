@@ -3,7 +3,6 @@ import { StaticImage } from "gatsby-plugin-image"
 import Social from "./Social"
 import Footer from "./Footer"
 import Categories from "./Tags"
-import NewsletterForm from "./NewsletterForm"
 
 const SideBar = ({ onHide }) => {
     return (
@@ -24,7 +23,6 @@ const SideBar = ({ onHide }) => {
                 <span>AI Security Architect | OWASP Leader | Secure GenAI &amp; Multi-Agent Systems | CISSP, CEH</span><br/>
                 <span><a href="https://www.waveseeker.com">@ Database Solutions</a></span>
                 <Social />
-                <NewsletterForm provider="formspree" action="https://formspree.io/f/xnqlpgoo" />
 
                 {/* <p>Husband, father, son, brother and uncle.</p> */}
                 {/* <p>Security driven developer and passionate cross platform software engineer, architect and consultant.</p> */}
