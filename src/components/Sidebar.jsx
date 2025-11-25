@@ -10,9 +10,10 @@ const SideBar = ({ onHide }) => {
             <section>
                 <StaticImage
                     className="profile"
+                    width={200}
                     layout="fixed"
                     formats={["AUTO", "WEBP", "AVIF"]}
-                    src="../images/profile.3.jpg"
+                    src="../images/profile.4.jpg"
                     quality={95}
                     alt="Profile picture"
                     style={{ borderRadius: '100%' }}
