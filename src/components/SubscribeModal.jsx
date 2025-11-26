@@ -10,44 +10,17 @@ import ReactDOM from "react-dom";
  *   - onClose: function – called to close the modal
  */
 export default function SubscribeModal({ isOpen, onClose }) {
-    const [email, setEmail] = useState("");
-    const [status, setStatus] = useState(null); // "success" | "error"
-
-    // Simple e‑mail validation regex
-    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!isValidEmail(email)) {
-            setStatus("error");
-            return;
-        }
-
-        const data = new FormData(e.target);
-        // Post to the Formspree endpoint defined in the form's action attribute
-        const action = e.target.getAttribute("action");
-        try {
-            const response = await fetch(action, {
-                method: "POST",
-                body: data,
-                headers: {
-                    Accept: "application/json",
-                },
-            });
-            if (response.ok) {
-                setStatus("success");
-                setEmail("");
-            } else {
-                setStatus("error");
-            }
-        } catch {
-            setStatus("error");
-        }
-    };
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3eg0hvwdSDrY_h8sHzZ_HANM3L2DVjRVlb4ILpa07rcqqmzNVXFFO4S7rLNgXbMYP/exec'; // <-- Replace with your deployed script URL
+    const [showThankYou, setShowThankYou] = useState(false);
 
     // Close on Escape key press
     useEffect(() => {
+    // --- Google Apps Script Setup ---
+    // 1. Create a Google Sheet.
+    // 2. Go to Extensions > Apps Script, paste the doPost code from the previous message.
+    // 3. Deploy as Web App (Anyone can access).
+    // 4. Copy the Web App URL and replace YOUR_SCRIPT_URL below.
+
         const onKey = (e) => {
             if (e.key === "Escape") {
                 onClose();
@@ -71,11 +44,13 @@ export default function SubscribeModal({ isOpen, onClose }) {
                 </button>
                 <h2 className="modal-title">Subscribe for AI Security Insights</h2>
 
-                <form   
-                    name="newsletter-subscribe"
+                {/* Hidden iframe for form target */}
+                <iframe name="hidden_iframe" style={{display: 'none'}}></iframe>
+                <form
+                    action={GOOGLE_SCRIPT_URL}
                     method="POST"
-                    action="https://formspree.io/f/mgvbqrdk" /* replace with real Formspree ID */
-                    onSubmit={handleSubmit}
+                    target="hidden_iframe"
+                    onSubmit={() => setShowThankYou(true)}
                 >
                     {/* honeypot field for bots */}
                     <p hidden>
@@ -85,13 +60,11 @@ export default function SubscribeModal({ isOpen, onClose }) {
                     </p>
                     <div className="modal-message">
                         <h3 className="modal-headline">Get AI Security and Architecture Insights</h3>
-
                         <ul className="modal-benefits">
                             <li>Practical guides on securing multi-agent systems</li>
                             <li>Enterprise AI architecture patterns</li>
                             <li>GenAI implementation strategies</li>
                         </ul>
-
                         <p className="modal-privacy">
                             No spam. Unsubscribe anytime.
                         </p>
@@ -104,23 +77,31 @@ export default function SubscribeModal({ isOpen, onClose }) {
                         type="email"
                         name="email"
                         placeholder="you@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                     <button type="submit" className="submit-btn">
                         Get Insights
                     </button>
-                    {status === "success" && (
-                        <p className="msg success">✅ Thanks! You’re subscribed.</p>
-                    )}
-                    {status === "error" && (
-                        <p className="msg error">❌ Please enter a valid e‑mail.</p>
-                    )}
                 </form>
+                {showThankYou && (
+                    <div className="msg success fade-in" style={{textAlign: 'center', marginTop: '1.5em'}}>
+                        <span style={{fontSize: '2em'}}>🎉</span>
+                        <h3 style={{margin: '0.5em 0'}}>Thanks for subscribing!</h3>
+                        <p style={{margin: 0}}>You’ll get exclusive AI security insights soon.<br />
+                        Stay tuned for practical guides and strategies.</p>
+                    </div>
+                )}
             </div>
         </div>
     );
+                {/* Classic HTML form for best compatibility (avoids CORS issues) */}
+                // <form action={GOOGLE_SCRIPT_URL} method="POST" target="_blank">
+                //     <input type="email" name="email" required placeholder="you@example.com" />
+                //     <button type="submit">Subscribe</button>
+                // </form>
+                {/* Optionally add a privacy/consent checkbox and link to privacy policy */}
+                {/* <label><input type="checkbox" required /> I agree to receive emails</label> */}
+                {/* <a href="/privacy">Privacy Policy</a> */}
 
     // Render the modal into the body to avoid clipping by parent containers
     return isBrowser ? ReactDOM.createPortal(modal, document.body) : null;
