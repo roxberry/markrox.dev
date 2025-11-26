@@ -75,23 +75,6 @@ const Footer = () => {
             <div>
                 © {currentYear} {data.site.siteMetadata.author} (v{data.site.siteMetadata.version})
             </div>
-            {/* optional manual subscribe button */}
-            <button
-                className="subscribe-btn"
-                onClick={openModal}
-                style={{
-                    marginTop: "1rem",
-                    padding: "0.6rem 1.2rem",
-                    background: "#007acc",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                }}
-            >
-                Subscribe to Newsletter
-            </button>
-            <SubscribeModal isOpen={isOpen} onClose={handleCloseModal} />
         </footer>
     );
 }
