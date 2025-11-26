@@ -116,7 +116,11 @@ input[type="email"] {
   text-align: center;
 }
 
-.msg.success { color: #4caf50; }
+.msg.success { 
+    color: $brand-accent; 
+    font-size: 1rem;
+    font-weight: bold;
+}
 .msg.error   { color: #f44336; }
 
 [hidden] { display: none !important; }
@@ -184,4 +188,28 @@ input[type="email"] {
 input[type="email"] {
   font-size: 1rem; // make input text larger
   padding: 0.875rem 1rem; // more comfortable
+}
+
+.fade-in {
+  animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95);}
+  to { opacity: 1; transform: scale(1);}
+}
+
+.submit-btn:disabled,
+.submit-btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: $brand-accent !important;
+  color: #fff !important;
+}
+
+.submit-btn:disabled:hover,
+.submit-btn[disabled]:hover {
+  background: $brand-accent !important;
+  color: #fff !important;
+  box-shadow: none !important;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import SubscribeModal from "./SubscribeModal"
 import { StaticImage } from "gatsby-plugin-image"
 import Social from "./Social"
@@ -7,10 +7,40 @@ import Categories from "./Tags"
 
 const SideBar = ({ onHide }) => {
 
-    // modal state
+    // modal state and prompt logic
     const [isModalOpen, setModalOpen] = useState(false);
     const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+    const closeModal = () => {
+        localStorage.setItem('newsletterPrompted', 'true');
+        setModalOpen(false);
+    };
+
+    useEffect(() => {
+        let hasShown = false;
+
+        const showModal = () => {
+            if (!hasShown && !localStorage.getItem('newsletterPrompted')) {
+                setModalOpen(true);
+                hasShown = true;
+            }
+        };
+
+        const timer = setTimeout(showModal, 15000);
+
+        const handleScroll = () => {
+            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            if (scrollPercent > 50) {
+                showModal();
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
         <aside className="side-bar">
