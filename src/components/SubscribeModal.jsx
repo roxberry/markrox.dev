@@ -16,9 +16,6 @@ export default function SubscribeModal({ isOpen, onClose }) {
     // Simple e‑mail validation regex
     const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-    console.log(isValidEmail('mark@un2.ai'));        // true
-    console.log(isValidEmail('roxberry@outlook.com')); // true
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -77,7 +74,7 @@ export default function SubscribeModal({ isOpen, onClose }) {
                 <form   
                     name="newsletter-subscribe"
                     method="POST"
-                    action="https://formspree.io/f/xnqlpgoo" /* replace with real Formspree ID */
+                    action="https://formspree.io/f/mgvbqrdk" /* replace with real Formspree ID */
                     onSubmit={handleSubmit}
                 >
                     {/* honeypot field for bots */}
