@@ -2,7 +2,6 @@ import React from 'react'
 import Layout from '../components/Layout'
 import Seo from '../components/Seo'
 import TagList from "../components/TagList"
-import NewsletterForm from "../components/NewsletterForm"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from 'gatsby'
 import AmazonSiteStripe from "../components/AmazonSiteStripe"

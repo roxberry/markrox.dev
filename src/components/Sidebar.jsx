@@ -1,10 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
+import SubscribeModal from "./SubscribeModal"
 import { StaticImage } from "gatsby-plugin-image"
 import Social from "./Social"
 import Footer from "./Footer"
 import Categories from "./Tags"
 
 const SideBar = ({ onHide }) => {
+
+    // modal state
+    const [isModalOpen, setModalOpen] = useState(false);
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
     return (
         <aside className="side-bar">
             <section>
@@ -21,10 +28,18 @@ const SideBar = ({ onHide }) => {
             </section>
             <section>
                 <h2>Mark Roxberry</h2>
-                <span><a href="https://www.waveseeker.com">@ Database Solutions</a></span><br/>
-                <span>AI Security Architect | OWASP Leader | Secure GenAI &amp; Multi-Agent Systems | CISSP, CEH</span><br/>
+                <span><a href="https://www.waveseeker.com">@ Database Solutions</a></span><br /><br />
+                <span>AI Security Architect | OWASP Leader | Secure GenAI &amp; Multi-Agent Systems | CISSP, CEH</span><br />
                 <Social />
-
+                {/* Subscribe button */}
+                <button
+                    className="subscribe-btn"
+                    onClick={openModal}
+                >
+                    Subscribe to Newsletter
+                </button>
+                {/* Modal */}
+                <SubscribeModal isOpen={isModalOpen} onClose={closeModal} />
                 {/* <p>Husband, father, son, brother and uncle.</p> */}
                 {/* <p>Security driven developer and passionate cross platform software engineer, architect and consultant.</p> */}
             </section>
