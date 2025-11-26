@@ -22,16 +22,16 @@ const projects = [
     ),
   },
   {
-    title: "HACTU8.COM",
+    title: "OWASP HACTU8",
     description:
       "A cutting-edge initiative dedicated to ethical hacking in the domains of robotics, AI, IoT, and consumer hardware.",
-    href: "https://hactu8.com",
+    href: "https://owasp.org/www-project-hactu8/",
     linkText: "Visit the project >",
     Image: () => (
       <StaticImage
         formats={["AUTO"]}
         src="../images/projects/hactu8.jpg"
-        alt="HACTU8 project"
+        alt="OWASPHACTU8 project"
         placeholder="NONE"
         background="#282828"
         loading="eager"
