@@ -8,7 +8,7 @@ author: Mark Roxberry
 excerpt: "A deep dive into the architecture pattern that dominated AI agent deployments in 2025: one immutable agent binary, externalized context, and proximity-based execution."
 tags: ["AppliedAI", "AI Agents", "Multi-Tenant", "Architecture", "Enterprise AI"]
 categories:
-  - Engineering
+  - AppliedAI
 postimage:
   src: "post.jpg"
   alt: "Enterprise Agentic AI Pattern"
