@@ -20,7 +20,7 @@ const Header = () => {
             <div className="top-nav sub-header">
                 <div className="leftSide">
                     <Link to="/" className="title" activeClassName="active">
-                        MARKROX.DEV
+                        \MARKROX.DEV
                         <span></span>
                         {/* <StaticImage
                             layout="fixed"

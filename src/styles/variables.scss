@@ -1,3 +1,5 @@
+
+@use "sass:color" as color;
 // Removed deprecated @import for Google Fonts. Use <link> in HTML instead.
 
 
@@ -16,7 +18,7 @@ $kelley-green: rgb(76,187,23);
 $christmas-green: #00873E;
 $gray-dark-transparent: rgba(40,40,40, .8);
 $gray: #798088;
-$white-faded: fade(white, 80%);
+$white-faded: color.adjust(white, $alpha: .8);
 $white: white;
 $gray-light: rgb(179, 179, 179);
 $black: black;

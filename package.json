@@ -10,7 +10,8 @@
         "build": "gatsby clean && gatsby build",
         "build:incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=false gatsby build",
         "serve": "gatsby clean && gatsby serve",
-        "clean": "gatsby clean"
+        "clean": "gatsby clean",
+        "install-browsers": "node node_modules/puppeteer/install.mjs || true && npx playwright install chromium || true"
     },
     "dependencies": {
         "@fortawesome/free-brands-svg-icons": "^6.6.0",
