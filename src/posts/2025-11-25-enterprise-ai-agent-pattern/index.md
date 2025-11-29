@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise Agentic AI Pattern: Proximity Over Specialization"
 subtitle: "A production-ready pattern for 2025 and beyond – Mark Roxberry"
 comments: true
-date: 2025-11-22
+date: 2025-11-28
 author: Mark Roxberry
 excerpt: "A deep dive into the architecture pattern that dominated AI agent deployments in 2025: one immutable agent binary, externalized context, and proximity-based execution."
 tags: ["AppliedAI", "AI Agents", "Multi-Tenant", "Architecture", "Enterprise AI"]
