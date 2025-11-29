@@ -6,7 +6,7 @@ comments: true
 date: 2025-12-03
 author: Mark Roxberry
 excerpt: How CAG and Azure’s Model Router create a recommended architecture for modern ITSM, ticket orchestration, and automated support workflows.
-tags: [AI, Azure, ITSM, CAG, Model Router, Automation]
+tags: [AppliedAI, AI, Azure, ITSM, CAG, Model Router, Automation]
 categories:
   - AppliedAI
 postimage:
