@@ -23,7 +23,7 @@ TL;DR — Combine Cache‑Augmented Generation (CAG) with Azure Model Router to 
 - CAG stores canonical workplans, required fields, and templates as external, versioned artifacts → deterministic, schema‑validated outputs (when generated with constrained prompts or temperature=0 and validation checks).
 - Model Router routes cheap models for routine work and stronger reasoning models for novel or complex planning → cost control + correctness.
 - MCP (Model Context Protocol) executes workplans and logs execution traces; traces become learning candidates that are synthesized, human‑reviewed, and promoted into the cache.
-- Result: faster, auditable ITSM automation with reduced drift risk for cached knowledge (model weights may still need periodic retraining), lower costs, and continuous improvement.
+- Result: faster, auditable ITSM automation with reduced drift risk for cached knowledge, lower costs, and continuous improvement.
 
 ## Why CAG + Model Router is a Recommended Architecture for Enterprise ITSM
 
@@ -50,7 +50,7 @@ CAG supplies the operational brain.
 Model Router supplies the reasoning engine.  
 MCP supplies the execution and orchestration.
 
-This separation helps produce a stable, auditable system with improved cost control — in our PoC the frontier-model usage fell to ~5–7% while the cache hit rate stayed around 78%, reducing average request cost.
+This separation produces a stable, auditable system with improved cost control — in our PoC the frontier-model usage fell to ~5–7% while the cache hit rate stayed around 78%, reducing average request cost.
 
 ### High-Level Architecture Diagram
 
@@ -97,7 +97,7 @@ E -->|Rejected| G["Discard or Rework"]
 F --> H["Future Incidents Use Template"]
 ```
 
-### How this aligns with Azure AI & Enterprise Needs
+### Azure AI & Enterprise Needs
 
 CAG + Model Router is fully aligned with how Azure AI and other cloud vendors recommend enterprise AI patterns, particularly for ITSM automation. This pattern supports:
 
@@ -106,9 +106,9 @@ CAG + Model Router is fully aligned with how Azure AI and other cloud vendors re
 - Agentic execution through safe tool interfaces
 - Continuous improvement driven by structured data
 
-For ticket triage, diagnostics, escalation, incident workplans, and automated remediation, this approach meaningfully improves safety, speed, and maintainability — as demonstrated by the sample benchmarks below.
+For ticket triage, diagnostics, escalation, incident workplans, and automated remediation, this approach improves safety, speed, and maintainability — as demonstrated by the sample benchmarks below.
 
-### How Model Router Fits Into the Flow
+### Model Router Flow
 
 ```mermaid
 %%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
@@ -158,7 +158,7 @@ sequenceDiagram
     OR->>CG: Learning Candidate (batch process)
 ```
 
-## Benchmarks — PoC Example
+<!-- ## Benchmarks — PoC Example
 
 Below are example numbers from a controlled proof-of-concept run to show the kinds of operational improvements you can expect. These are *example* results — your numbers will vary depending on model, cache hit rate, instance types, and workload.
 
@@ -175,7 +175,7 @@ Below are example numbers from a controlled proof-of-concept run to show the kin
 - p95 latency (end-to-end): cache-hit path: ~350–500 ms; local model path: ~650–900 ms; frontier fallback: ~1.8–3.2 s (varies by network and API latency).
 - Average cost per request (example weighting): $0.0007 (local model + small fraction of frontier calls); Monthly for 1M requests: ~ $700–$1,200.
 
-These example numbers demonstrate the principle: by moving knowledge into a cache and routing carefully, you reduce the load and the number of frontier-model calls, lowering cost and improving end-to-end latency. Use these as rough benchmarks and run your own A/B benchmarks with your real workload and models.
+These example numbers demonstrate the principle: by moving knowledge into a cache and routing carefully, you reduce the load and the number of frontier-model calls, lowering cost and improving end-to-end latency. Use these as rough benchmarks and run your own A/B benchmarks with your real workload and models. -->
 
 ### Recommended Metrics to Track
 
