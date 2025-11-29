@@ -18,90 +18,142 @@ pinned: true
 
 ## Proximity Over Specialization
 
-I stopped writing blog posts about AI agents for almost a year because every time I started one, the architecture I wanted to describe felt too simple to be interesting. Turns out “too simple” is exactly what enterprises now pay millions to achieve.
+In my recent innovation projects, I’ve been designing, building, and validating agentic architectures, focusing on the reference architecture, the proof of concept, and the first working implementation. I’ve found it effective to use a consistent immutable runtime model across all agent types, including orchestrator, triage, responder, and extension agents, creating a common orchestration specification that scales and keeps behavior driven by external context with controlled extensibility.
 
-Run the exact same immutable agent binary in every tenant and every region.  
-Everything that makes it behave differently — context, policies, RAG indexes, escalation rules — lives outside the code and is injected at runtime.
+There are no regional variants or tenant-specific branches, and no one-off forks created for compliance exceptions. The runtime is identical everywhere. The agent runs where the data lives, and all dynamic behavior comes from external artifacts and controlled extension points, not code changes. The design is intentional, preventing the fragmentation that runtime customization creates.
 
-That’s it. No per-tenant forks. No “EU agent” vs “US agent” code bases. One golden image, zero trust exceptions, full data residency compliance.
+## Rationale for the Architecture
 
-I'll call this *Proximity over Specialization.*
+**Security needs consistency.**  
+A single runtime means one SBOM, one digest, and a clear audit path. When asked what runs in a region, you provide the exact artifact identifier.
 
----
+**Data residency must be automatic.**  
+The same container deploys globally. Each agent instance pulls tenant context from its region and becomes compliant without custom builds.
 
-### Why This Pattern Won in 2025
+**Upgrades must be predictable.**  
+With only one runtime, global rollouts take minutes. Variation moves into versioned, verified data bundles and extensible modules, not the binary.
 
-1. **Security & audit teams finally sleep at night**  
-   One binary = one SBOM = one place to patch prompt-injection fixes or update the JSON validator.  
-   CISOs now accept multi-tenant AI agents only when the answer to “show me every line of code that runs in Germany” is a single Git commit SHA.
+## Core Components of the Pattern
 
-2. **Data residency becomes trivial**  
-   Deploy the same container to Frankfurt, Virginia, Singapore, São Paulo.  
-   The agent wakes up, pulls tenant-specific context from the local object store or vector DB, and is instantly compliant with GDPR, CCPA, LGPD, etc.
+### Core Immutable Runtime with Modular Extensibility
 
-3. **Upgrades measured in minutes, not quarters**  
-   Blue/green rollout of a single Docker image across 40 regions finishes before your coffee gets cold.
+The core runtime never changes per region or tenant. It provides a fixed execution path for stability, observability, and auditability. Flexibility comes from a modular extension layer that supports plugins, adapters, or capability modules. These extensions operate under strict boundaries and are versioned, signed, and controlled.
 
----
+The core stays immutable for sanity and consistency.  
+Extensions provide flexibility without compromising architecture integrity.  
+Behavior remains data-driven, not code-fork driven.
 
-## The Four Pillars We Actually Ship With
+### Externalized Context
 
-1. **Single immutable agent binary**  
-   No `if tenant == "acme-eu"` nonsense. Ever.
+Policies, product catalogs, escalation rules, and retrieval indexes exist as signed, versioned artifacts. The runtime pulls and caches them at startup. Replacing these artifacts updates behavior without changing the runtime itself.
 
-2. **Externalized, cacheable context**  
-   Policies, product catalogs, SLAs, escalation matrices — all versioned JSON/YAML artifacts stored next to the data they govern.
+### Deterministic Model Routing
 
-3. **Model router, not model roulette**  
-   95% of turns are answered by a local cache or a cheap 8B–70B model.  
-   Only true “no grounding” cases escalate to the frontier model (logged, metered, reviewed).
+Routing follows a predictable sequence:
 
-4. **Recursive sub-agent compaction for oversized context**  
-   When a tenant’s policy + RAG payload exceeds the model window, the same agent binary spins up a temporary “Context Compactor” sub-agent.  
-   It distills **500k tokens → 24k tokens**, then hands the dense summary back to the primary loop.
+- Cache first  
+- Local 8B–70B model next  
+- Frontier model only when required  
 
-```text
-Primary Agent
-   ↓ (context > window)
-Spawns → Context Compactor Sub-Agent (cheap long-context model)
-   ← returns compacted summary + fingerprint
-Primary Agent continues with grounded, compliant context
+Every escalation is logged and reviewable.
+
+### Automated Context Compaction
+
+Enterprise tenants often provide massive policy or reference documents. The runtime triggers a compactor module using a long-context lightweight model. The compactor generates a deterministic low-temperature summary and returns a fingerprint. The agent continues execution with the compressed context.
+
+Flow overview:
+
+```mermaid
+
+flowchart LR
+
+    U[User or Client] -->|Request| GW[API or Ingress]
+
+    subgraph RegionDeployment
+        direction LR
+
+        GW --> AR[Core Immutable Agent Runtime]
+
+        subgraph ExtensionLayer
+            direction TB
+            EX1[Policy Engine Extension]
+            EX2[Domain Adapter]
+            EX3[Tool Plugin]
+        end
+
+        AR --> ExtensionLayer
+
+        subgraph ExternalContext
+            direction TB
+            POL[Policy Bundles Signed Versioned]
+            CAT[Domain Data]
+            ESC[Escalation Rules]
+            RAG[RAG Index Sources]
+        end
+
+        AR -->|Load and Cache| ExternalContext
+
+        subgraph ModelRouter
+            direction TB
+            CSH[Response Cache]
+            LLMLOCAL[Local Model]
+            LLMFRONT[Frontier Model]
+        end
+
+        AR --> ModelRouter
+        ModelRouter --> CSH
+        ModelRouter --> LLMLOCAL
+        ModelRouter -->|Escalate on Low Confidence| LLMFRONT
+
+        subgraph ContextCompaction
+            direction TB
+            CRAW[Large Tenant Context]
+            CCALL[Compactor SubAgent]
+            CSUM[Compacted Summary With Fingerprint]
+        end
+
+        AR -->|Context Exceeds Window| CRAW
+        CRAW --> CCALL
+        CCALL --> CSUM
+        CSUM --> AR
+
+        subgraph RegionalDataStores
+            direction TB
+            VDB[Vector Store]
+            OSTR[Object Store Artifacts Summaries]
+            METR[Logs Metrics Audit]
+        end
+
+        ExternalContext <--> OSTR
+        ContextCompaction <--> OSTR
+        ModelRouter --> VDB
+        AR --> METR
+
+    end
+
+    RegionDeployment --> Region2[Additional Regions]
+
 ```
 
-Same binary. Different system prompt. Zero new code.
+## Engineering Work That Made It Practical
 
----
+- Compaction runs deterministically and is precomputed during policy deployment.  
+- Every artifact, raw or summarized, carries a stable fingerprint for audit trails.  
+- Compaction includes PII stripping; if too much content is removed, deployment halts.  
+- Pre-loading compacted blobs reduces cold-start latency.  
+- Local-model speculation reduces frontier model calls by more than half.  
+- Extension modules are versioned artifacts, not ad-hoc code injections.
 
-### The Refinements That Turned This From Prototype to $XXM Workload
+## Results After Long-Term Use
 
-- Compaction is two-stage and idempotent (temperature=0) so results are cacheable  
-- Every artifact (raw context, compacted blob, policy bundle) is versioned and signed  
-- Compactor redacts PII automatically; if redaction removes >30% it aborts and escalates  
-- Cold-start latency dropped from 9s → 800ms by pre-warming compacted blobs on policy deploy  
-- Added a speculative local model (Phi-3.5 or Grok-3-mini) before frontier escalation — ~60% token savings
+- Audits validated through a single runtime digest  
+- Global patching consolidated into one predictable rollout  
+- Frontier model usage reduced to exceptional cases only  
+- No regional forks and no tenant-specific binaries  
 
----
+## Closing
 
-## Results After 18 Months in Production
-
-- **100% regulatory audits passed** — auditors asked only for the container image digest  
-- **11-minute global patch window** for prompt-injection vectors  
-- **3.8s p95 latency** for a 400k-token grounded context  
-- **<8% frontier model spend**, down from 68% when “just calling GPT-4o”
-
----
-
-### Closing
-
-This isn’t sexy. There are no 1.9T hero models, no fine-tuned snowflakes, no framework-of-the-week. If you’re one of the three companies on Earth that actually needs a 70B fine-tune per tenant for drug discovery IPC classification, congratulations — you get to keep your snowflake repo. Everyone else gets to ship.
-
-It’s just engineering.
-
-And in 2025, disciplined engineering is the only thing that separates AI pilots that quietly die from AI infrastructure that prints money and survives audits.
-
-One binary. External context. Proximity over specialization.
-
----
+A single immutable runtime with externalized context and modular extensibility, deployed close to the data, is the pattern that consistently avoids the failure modes I experienced in other approaches.
 
 ## References
 
