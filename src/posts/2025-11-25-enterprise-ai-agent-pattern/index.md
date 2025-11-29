@@ -64,7 +64,7 @@ Enterprise tenants often provide massive policy or reference documents. The runt
 Flow overview:
 
 ```mermaid
-
+%%{init: {'theme':'dark'}}%%
 flowchart LR
 
     U[User or Client] -->|Request| GW[API or Ingress]
