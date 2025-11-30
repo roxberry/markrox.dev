@@ -38,51 +38,43 @@ const Tags = ({ pageContext, data }) => {
         <Layout>
             <Seo title={tag} />
             <section>
-                <h1><FontAwesomeIcon icon={['fas', 'tags']} />&nbsp;&nbsp;{tagHeader}</h1>
+                <h1 className="sectionTitle"><FontAwesomeIcon icon={['fas', 'tags']} />&nbsp;&nbsp;{tagHeader}</h1>
                 <div className="flexbox">
-                    {edges.map(({ node }, i) => {
+                    {edges
+                        .filter(edge => {
+                            const postDate = new Date(edge.node.frontmatter.date);
+                            const today = new Date();
+                            // Only include posts with a date <= today
+                            return postDate <= today;
+                        })
+                        .map(({ node }, i) => {
 
-                        const postImage = node.frontmatter.postimage
+                            const postImage = node.frontmatter.postimage
 
-                        return (
-                            <div key={node.fields.slug + i.toString()}>
-                                <Link to={node.fields.slug}><h1 className="postTitle">{node.frontmatter.title}</h1></Link>
-                                <div className="postedInfo">posted on {node.frontmatter.date} | tags: [ <TagList tags={node.frontmatter.tags} /> ]</div>
-                                <Link to={node.fields.slug}>
-                                    {postImage && postImage.src && (
-                                        <div className="postImage">
-                                            <GatsbyImage
-                                                image={postImage.src.childImageSharp.gatsbyImageData}
-                                                alt={postImage.alt}
-                                                layout="fullWidth"
-                                                formats={["auto", "webp"]}
-                                            />
-                                            <div className="overlay">
-                                                <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: node.frontmatter.excerpt }}></div>
+                            return (
+                                <div key={node.fields.slug + i.toString()}>
+                                    <Link to={node.fields.slug}><h1 className="postTitle">{node.frontmatter.title}</h1></Link>
+                                    <div className="postedInfo">posted on {node.frontmatter.date} | tags: [ <TagList tags={node.frontmatter.tags} /> ]</div>
+                                    <Link to={node.fields.slug}>
+                                        {postImage && postImage.src && (
+                                            <div className="postImage">
+                                                <GatsbyImage
+                                                    image={postImage.src.childImageSharp.gatsbyImageData}
+                                                    alt={postImage.alt}
+                                                    layout="fullWidth"
+                                                    formats={["auto", "webp"]}
+                                                />
+                                                <div className="overlay">
+                                                    <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: node.frontmatter.excerpt }}></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
-                                </Link>
-                            </div>
-                        )
-                    })}
+                                        )}
+                                    </Link>
+                                </div>
+                            )
+                        })}
                     {pager}
                 </div>
-                {/* <ul>
-          const { slug } = node.fields
-          const { title } = node.frontmatter
-          return (
-            <li key={slug}>
-              <Link to={slug}>{title}</Link>
-            </li>
-          )
-        })}
-      </ul> */}
-                {/*
-              This links to a page that does not yet exist.
-              You'll come back to it!
-            */}
-                {/* <Link to="/ta`gs">All tags</Link> */}
             </section>
             <AmazonSiteStripe
                 amazonProducts={amazonProducts}

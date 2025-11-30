@@ -80,9 +80,9 @@ class BlogIndex extends React.Component {
                     amazonProducts={amazonProducts}
                     layout="horizontal"
                 />
-                {data.pinnedPosts && data.pinnedPosts.edges && data.pinnedPosts.edges.length > 0 && (
-                    <section>
-                        <h1 className="sectionTitle">Pinned Posts</h1>
+                    {data.pinnedPosts && data.pinnedPosts.edges && data.pinnedPosts.edges.length > 0 && (
+                        <section>
+                            <h1 className="sectionTitle">Pinned Posts</h1>
                             <div className="pinned-carousel-container">
                                 {this.state.showLeft && (
                                     <button
@@ -95,90 +95,99 @@ class BlogIndex extends React.Component {
                                     </button>
                                 )}
                                 <div className="pinned-carousel" ref={this.projectCarouselRef}>
-                                    {data.pinnedPosts.edges.map((edge, i) => {
-                                const postImage = edge.node.frontmatter.postimage
-                                return (
-                                    <div
-                                            key={edge.node.fields.slug + i.toString()}
-                                                className="post pinned pinned-card"
-                                        >
-                                            {postImage && postImage.src && (
-                                                <Link to={edge.node.fields.slug} className="postThumbLink" aria-label={`Read ${edge.node.frontmatter.title}`}>
-                                                    <div className="postThumb">
-                                                        <GatsbyImage
-                                                            image={postImage.src.childImageSharp.gatsbyImageData}
-                                                            alt={edge.node.frontmatter.title}
-                                                            layout="constrained"
-                                                            formats={["auto", "webp"]}
-                                                        />
+                                    {data.pinnedPosts.edges
+                                        .filter(edge => {
+                                            const postDate = new Date(edge.node.frontmatter.date);
+                                            const today = new Date();
+                                            // Only include posts with a date <= today
+                                            return postDate <= today;
+                                        })
+                                        .map((edge, i) => {
+                                            const postImage = edge.node.frontmatter.postimage;
+                                            return (
+                                                <div
+                                                    key={edge.node.fields.slug + i.toString()}
+                                                    className="post pinned pinned-card"
+                                                >
+                                                    {postImage && postImage.src && (
+                                                        <Link to={edge.node.fields.slug} className="postThumbLink" aria-label={`Read ${edge.node.frontmatter.title}`}>
+                                                            <div className="postThumb">
+                                                                <GatsbyImage
+                                                                    image={postImage.src.childImageSharp.gatsbyImageData}
+                                                                    alt={edge.node.frontmatter.title}
+                                                                    layout="constrained"
+                                                                    formats={["auto", "webp"]}
+                                                                />
+                                                            </div>
+                                                        </Link>
+                                                    )}
+                                                    <div className="pinned-card-content">
+                                                        <Link to={edge.node.fields.slug} className="pinnedTitleLink">
+                                                            <h2 className="postTitle">{edge.node.frontmatter.title}<span className="pinnedBadge">Pinned</span> </h2>
+                                                        </Link>
+                                                        <div className="postedInfo">
+                                                            posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
+                                                        </div>
+                                                        <div className="postExcerpt" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }} />
                                                     </div>
-                                                </Link>
-                                            )}
-                                            <div className="pinned-card-content">
-                                                <Link to={edge.node.fields.slug} className="pinnedTitleLink">
-                                                    <h2 className="postTitle">{edge.node.frontmatter.title}<span className="pinnedBadge">Pinned</span> </h2>
-                                                </Link>
-                                                <div className="postedInfo">
-                                                    posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
                                                 </div>
-                                                <div className="postExcerpt" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }} />
-                                            </div>
-                                    </div>
-                                )
-                            })}
+                                            );
+                                        })}
+                                </div>
+                                {this.state.showRight && (
+                                    <button
+                                        className="carousel-button right"
+                                        onClick={() => this.scrollProjects('right')}
+                                        aria-hidden={!this.state.showRight}
+                                        aria-label="Scroll pinned posts right"
+                                    >
+                                        ›
+                                    </button>
+                                )}
                             </div>
-                            {this.state.showRight && (
-                                <button
-                                    className="carousel-button right"
-                                    onClick={() => this.scrollProjects('right')}
-                                    aria-hidden={!this.state.showRight}
-                                    aria-label="Scroll pinned posts right"
-                                >
-                                    ›
-                                </button>
-                            )}
-                        </div>
-                    </section>
-                )}
+                        </section>
+                    )}
 
                 <section>
                     <h1 className="sectionTitle">Latest Posts</h1>
                     <div className="flexbox">
-                        {data.allMarkdownRemark.edges.map((edge, i) => {
-                            const postImage = edge.node.frontmatter.postimage
-
-                            return (
-                                <div
-                                    key={edge.node.fields.slug + i.toString()}
-                                    className="post"
-                                >
-                                    <Link to={edge.node.fields.slug}>
-                                        <h1 className="postTitle">{edge.node.frontmatter.title}</h1>
-                                    </Link>
-                                    <div className="postedInfo">
-                                        posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
-                                    </div>
-                                    <Link to={edge.node.fields.slug}>
-
-                                        {postImage && postImage.src && (
-                                            <div className="postImage">
-                                                <GatsbyImage
-                                                    image={postImage.src.childImageSharp.gatsbyImageData}
-                                                    alt={edge.node.frontmatter.title}
-                                                    layout="fullWidth"
-                                                    formats={["auto", "webp"]}
-                                                />
-                                                <div className="overlay">
-                                                    <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }}></div>
+                        {data.allMarkdownRemark.edges
+                            .filter(edge => {
+                                const postDate = new Date(edge.node.frontmatter.date);
+                                const today = new Date();
+                                return postDate <= today;
+                            })
+                            .map((edge, i) => {
+                                const postImage = edge.node.frontmatter.postimage;
+                                return (
+                                    <div
+                                        key={edge.node.fields.slug + i.toString()}
+                                        className="post"
+                                    >
+                                        <Link to={edge.node.fields.slug}>
+                                            <h1 className="postTitle">{edge.node.frontmatter.title}</h1>
+                                        </Link>
+                                        <div className="postedInfo">
+                                            posted on {edge.node.frontmatter.date} | tags: [ <TagList tags={edge.node.frontmatter.tags} /> ]
+                                        </div>
+                                        <Link to={edge.node.fields.slug}>
+                                            {postImage && postImage.src && (
+                                                <div className="postImage">
+                                                    <GatsbyImage
+                                                        image={postImage.src.childImageSharp.gatsbyImageData}
+                                                        alt={edge.node.frontmatter.title}
+                                                        layout="fullWidth"
+                                                        formats={["auto", "webp"]}
+                                                    />
+                                                    <div className="overlay">
+                                                        <div className="innerOverlayText" dangerouslySetInnerHTML={{ __html: edge.node.frontmatter.excerpt }}></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
-                                    </Link>
-
-
-                                </div>
-                            )
-                        })}
+                                            )}
+                                        </Link>
+                                    </div>
+                                );
+                            })}
                         {pager}
                     </div>
                 </section>

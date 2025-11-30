@@ -45,14 +45,14 @@ const Header = () => {
                         <Link to="/tags/applied-ai" className="header-menu-item" activeClassName="active">Applied AI</Link>
                     </li>
                     <li>
-                        <Link to="/about" className="header-menu-item" activeClassName="active">About Me</Link>
-                    </li>
-                    <li>
                         <Link to="/projects" className="header-menu-item" activeClassName="active">Projects</Link>
                     </li>
                     <li>
-                        <Link to="/contact" className="header-menu-item" activeClassName="active">Contact</Link>
+                        <Link to="/about" className="header-menu-item" activeClassName="active">About Me</Link>
                     </li>
+                    {/* <li>
+                        <Link to="/contact" className="header-menu-item" activeClassName="active">Contact</Link>
+                    </li> */}
                 </ul>
 
             </div>
