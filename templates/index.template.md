@@ -13,6 +13,7 @@ postimage:
   src: "post.png"
   alt: ""
 featured: true
+pinned: true|false
 
 ---
 
