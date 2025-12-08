@@ -113,12 +113,43 @@ aside {
 }
 
 article {
+    max-width: 800px; /* or your desired width */
+  width: 100%;
+  overflow-wrap: break-word; /* wrap long words */
+  word-wrap: break-word; /* legacy support */
+}
+
+/* For images */
+article img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* For tables or code blocks that might overflow */
+article table,
+article pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+article {
     width: 100%;
-    line-height: 1.5;
-    /* ensure flex children don't force the article to grow beyond viewport
-       (helps prevent horizontal overflow in Chrome/Edge when carousels are inside)
-       See: pinned-carousel causing article to expand when it overflows */
-    min-width: 0;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    // max-width: 700px;
+    // min-width: 600px;
+    // // margin-left: auto;
+    // // margin-right: auto;
+    // line-height: 1.5;
+    // /* ensure flex children don't force the article to grow beyond viewport
+    //    (helps prevent horizontal overflow in Chrome/Edge when carousels are inside)
+    //    See: pinned-carousel causing article to expand when it overflows */
+    // min-width: 0;
+}
+
+article h1 {
+  word-wrap: break-word;          /* older browsers */
+  overflow-wrap: anywhere;        /* modern browsers */
 }
 
 section {
@@ -322,7 +353,6 @@ a {
 // sidebar end
 
 aside section {
-    // width: 200px;
     flex: 0 0 200px;
 }
 

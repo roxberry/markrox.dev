@@ -16,6 +16,7 @@ const AboutPage = () => {
         <Layout>
             <Seo title="About Me" />
             <section>
+                <h1 className="sectionTitle">About Me</h1>
                 <ReactMarkdown>{markdown}</ReactMarkdown>
             </section>
         </Layout>

@@ -20,7 +20,7 @@ const Header = () => {
             <div className="top-nav sub-header">
                 <div className="leftSide">
                     <Link to="/" className="title" activeClassName="active">
-                        MARKROX.DEV
+                        \MARKROX.DEV
                         <span></span>
                         {/* <StaticImage
                             layout="fixed"
@@ -45,14 +45,14 @@ const Header = () => {
                         <Link to="/tags/applied-ai" className="header-menu-item" activeClassName="active">Applied AI</Link>
                     </li>
                     <li>
-                        <Link to="/about" className="header-menu-item" activeClassName="active">About Me</Link>
-                    </li>
-                    <li>
                         <Link to="/projects" className="header-menu-item" activeClassName="active">Projects</Link>
                     </li>
                     <li>
-                        <Link to="/contact" className="header-menu-item" activeClassName="active">Contact</Link>
+                        <Link to="/about" className="header-menu-item" activeClassName="active">About Me</Link>
                     </li>
+                    {/* <li>
+                        <Link to="/contact" className="header-menu-item" activeClassName="active">Contact</Link>
+                    </li> */}
                 </ul>
 
             </div>

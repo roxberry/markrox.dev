@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "sass:color" as color;
 
 // $brand-accent: #ff6600 !default; // fallback if not defined elsewhere
 
@@ -106,9 +107,8 @@ input[type="email"] {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
 .submit-btn:hover {
-  background: darken($brand-accent, 10%);
+  background: color.adjust($brand-accent, $lightness: -10%);
 }
 
 .msg {
@@ -150,7 +150,7 @@ input[type="email"] {
   transition: all 0.2s ease;
   
   &:hover {
-    background: darken($brand-accent, 10%);
+    background: color.adjust($brand-accent, $lightness: -10%);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(20, 184, 166, 0.3);
   }

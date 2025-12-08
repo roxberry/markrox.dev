@@ -7,6 +7,29 @@ const fs = require('fs')
 const path = require('path')
 const puppeteer = require('puppeteer')
 
+// Figure out a working executable path for Chrome/Chromium.
+// Prefer Puppeteer-installed browser, fall back to system Chrome/Chromium if missing.
+let puppeteerExecutablePath = puppeteer.executablePath();
+const candidatePaths = [
+    puppeteerExecutablePath,
+    '/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+];
+const findExisting = (paths) => paths.find(p => p && fs.existsSync(p));
+const foundPath = findExisting(candidatePaths);
+if (foundPath) {
+    puppeteerExecutablePath = foundPath;
+} else {
+    // Provide a helpful hint in case the build fails because of missing browser binary.
+    console.warn(
+        `puppeteer browser binary not found at the expected cache path (${puppeteerExecutablePath}).\n` +
+        `To fix this locally run: \n  node node_modules/puppeteer/install.mjs\n` +
+        `Or run: \n  npm ci\n` +
+        `If you want to use your system Chrome, install it and verify it exists at /Applications/Google Chrome.app`
+    );
+}
+
 module.exports = {
     siteMetadata: {
         title: "MARKROX.DEV",
@@ -52,7 +75,7 @@ module.exports = {
                         resolve: "gatsby-remark-mermaid",
                         options: {
                             launchOptions: {
-                                executablePath: puppeteer.executablePath(),
+                                executablePath: puppeteerExecutablePath,
                                 defaultViewport: {
                                     width: 1280,
                                     height: 3000,
