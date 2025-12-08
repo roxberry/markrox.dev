@@ -1,19 +1,19 @@
 ---
 layout: post
-title: "Bsides Philly 2025”
-subtitle: "Observations and takeaways from a community-driven security conference”
+title: "Bsides Philly 2025"
+subtitle: "Observations and takeaways from a community-driven security conference"
 comments: true
 date: 2025-10-05
 author: Mark Roxberry
-excerpt: "A recap of my experience at Bsides Philly 2025 — highlights, insights, and what comes next.”
-tags: ["conference”, "cybersecurity”, "bsides”, "ai-security”, "hacking”]
+excerpt: "A recap of my experience at Bsides Philly 2025 — highlights, insights, and what comes next."
+tags: ["conference", "cybersecurity", "bsides", "ai-security", "hacking"]
 categories:
   - conferences
   - security
   - hacking
 postimage:
-  src: "post.jpg”
-  alt: "Bsides Philly 2025”
+  src: "post.jpg"
+  alt: "Bsides Philly 2025"
 featured: true
 pinned: true
 ---
@@ -33,15 +33,15 @@ This year’s event delivered a mix of culture, creativity, technical depth, and
 **[The Imposter’s Guide to Hacking… Without Technical Talent!](https://hackertracker.app/event?conf=BSIDESPHILLY2025&event=64837)**
 
 Jayson leaned into what makes hacking *human*. His core message echoed throughout the talk:  
-"Rick Astley has done more for cyber security than any other human in history.”
+"Rick Astley has done more for cyber security than any other human in history."
 
-His "attack techniques” were reminders of the power of human behavior:
+His "attack techniques" were reminders of the power of human behavior:
 
 - Kindness  
 - Curiosity  
 - Routine  
 
-He emphasized that giving the "client a win” creates collaboration rather than confrontation — a foundational mindset for effective security work.
+He emphasized that giving the "client a win" creates collaboration rather than confrontation — a foundational mindset for effective security work.
 
 —
 
@@ -56,9 +56,9 @@ Key takeaways:
 - Purple teaming focuses on *visibility, validation, and assurance*.  
 - Red performs attacks → Blue observes tooling, telemetry, and detection paths.  
 - Blue mitigates → Red learns constraints and defensive gaps.  
-- The **Assumed Compromise Approach** reframes risk: instead of "how they get in,” focus on "what happens next.”
+- The **Assumed Compromise Approach** reframes risk: instead of "how they get in," focus on "what happens next."
 
-Sara compared "classic findings” to "assumed compromise findings” in contexts like DNS exfiltration, ransomware stages, and scheduled task hijacking.  
+Sara compared "classic findings" to "assumed compromise findings" in contexts like DNS exfiltration, ransomware stages, and scheduled task hijacking.  
 Her inversion of the Lockheed Kill Chain — focusing on breaking stages rather than tracing them — stood out.
 
 —
@@ -105,7 +105,7 @@ https://www.baldwinschool.org/news-story?pk=1395687&fromId=249697
 ### 14:00 — Don’t Worry, Everyone Is That Bad!  
 **[Session Link](https://hackertracker.app/event?conf=BSIDESPHILLY2025&event=64849)**
 
-A humorous but sobering set of corporate mishaps — decommissioned servers still holding financial data, email archives left intact, and "retired” systems sold with sensitive content still on them.
+A humorous but sobering set of corporate mishaps — decommissioned servers still holding financial data, email archives left intact, and "retired" systems sold with sensitive content still on them.
 
 A reminder: security failures are common, not exceptional.
 
@@ -119,13 +119,13 @@ A deep dive into the evolution of cell-site simulators and open-source detection
 Key reference:  
 EFF’s Rayhunter — https://www.eff.org/deeplinks/2025/03/meet-rayhunter-new-open-source-tool-eff-detect-cellular-spying
 
-A helpful chart illustrated various adversary "interventions,” including downgrade attacks, interception points, and detection heuristics.
+A helpful chart illustrated various adversary "interventions," including downgrade attacks, interception points, and detection heuristics.
 
 —
 
 ## What’s Next for Me?
 
-1. **Investigate the "harness” model for AI agents.**  
+1. **Investigate the "harness" model for AI agents.**  
    Determine whether this is an emerging architectural pattern or a formalized approach to long-running autonomous systems. Prototype a small example.
 
 2. **Define what Purple Teaming means in my consulting practice.**  
