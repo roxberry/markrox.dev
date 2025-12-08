@@ -3,7 +3,7 @@ layout: post
 title: "Bsides Philly 2025"
 subtitle: "Observations and takeaways from a community-driven security conference"
 comments: true
-date: 2025-10-05
+date: 2025-12-05
 author: Mark Roxberry
 excerpt: "A recap of my experience at Bsides Philly 2025 — highlights, insights, and what comes next."
 tags: ["conference", "cybersecurity", "bsides", "ai-security", "hacking"]
