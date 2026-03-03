@@ -525,7 +525,7 @@ aside section {
         display: inline-block;
         margin-left: .5rem;
         padding: 2px 6px;
-        background: $brand-primary;
+        background: $brand-accent;
         color: #fff;
         font-size: .7rem;
         border-radius: 4px;
@@ -545,7 +545,7 @@ aside section {
   white-space: nowrap;
   vertical-align: middle;
   border-radius: 0.25rem;
-  background: $hactu8-link;
+  background: $brand-accent;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
