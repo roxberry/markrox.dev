@@ -34,6 +34,8 @@ $pennstateblue: #1E407C;
 $pennstatenavy: #001E44;
 $pennstatesky:  #009CDE;
 
+$hactu8: #203445;
+$hactu8-link: #73A6DE;
 // Penn State Theme
 // $brand-header-background: $pennstateblue; // $default-contrast
 // $brand-body-background: $pennstatenavy;  // $default
@@ -55,13 +57,13 @@ $brand-header-background: $default-contrast;
 $brand-body-background: $default;
 $brand-overlay: $default-contrast;
 $brand-primary: $white;
-$brand-links: turquoise;
+$brand-links: $hactu8-link;
 $brand-primary-banner: $white;
 $brand-navbar: $default;
-$brand-disclaimer: $darkturquoise; // highlight
+$brand-disclaimer: $hactu8; // highlight
 $brand-font: 'Roboto'; // 'Raleway';
 $brand-heading-font: 'Questrial';
-$brand-accent: $darkturquoise;
+$brand-accent: $hactu8-link;
 
 $disclaimer-color: $white;
 $sidebar-background: linear-gradient(to right, $default, $default-contrast);

@@ -32,13 +32,13 @@ if (foundPath) {
 
 module.exports = {
     siteMetadata: {
-        title: "MARKROX.DEV",
+        title: "\MARKROX.DEV",
         url: "https://www.markrox.dev",
         siteUrl: "https://www.markrox.dev",
         twitterUsername: "@markroxdotdev",
         author: "Mark Roxberry",
         keywords: ["roxberry", "journal", "development"],
-        featuredTags: ["AppliedAI", "AI", "architecture", "development", "performance", "robotics", "security", "privacy", "apple"],
+        featuredTags: ["AppliedAI", "AI", "architecture", "development", "performance", "OWASP","robotics", "security", "privacy", "apple"],
         version: "2025.08.14.01",
     },
     plugins: [
@@ -87,7 +87,7 @@ module.exports = {
                     {
                         resolve: `gatsby-remark-twitter-cards`,
                         options: {
-                            title: "markrox.dev",
+                            title: "\MARKROX.DEV",
                             separator: "|",
                             author: "Mark Roxberry",
                             background: require.resolve("./src/images/profile.1.jpg"),
