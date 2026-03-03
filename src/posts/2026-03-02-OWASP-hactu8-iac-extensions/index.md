@@ -35,15 +35,19 @@ Central manifest of all available extensions:
   "extensions": [
     {
       "manifest": {
-        "id": "iac-prompt-injection-tests",
-        "name": "Prompt Injection Tests",
+        "id": "mcp-attack-vulnerability-tests",
+        "name": "MCP Attack Vulnerability Tests",
         "version": "0.1.0",
+        "description": "Automated MCP resource poisoning and tool poisoning vulnerability assessment across multiple model providers. Tests 40 attack vectors across 3 prompt tiers with HACTU8 IAC schema output.",
+        "author": "OWASP HACTU8 Project",
+        "license": "Apache-2.0",
         "type": "streamlit",
         "category": "testing",
         "permissions": ["network", "hostConfig", "reporting"],
+        "entryPoint": "app.py",
         "settings": [ /* schema-driven config options */ ]
       },
-      "zipFile": "iac-prompt-injection-tests-0.1.0.zip",
+      "zipFile": "mcp-attack-vulnerability-tests-0.1.0.zip",
       "sha256": "a916dd6c...",
       "publishedAt": "2025-01-01T00:00:00Z"
     }
@@ -161,9 +165,33 @@ Extensions run in separate processes on dedicated ports — stronger than JavaSc
 
 Testing extensions post structured results to the Assurance Results page: run metadata, pass/fail/skip summary, and per-test details with error traces.
 
-## Example: Prompt Injection Testing Extension
+## Example: MCP Attack Vulnerability Extension
 
-The **iac-prompt-injection-tests** reference implementation is a Python Streamlit app that prepares and sends injection payloads, reports results back via `postMessage`, and surfaces them in the Results view with filtering and charts.
+The **mcp-attack-vulnerability-tests** reference implementation is a Python Streamlit app that prepares and sends mcp attack payloads, reports results back via `postMessage`, and surfaces them in the Results view with filtering and charts.
+
+### Install the Extensions
+
+From the IAC > Extensions, view available extensions and install the "MCP Attack Vulnerability Extension":
+
+![alt text](2026-03-03_09-44-58.jpg)
+
+### Run and Configure the Extension
+
+The installed extension then can be run with the instructions provided.  Configure the settings and view the running extension in the extension card:
+
+![alt text](2026-03-03_09-45-47.jpg)
+
+### Running from IAC Tests
+
+Test extensions will be available from the IAC sidebar under Tests.  View the Extension running in full view mode:
+
+![alt text](2026-03-03_09-46-08.jpg)
+
+### Analyze results
+
+From the IAC, you can analyze exported JSON results using the Assurance Results feature.  Also, you can have the IAC Copilot analyze result exports, configured using an LLM provider of your choice:
+
+![alt text](2026-03-03_09-59-12.jpg)
 
 ## Files and Directories
 
@@ -171,8 +199,8 @@ The **iac-prompt-injection-tests** reference implementation is a Python Streamli
 iac-prototype/
 ├── extensions/
 │   ├── registry.json                    # Central registry of extensions
-│   ├── iac-prompt-injection-tests/      # Example testing extension
-│   └── iac-prompt-injection-tests-0.1.0.zip
+│   ├── mcp-attack-vulnerability-tests/      # Example testing extension
+│   └── mcp-attack-vulnerability-tests-0.1.0.zip
 │
 ├── iac_extension_installer.py           # Backend installer logic
 ├── extension_api.py                     # Flask API server
@@ -200,7 +228,7 @@ cd iac-host && npm run dev
 python extension_api.py
 
 # Terminal 3: Streamlit extension (localhost:8513)
-cd extensions/iac-prompt-injection-tests && python app.py
+cd extensions/mcp-attack-vulnerability-tests && python app.py
 ```
 
 ### Production Mode
