@@ -132,7 +132,8 @@ class BlogIndex extends React.Component {
                                                     </div>
                                                 </div>
                                             );
-                                        })}
+                                        })
+                                    }
                                 </div>
                                 {this.state.showRight && (
                                     <button
