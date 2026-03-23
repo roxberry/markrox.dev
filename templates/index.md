@@ -5,13 +5,13 @@ subtitle: "Quote - Author"
 comments: true|false
 date: {{postDate}}
 author: Mark Roxberry
-excerpt: Excerpt to show on the frontpage
+excerpt: {{Excerpt to show on the frontpage}}
 tags: []
 categories:
   - 
 postimage:
   src: "post.png"
-  alt: 
+  alt: {{describe blog post}}
 featured: true|false 
 pinned: true|false
 

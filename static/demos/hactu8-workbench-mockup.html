@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HACTU8 IAC Workbench — Mockup</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#0d1520;--bg1:#111b2a;--bg2:#152030;--bg3:#1a2840;
+  --accent:#2dd4a0;--accent2:#1db88a;--red:#e85555;--amber:#e8a030;--cyan:#38c0d4;
+  --txt:#e2e8f0;--txt2:#94a3b8;--txt3:#64748b;
+  --border:#1e3048;--border2:#253a55;
+  --err-bg:#200a0a;--err-border:#4a1010;--err-txt:#f08080;
+}
+html,body{height:100%;background:var(--bg0);color:var(--txt);font-family:'SF Mono','JetBrains Mono',ui-monospace,monospace;font-size:13px;overflow:hidden}
+
+/* Shell */
+.shell{display:grid;grid-template-rows:48px 32px 1fr;height:100vh}
+.topbar{background:var(--bg1);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.logo{width:24px;height:24px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.brand-main{font-weight:600;font-size:13px;letter-spacing:.02em}
+.brand-sub{font-size:10px;color:var(--txt2);letter-spacing:.03em}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txt2)}
+.env-bar{background:#061810;border-bottom:1px solid #0d3020;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-size:11px}
+.env-tag{color:var(--accent);display:flex;align-items:center;gap:6px}
+.env-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.create-btn{color:var(--txt2);font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.create-btn:hover{color:var(--txt)}
+.fullscreen-btn{color:var(--txt2);font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border:1px solid var(--border2);border-radius:4px;background:var(--bg2)}
+.fullscreen-btn:hover{color:var(--txt);border-color:var(--accent)}
+
+.body{display:grid;grid-template-columns:200px 1fr 260px;overflow:hidden}
+
+/* Sidebar */
+.sidebar{background:var(--bg1);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-menu-label{padding:16px 12px 6px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3);display:flex;align-items:center;justify-content:space-between}
+.nav-section{padding:10px 12px 3px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3)}
+.nav-item{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;font-size:11px;color:var(--txt2);transition:all .1s;border-left:2px solid transparent}
+.nav-item:hover{background:var(--bg2);color:var(--txt)}
+.nav-item.active{background:var(--bg3);color:var(--txt);border-left-color:var(--accent)}
+.nav-dash{width:10px;height:1.5px;background:currentColor;flex-shrink:0;opacity:.4}
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-g{background:var(--accent)}.dot-a{background:var(--amber)}.dot-r{background:var(--red)}
+
+/* Main */
+.main{display:flex;flex-direction:column;overflow:hidden;background:var(--bg0)}
+.main-header{border-bottom:1px solid var(--border);padding:0 20px}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:12px 0 0}
+.page-title{font-size:15px;font-weight:600;color:var(--txt);letter-spacing:.01em}
+.mode-switcher{display:flex;background:var(--bg1);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.mode-btn{padding:4px 12px;font-size:11px;color:var(--txt3);cursor:pointer;font-family:inherit;background:transparent;border:none;transition:all .15s}
+.mode-btn.active{background:var(--bg3);color:var(--accent)}
+.step-tabs{display:flex;gap:0;padding-top:10px}
+.step-tab{padding:6px 14px;font-size:11px;color:var(--txt3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.step-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.step-tab.done{color:var(--txt2)}
+.step-num{width:16px;height:16px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-tab.active .step-num{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.step-tab.done .step-num{background:#0a2018;border-color:var(--accent2);color:var(--accent)}
+.main-body{flex:1;overflow-y:auto;padding:18px 20px}
+
+/* Right panel */
+.right-panel{background:var(--bg1);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.panel-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:12px;font-weight:600;letter-spacing:.03em}
+.panel-icons{display:flex;gap:10px}
+.panel-icon{font-size:12px;color:var(--txt3);cursor:pointer}
+.ptabs{display:flex;border-bottom:1px solid var(--border)}
+.ptab{padding:6px 10px;font-size:10px;color:var(--txt3);cursor:pointer;border-bottom:2px solid transparent;letter-spacing:.02em}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel-body{flex:1;overflow-y:auto;padding:12px}
+.copilot-warn{background:#1a0e00;border:1px solid #3a2000;border-radius:6px;padding:10px;margin-bottom:12px}
+.copilot-warn-title{font-size:10px;font-weight:600;color:var(--amber);margin-bottom:3px;letter-spacing:.05em}
+.copilot-warn-sub{font-size:10px;color:#8a5020;line-height:1.5}
+.copilot-action{display:block;width:100%;margin-top:8px;padding:5px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;font-size:10px;color:var(--txt2);text-align:center;cursor:pointer;font-family:inherit}
+.ctx-block{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.ctx-label{font-size:10px;color:var(--txt2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.ctx-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:10px;color:var(--txt3)}
+.ctx-val{color:var(--txt)}
+.ctx-val-g{color:var(--accent)}
+.ctx-val-a{color:var(--amber)}
+.ctx-val-r{color:var(--red)}
+.copilot-bottom{border-top:1px solid var(--border);padding:8px 10px;display:flex;gap:6px}
+.copilot-input{flex:1;background:var(--bg0);border:1px solid var(--border2);border-radius:5px;padding:6px 10px;color:var(--txt);font-size:11px;font-family:inherit;outline:none}
+.copilot-input:focus{border-color:var(--accent)}
+.send-btn{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);color:var(--txt2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px}
+
+/* Screens */
+.screen{display:none}.screen.active{display:block}
+
+/* Cards */
+.template-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tcard{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:all .15s}
+.tcard:hover{border-color:var(--border2);background:var(--bg2)}
+.tcard.sel{border-color:var(--accent);background:#061810}
+.cbadge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:600;margin-bottom:7px;letter-spacing:.04em}
+.b-test{background:#201500;color:var(--amber);border:1px solid #3a2500}
+.b-tool{background:#001818;color:var(--cyan);border:1px solid #003030}
+.b-attack{background:#180808;color:var(--red);border:1px solid #2a0f0f}
+.cname{font-size:12px;font-weight:600;color:var(--txt);margin-bottom:4px}
+.cdesc{font-size:10px;color:var(--txt2);line-height:1.6}
+.cmeta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:9px;color:var(--txt3)}
+.sel-check{color:var(--accent)}
+
+/* Forms */
+.fg{margin-bottom:12px}
+.fl{font-size:10px;color:var(--txt2);margin-bottom:4px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.05em}
+.req{color:var(--red);font-size:9px}
+.inf-tag{background:#061810;color:var(--accent);font-size:9px;padding:1px 5px;border-radius:3px;letter-spacing:.03em}
+.fi{width:100%;background:var(--bg0);border:1px solid var(--border2);border-radius:5px;padding:6px 10px;color:var(--txt);font-size:11px;font-family:inherit;outline:none}
+.fi:focus{border-color:var(--accent)}
+.fi.e{border-color:var(--red);background:#110505}
+.fta{resize:vertical;min-height:64px}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fsel{width:100%;background:var(--bg0);border:1px solid var(--border2);border-radius:5px;padding:6px 10px;color:var(--txt);font-size:11px;font-family:inherit;outline:none}
+
+.prompt-wrap{background:var(--bg1);border:1px solid var(--border2);border-radius:8px;padding:12px;margin-bottom:14px}
+.prompt-hint{font-size:10px;color:var(--txt3);margin-top:5px;line-height:1.5}
+.kbd{background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 4px;font-size:9px;font-family:monospace}
+
+/* Generation */
+.gen-status{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg1);border:1px solid var(--border);border-radius:7px;margin-bottom:12px}
+.gen-pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1s ease-in-out infinite;flex-shrink:0}
+.gen-label{font-size:11px}
+.gen-iter{font-size:10px;color:var(--txt3);margin-left:auto}
+.gen-steps{display:flex;gap:6px;margin-bottom:12px}
+.gstep{flex:1;background:var(--bg1);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+.gstep-label{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.gstep-val{font-size:11px}
+.gstep-val.active{color:var(--accent)}
+.gstep-val.wait{color:var(--txt3)}
+
+.token-stream{background:#06101a;border:1px solid var(--border);border-radius:7px;padding:12px;font-family:monospace;font-size:10px;color:var(--txt2);line-height:1.9;height:180px;overflow-y:auto;margin-bottom:12px}
+.tk{color:var(--cyan)}.tv{color:#98d8a0}.ts{color:#f0c060}.tc{display:inline-block;width:6px;height:12px;background:var(--accent);vertical-align:middle;animation:blink .7s step-end infinite}
+
+.art-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.art-pill{display:flex;align-items:center;gap:5px;background:var(--bg1);border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:10px}
+.art-done{color:var(--accent)}.art-pending{color:var(--amber)}.art-wait{color:var(--txt3)}
+
+/* YAML preview */
+.yaml-wrap{display:flex;gap:12px;margin-bottom:12px}
+.yaml-main{flex:2}
+.yaml-side{flex:1}
+.yaml-box{background:#05101a;border:1px solid var(--border);border-radius:7px;padding:12px;font-family:monospace;font-size:10px;line-height:1.9;height:260px;overflow-y:auto}
+.yaml-box.err{border-color:var(--red)}
+.yk{color:var(--cyan)}.yv{color:#98d8a0}.ys{color:#f0c060}.yc{color:var(--txt3)}.yn{color:#c792ea}
+
+/* Code lines with errors */
+.cl{display:flex;gap:6px}
+.ln{width:22px;text-align:right;color:var(--txt3);flex-shrink:0;font-size:9px;padding-top:2px;user-select:none}
+.lc{flex:1}
+.cl.el .ln{color:var(--red)}
+.cl.el .lc{background:#180505;border-radius:2px;padding:0 3px;margin-left:-3px}
+.cl.wl .lc{background:#120d00;border-radius:2px;padding:0 3px;margin-left:-3px}
+.esq{border-bottom:2px dashed var(--red)}
+.wsq{border-bottom:2px dashed var(--amber)}
+.einline{font-size:9px;color:var(--red);margin-left:8px}
+.winline{font-size:9px;color:var(--amber);margin-left:8px}
+
+/* Validation panel */
+.val-panel{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:10px;margin-bottom:10px}
+.vr{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:10px;color:var(--txt2);border-bottom:1px solid var(--border)}
+.vr:last-child{border-bottom:none}
+.vpass{color:var(--accent);font-size:9px;font-weight:600;width:40px;flex-shrink:0}
+.vfail{color:var(--red);font-size:9px;font-weight:600;width:40px;flex-shrink:0}
+
+.file-tree{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:8px 12px;margin-bottom:10px}
+.fr{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:10px;color:var(--txt2);cursor:pointer}
+.fr:hover{color:var(--txt)}
+
+/* Error report */
+.err-panel{background:var(--err-bg);border:1px solid var(--err-border);border-radius:7px;padding:12px;margin-bottom:12px}
+.ep-head{font-size:10px;font-weight:600;color:var(--err-txt);margin-bottom:10px;display:flex;align-items:center;gap:5px;letter-spacing:.04em}
+.ei{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid #200808;font-size:10px}
+.ei:last-child{border-bottom:none}
+.ebadge{flex-shrink:0;padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600;letter-spacing:.04em}
+.be{background:#2a0606;color:var(--red);border:1px solid #3a0a0a}
+.bw{background:#1e1200;color:var(--amber);border:1px solid #3a2200}
+.eloc{color:var(--txt3);font-family:monospace;font-size:9px}
+.emsg{color:var(--txt2);line-height:1.5;margin-top:2px}
+.efix{margin-top:4px;font-size:9px;color:var(--accent);cursor:pointer}
+.efix:hover{text-decoration:underline}
+
+/* Iteration banner */
+.iter-banner{background:#120d00;border:1px solid #3a2500;border-radius:7px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.iter-icon{width:26px;height:26px;border-radius:50%;background:#201200;border:1px solid #4a2500;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.iter-dots{display:flex;gap:4px;margin-left:auto}
+.idot{width:8px;height:8px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2)}
+.idot.done{background:var(--accent);border-color:var(--accent2)}
+.idot.cur{background:var(--amber);border-color:var(--amber);animation:blink 1s ease-in-out infinite}
+
+/* Architect */
+.asec{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px}
+.sec-head{font-size:9px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.field-hdr{display:grid;grid-template-columns:1fr 70px 90px 24px;gap:6px;margin-bottom:6px}
+.fhcol{font-size:9px;color:var(--txt3);text-align:center;text-transform:uppercase;letter-spacing:.06em}
+.fhcol:first-child{text-align:left}
+.frow{display:grid;grid-template-columns:1fr 70px 90px 24px;gap:6px;align-items:center;background:var(--bg0);border:1px solid var(--border);border-radius:5px;padding:7px 10px;margin-bottom:5px;font-size:11px}
+.toggle{width:30px;height:16px;background:var(--border2);border-radius:8px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;margin:auto}
+.toggle.on{background:var(--accent2)}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle.on::after{transform:translateX(14px)}
+.del-btn{width:20px;height:20px;border-radius:3px;background:transparent;border:1px solid #2a0a0a;color:var(--red);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:auto;font-family:inherit}
+.add-f{font-size:10px;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:3px;padding:4px 0}
+.add-f:hover{text-decoration:underline}
+.prompt-editor{background:#05101a;border:1px solid var(--border2);border-radius:7px;overflow:hidden;margin-bottom:8px}
+.pe-bar{background:#080f1a;border-bottom:1px solid var(--border);padding:6px 12px;font-size:9px;color:var(--txt3);display:flex;justify-content:space-between;text-transform:uppercase;letter-spacing:.06em}
+.pe-ta{width:100%;background:transparent;border:none;padding:10px 12px;color:var(--txt2);font-size:10px;line-height:1.9;resize:none;font-family:monospace;outline:none;min-height:90px}
+.scaffold-box{background:#05101a;border:1px solid var(--border2);border-radius:7px;overflow:hidden;margin-bottom:8px}
+.sb-bar{background:#080f1a;border-bottom:1px solid var(--border);padding:5px 12px;font-size:9px;color:var(--txt3);display:flex;justify-content:space-between}
+.sb-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:2px 7px;font-size:9px;color:var(--txt2);cursor:pointer;font-family:inherit}
+.sb-code{padding:10px 12px;font-family:monospace;font-size:10px;line-height:1.9;color:var(--txt2);max-height:140px;overflow-y:auto}
+.contract-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:10px;color:var(--txt2)}
+.contract-row:last-child{border-bottom:none}
+.crcheck{color:var(--accent);font-size:9px}
+
+/* Buttons */
+.btn{padding:6px 14px;border-radius:5px;font-size:11px;font-family:inherit;cursor:pointer;border:none;font-weight:500;transition:all .15s}
+.btn-p{background:var(--accent2);color:#fff}.btn-p:hover{background:var(--accent)}
+.btn-g{background:transparent;color:var(--txt2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg2);color:var(--txt)}
+.btn-row{display:flex;align-items:center;gap:8px;justify-content:flex-end;padding-top:10px;border-top:1px solid var(--border);margin-top:6px}
+
+.success-box{background:#061810;border:1px solid #1a4030;border-radius:6px;padding:10px;text-align:center;margin-top:8px}
+.correction-box{background:#05101a;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-family:monospace;font-size:9px;color:var(--txt2);line-height:1.9;margin-bottom:12px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2dd4a0" stroke-width="2.5"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg>
+      </div>
+      <div>
+        <div class="brand-main">OWASP HACTU8</div>
+        <div class="brand-sub">Intelligence Assurance Center</div>
+      </div>
+    </div>
+    <div class="avatar">MR</div>
+  </div>
+
+  <!-- Env bar -->
+  <div class="env-bar">
+    <div class="env-tag"><div class="env-dot"></div>Running in Development Environment</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="fullscreen-btn" onclick="enterFullscreen()">⛶ Fullscreen</button>
+      <div class="create-btn">+ Create New Resource</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-menu-label">Menu <span style="color:var(--txt3);cursor:pointer">›</span></div>
+      <div class="nav-item" onclick=""><div class="nav-dash"></div>Dashboard</div>
+      <div class="nav-item active"><div class="nav-dash"></div>Workbench</div>
+      <div class="nav-item"><div class="nav-dash"></div>Registry</div>
+      <div class="nav-item"><div class="nav-dash"></div>Console</div>
+      <div class="nav-section">Monitoring</div>
+      <div class="nav-item"><div class="nav-dash"></div>Logs</div>
+      <div class="nav-item"><span style="font-size:11px">⚡</span>Events</div>
+      <div class="nav-section">Projects</div>
+      <div class="nav-item"><div class="nav-dash"></div>Red Team Demo</div>
+      <div class="nav-item"><div class="nav-dash"></div>Blue Team Demo</div>
+      <div class="nav-item"><div class="nav-dash"></div>Purple Team Demo</div>
+      <div class="nav-section">Testing</div>
+      <div class="nav-item"><div class="nav-dot dot-g"></div>Prompt Injection Tester</div>
+      <div class="nav-item"><div class="nav-dot dot-g"></div>Training Data Leak Detector</div>
+      <div class="nav-item"><div class="nav-dot dot-a"></div>Model Misbehavior Monitor</div>
+      <div class="nav-item"><div class="nav-dot dot-a"></div>Overreliance Risk Analyzer</div>
+      <div class="nav-item"><div class="nav-dot dot-r"></div>Excessive Agency Validator</div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="main-header">
+        <div class="header-top">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div class="page-title">Workbench</div>
+            <div class="mode-switcher">
+              <button class="mode-btn" id="mb0" onclick="setMode(0)">Builder</button>
+              <button class="mode-btn active" id="mb1" onclick="setMode(1)">Architect</button>
+            </div>
+          </div>
+        </div>
+        <!-- Builder tabs -->
+        <div class="step-tabs" id="builder-tabs" style="display:none">
+          <div class="step-tab" id="bt0" onclick="setBuilderScreen(0)"><div class="step-num">1</div>Template</div>
+          <div class="step-tab" id="bt1" onclick="setBuilderScreen(1)"><div class="step-num">2</div>Prompt & Metadata</div>
+          <div class="step-tab" id="bt2" onclick="setBuilderScreen(2)"><div class="step-num">3</div>Generating</div>
+          <div class="step-tab" id="bt3" onclick="setBuilderScreen(3)"><div class="step-num">4</div>Preview & Publish</div>
+        </div>
+        <!-- Architect tabs -->
+        <div class="step-tabs" id="arch-tabs">
+          <div class="step-tab active" id="at0" onclick="setArchScreen(0)"><div class="step-num" style="background:var(--accent2);border-color:var(--accent2);color:#fff">1</div>Template Editor</div>
+          <div class="step-tab" id="at1" onclick="setArchScreen(1)"><div class="step-num">2</div>Validation Failure</div>
+        </div>
+      </div>
+
+      <div class="main-body">
+
+        <!-- ═══ BUILDER SCREENS ═══ -->
+        <!-- B0: Template Selection -->
+        <div class="screen" id="bs0">
+          <div style="font-size:10px;color:var(--txt3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">Select an Architect Template</div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span style="background:#061810;border:1px solid #1a4030;color:var(--accent);font-size:9px;padding:2px 8px;border-radius:3px;cursor:pointer">All</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);color:var(--txt3);font-size:9px;padding:2px 8px;border-radius:3px;cursor:pointer">Test</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);color:var(--txt3);font-size:9px;padding:2px 8px;border-radius:3px;cursor:pointer">Tool</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);color:var(--txt3);font-size:9px;padding:2px 8px;border-radius:3px;cursor:pointer">Attack</span>
+          </div>
+          <div class="template-grid">
+            <div class="tcard sel" onclick="selectCard(this)">
+              <div class="cbadge b-test">● TEST</div>
+              <div class="cname">OWASP LLM Test Suite</div>
+              <div class="cdesc">Structured assurance tests targeting OWASP LLM Top 10 risks. Generates reproducible test packages with pass/fail assertions.</div>
+              <div class="cmeta"><span>v1.2</span><span>·</span><span>IAC Core</span><span>·</span><span class="sel-check">✓ Selected</span></div>
+            </div>
+            <div class="tcard" onclick="selectCard(this)">
+              <div class="cbadge b-tool">● TOOL</div>
+              <div class="cname">Blue Team Scanner</div>
+              <div class="cdesc">Network and endpoint discovery tools for cataloging AI service endpoints, request patterns, and model telemetry.</div>
+              <div class="cmeta"><span>v1.0</span><span>·</span><span>IAC Core</span></div>
+            </div>
+            <div class="tcard" onclick="selectCard(this)">
+              <div class="cbadge b-attack">● ATTACK</div>
+              <div class="cname">Red Team Payload Generator</div>
+              <div class="cdesc">Offensive extension template for crafting adversarial payloads, flood scenarios, and malformed input attacks.</div>
+              <div class="cmeta"><span>v1.1</span><span>·</span><span>IAC Core</span></div>
+            </div>
+            <div class="tcard" onclick="selectCard(this)">
+              <div class="cbadge b-tool">● TOOL</div>
+              <div class="cname">Monitoring Agent</div>
+              <div class="cdesc">Continuous monitoring for model drift, behavioral anomalies, and policy violations in production LLM deployments.</div>
+              <div class="cmeta"><span>v0.9</span><span>·</span><span>Community</span></div>
+            </div>
+          </div>
+          <div class="btn-row" style="border-top:none">
+            <button class="btn btn-p" onclick="setBuilderScreen(1)">Use Template →</button>
+          </div>
+        </div>
+
+        <!-- B1: Prompt & Metadata -->
+        <div class="screen" id="bs1">
+          <div class="prompt-wrap">
+            <div style="font-size:10px;color:var(--txt2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Describe the extension</div>
+            <textarea class="fi fta" style="min-height:60px">Create a test suite extension to find vulnerabilities to analyze for LLM04:2025 Data and Model Poisoning</textarea>
+            <div class="prompt-hint">e.g. "Create a tool extension to crawl the network and find AI requests, name it IntelMap" &nbsp;·&nbsp; <span class="kbd">⌘</span><span class="kbd">↩</span> to generate</div>
+          </div>
+          <div style="background:#120d00;border:1px solid #3a2200;border-radius:6px;padding:8px 12px;font-size:10px;color:var(--amber);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+            <span>⚡</span> Fields marked <span style="color:var(--accent);font-weight:600">inferred</span> were extracted from your prompt — review before generating.
+          </div>
+          <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Extension Metadata</div>
+          <div class="fg2" style="margin-bottom:10px">
+            <div class="fg"><div class="fl">Name <span class="req">*</span><span class="inf-tag">inferred</span></div><input class="fi" value="llm04-data-poisoning-test"></div>
+            <div class="fg"><div class="fl">Version <span class="req">*</span></div><input class="fi" value="1.0.0"></div>
+            <div class="fg"><div class="fl">Category <span class="req">*</span></div><select class="fsel"><option>test</option><option>tool</option><option>attack</option></select></div>
+            <div class="fg"><div class="fl">Author <span class="req">*</span></div><input class="fi" value="mroxberry"></div>
+          </div>
+          <div class="fg"><div class="fl">Description <span class="req">*</span></div><textarea class="fi fta">Automated test suite targeting LLM04:2025 Data and Model Poisoning. Evaluates model responses to known poisoning patterns.</textarea></div>
+          <div class="fg2">
+            <div class="fg"><div class="fl">OWASP Reference <span class="inf-tag">inferred</span></div><input class="fi" value="LLM04:2025"></div>
+            <div class="fg"><div class="fl">Tags <span class="inf-tag">inferred</span></div><input class="fi" value="data-poisoning, llm04, test, assurance"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-g" onclick="setBuilderScreen(0)">← Back</button>
+            <button class="btn btn-p" onclick="setBuilderScreen(2)">Generate Extension →</button>
+          </div>
+        </div>
+
+        <!-- B2: Generating -->
+        <div class="screen" id="bs2">
+          <div class="gen-status">
+            <div class="gen-pulse"></div>
+            <span class="gen-label">Generating via <strong style="color:var(--txt)">claude-sonnet-4</strong> · <span style="color:var(--accent)">Anthropic</span></span>
+            <span class="gen-iter">Iteration 1 / 3</span>
+          </div>
+          <div class="gen-steps">
+            <div class="gstep"><div class="gstep-label">Step</div><div class="gstep-val active">▶ Generating</div></div>
+            <div class="gstep"><div class="gstep-label">Validating</div><div class="gstep-val wait">Waiting…</div></div>
+            <div class="gstep"><div class="gstep-label">Correcting</div><div class="gstep-val wait">Waiting…</div></div>
+          </div>
+          <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">LLM Output Stream</div>
+          <div class="token-stream">
+<span class="tk">extension_yaml</span>: |<br>
+&nbsp;&nbsp;<span class="tk">apiVersion</span>: <span class="tv">hactu8.owasp.org/v1</span><br>
+&nbsp;&nbsp;<span class="tk">kind</span>: <span class="tv">Extension</span><br>
+&nbsp;&nbsp;<span class="tk">metadata</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">name</span>: <span class="ts">llm04-data-poisoning-test</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">version</span>: <span class="ts">1.0.0</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">category</span>: <span class="ts">test</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">owasp_ref</span>: <span class="ts">LLM04:2025</span><br>
+&nbsp;&nbsp;<span class="tk">spec</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">entrypoint</span>: <span class="ts">main.py</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">language</span>: <span class="ts">python</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">steps</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ts">Load poisoning payload corpus</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ts">Submit adversarial training inputs</span><span class="tc"></span>
+          </div>
+          <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Artifacts</div>
+          <div class="art-row">
+            <div class="art-pill"><span class="art-done">●</span>extension.yaml</div>
+            <div class="art-pill"><span class="art-pending">◌</span>main.py</div>
+            <div class="art-pill"><span class="art-wait">◌</span>README.md</div>
+          </div>
+          <div class="btn-row" style="border-top:none">
+            <button class="btn btn-g">Cancel</button>
+            <button class="btn btn-p" onclick="setBuilderScreen(3)">View Results →</button>
+          </div>
+        </div>
+
+        <!-- B3: Preview & Publish -->
+        <div class="screen" id="bs3">
+          <div class="yaml-wrap">
+            <div class="yaml-main">
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">extension.yaml</div>
+              <div class="yaml-box">
+<span class="yc"># HACTU8 Extension — generated by IAC Workbench</span><br>
+<span class="yk">apiVersion</span>: <span class="ys">hactu8.owasp.org/v1</span><br>
+<span class="yk">kind</span>: <span class="ys">Extension</span><br>
+<span class="yk">metadata</span>:<br>
+&nbsp;&nbsp;<span class="yk">name</span>: <span class="ys">llm04-data-poisoning-test</span><br>
+&nbsp;&nbsp;<span class="yk">version</span>: <span class="ys">1.0.0</span><br>
+&nbsp;&nbsp;<span class="yk">category</span>: <span class="ys">test</span><br>
+&nbsp;&nbsp;<span class="yk">author</span>: <span class="ys">mroxberry</span><br>
+&nbsp;&nbsp;<span class="yk">description</span>: <span class="ys">Automated test suite for LLM04:2025</span><br>
+&nbsp;&nbsp;<span class="yk">owasp_ref</span>: <span class="ys">LLM04:2025</span><br>
+&nbsp;&nbsp;<span class="yk">tags</span>: [<span class="ys">data-poisoning</span>, <span class="ys">llm04</span>, <span class="ys">test</span>]<br>
+<span class="yk">spec</span>:<br>
+&nbsp;&nbsp;<span class="yk">entrypoint</span>: <span class="ys">main.py</span><br>
+&nbsp;&nbsp;<span class="yk">language</span>: <span class="ys">python</span><br>
+&nbsp;&nbsp;<span class="yk">template_id</span>: <span class="ys">owasp-llm-test-v1.2</span><br>
+&nbsp;&nbsp;<span class="yk">inputs</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="yk">name</span>: <span class="ys">target_endpoint</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yk">type</span>: <span class="ys">string</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yk">required</span>: <span class="yn">true</span><br>
+&nbsp;&nbsp;<span class="yk">steps</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ys">Load poisoning payload corpus</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ys">Submit adversarial training inputs</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ys">Evaluate model response drift</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="ys">Generate assurance report</span>
+              </div>
+            </div>
+            <div class="yaml-side">
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Validation</div>
+              <div class="val-panel">
+                <div class="vr"><span class="vpass">✓ PASS</span>Schema validation</div>
+                <div class="vr"><span class="vpass">✓ PASS</span>Name format</div>
+                <div class="vr"><span class="vpass">✓ PASS</span>Version semver</div>
+                <div class="vr"><span class="vpass">✓ PASS</span>Category valid</div>
+                <div class="vr"><span class="vpass">✓ PASS</span>Entrypoint exists</div>
+                <div class="vr"><span class="vpass">✓ PASS</span>OWASP ref format</div>
+              </div>
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Generated Files</div>
+              <div class="file-tree">
+                <div class="fr"><span style="color:var(--amber)">📄</span>extension.yaml</div>
+                <div class="fr"><span style="color:#5bc4f0">🐍</span>main.py</div>
+                <div class="fr"><span style="color:var(--txt3)">📝</span>README.md</div>
+              </div>
+              <div class="success-box">
+                <div style="font-size:11px;color:var(--accent);font-weight:600">All checks passed</div>
+                <div style="font-size:9px;color:var(--txt3);margin-top:2px">6 / 6 validations</div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-g" onclick="setBuilderScreen(1)">← Edit Metadata</button>
+            <button class="btn btn-g">⬇ Export .zip</button>
+            <button class="btn btn-p">Publish to Registry →</button>
+          </div>
+        </div>
+
+        <!-- ═══ ARCHITECT SCREENS ═══ -->
+        <!-- A0: Template Editor -->
+        <div class="screen active" id="as0">
+          <!-- Identity -->
+          <div class="asec">
+            <div class="sec-head">Template Identity</div>
+            <div class="fg2" style="margin-bottom:10px">
+              <div class="fg"><div class="fl">Template Name <span class="req">*</span></div><input class="fi" value="OWASP LLM Test Suite"></div>
+              <div class="fg"><div class="fl">Version <span class="req">*</span></div><input class="fi" value="1.2.0"></div>
+              <div class="fg"><div class="fl">Extension Category <span class="req">*</span></div><select class="fsel"><option>test</option><option>tool</option><option>attack</option></select></div>
+              <div class="fg"><div class="fl">Author</div><input class="fi" value="mroxberry"></div>
+            </div>
+            <div class="fg"><div class="fl">Description</div><textarea class="fi fta" style="min-height:46px">Structured assurance tests targeting OWASP LLM Top 10 risks. Generates reproducible test packages.</textarea></div>
+          </div>
+          <!-- Metadata fields -->
+          <div class="asec">
+            <div class="sec-head">Metadata Field Rules</div>
+            <div class="field-hdr">
+              <div class="fhcol">Field</div>
+              <div class="fhcol">Required</div>
+              <div class="fhcol">Infer from prompt</div>
+              <div></div>
+            </div>
+            <div class="frow"><span style="font-size:11px;color:var(--txt)">name</span><div class="toggle on"></div><div class="toggle on"></div><span style="color:var(--txt3);text-align:center;display:block">—</span></div>
+            <div class="frow"><span style="font-size:11px;color:var(--txt)">version</span><div class="toggle on"></div><div class="toggle"></div><span style="color:var(--txt3);text-align:center;display:block">—</span></div>
+            <div class="frow"><span style="font-size:11px;color:var(--txt)">owasp_ref</span><div class="toggle"></div><div class="toggle on"></div><button class="del-btn">×</button></div>
+            <div class="frow"><span style="font-size:11px;color:var(--txt)">tags</span><div class="toggle"></div><div class="toggle on"></div><button class="del-btn">×</button></div>
+            <div class="add-f">+ Add custom field</div>
+          </div>
+          <!-- System prompt -->
+          <div class="asec">
+            <div class="sec-head">System Prompt</div>
+            <div style="font-size:10px;color:var(--txt3);margin-bottom:8px">Injected as LLM system context during generation. Use <span style="color:var(--cyan);font-family:monospace">{variable}</span> tokens for dynamic substitution.</div>
+            <div class="prompt-editor">
+              <div class="pe-bar"><span>system_prompt.txt</span><span>tokens: {category}, {name}, {owasp_ref}</span></div>
+              <textarea class="pe-ta" rows="7">You are a security extension generator for OWASP HACTU8.
+
+Generate a {category} extension named "{name}" that targets {owasp_ref}.
+
+Follow the HACTU8 extension YAML schema strictly.
+The extension must be self-contained and repeatable.
+All test assertions must be deterministic.
+
+Return ONLY valid JSON:
+{ "extension_yaml": string, "files": [{path, content}], "readme": string }</textarea>
+            </div>
+          </div>
+          <!-- Output contract -->
+          <div class="asec">
+            <div class="sec-head">Output Contract</div>
+            <div style="font-size:10px;color:var(--txt3);margin-bottom:8px">Files the LLM must produce. Missing required files = validation failure.</div>
+            <div class="contract-row"><span class="crcheck">✓</span><span style="font-family:monospace;color:var(--txt);font-size:10px">extension.yaml</span><span style="margin-left:auto;font-size:9px;color:var(--accent)">required</span></div>
+            <div class="contract-row"><span class="crcheck">✓</span><span style="font-family:monospace;color:var(--txt);font-size:10px">main.py</span><span style="margin-left:auto;font-size:9px;color:var(--accent)">required</span></div>
+            <div class="contract-row"><span class="crcheck">✓</span><span style="font-family:monospace;color:var(--txt);font-size:10px">README.md</span><span style="margin-left:auto;font-size:9px;color:var(--accent)">required</span></div>
+            <div style="margin-top:10px"><div class="fl">Validates against schema</div><input class="fi" value="hactu8-extension-schema-v1"></div>
+          </div>
+          <!-- Scaffold -->
+          <div class="asec">
+            <div class="sec-head">Scaffold Stub</div>
+            <div style="font-size:10px;color:var(--txt3);margin-bottom:8px">Starter code injected into the generation context. LLM fills the implementation.</div>
+            <div class="scaffold-box">
+              <div class="sb-bar"><span style="font-family:monospace">main.py</span><button class="sb-btn">Edit</button></div>
+              <div class="sb-code">
+                <div class="cl"><span class="ln">1</span><span class="lc" style="color:var(--txt3)"># HACTU8 Extension Stub — {name}</span></div>
+                <div class="cl"><span class="ln">2</span><span class="lc" style="color:var(--txt3)"># Category: {category} | OWASP: {owasp_ref}</span></div>
+                <div class="cl"><span class="ln">3</span><span class="lc"></span></div>
+                <div class="cl"><span class="ln">4</span><span class="lc"><span style="color:#c792ea">from</span> <span style="color:var(--cyan)">hactu8.sdk</span> <span style="color:#c792ea">import</span> Extension, TestResult</span></div>
+                <div class="cl"><span class="ln">5</span><span class="lc"></span></div>
+                <div class="cl"><span class="ln">6</span><span class="lc"><span style="color:#c792ea">class</span> <span style="color:var(--amber)">{ClassName}</span>(Extension):</span></div>
+                <div class="cl"><span class="ln">7</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c792ea">def</span> <span style="color:#98d8a0">run</span>(self, inputs) -> TestResult:</span></div>
+                <div class="cl"><span class="ln">8</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--txt3)"># TODO: implement</span></span></div>
+                <div class="cl"><span class="ln">9</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c792ea">raise</span> NotImplementedError</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-g">Discard</button>
+            <button class="btn btn-g">Save Draft</button>
+            <button class="btn btn-p">Publish Template →</button>
+          </div>
+        </div>
+
+        <!-- A1: Validation Failure -->
+        <div class="screen" id="as1">
+          <div class="iter-banner">
+            <div class="iter-icon">⚠</div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--amber)">Schema validation failed — auto-correcting</div>
+              <div style="font-size:9px;color:var(--txt3);margin-top:2px">LLM receives error context and retries. Max 3 iterations.</div>
+            </div>
+            <div class="iter-dots">
+              <div class="idot done"></div>
+              <div class="idot cur"></div>
+              <div class="idot"></div>
+            </div>
+          </div>
+
+          <div class="err-panel">
+            <div class="ep-head">✕ &nbsp;3 issues found — extension.yaml</div>
+            <div class="ei">
+              <span class="ebadge be">ERROR</span>
+              <div>
+                <div class="eloc">line 6 · metadata.version</div>
+                <div class="emsg">Invalid semver. Got <span style="font-family:monospace;color:var(--amber)">"v1.0"</span> — expected <span style="font-family:monospace;color:var(--accent)">"1.0.0"</span></div>
+                <div class="efix">↳ Apply fix: replace with "1.0.0"</div>
+              </div>
+            </div>
+            <div class="ei">
+              <span class="ebadge be">ERROR</span>
+              <div>
+                <div class="eloc">line 14 · spec.entrypoint</div>
+                <div class="emsg">Entrypoint <span style="font-family:monospace;color:var(--amber)">"run.py"</span> not in file list. Available: <span style="font-family:monospace;color:var(--accent)">main.py</span></div>
+                <div class="efix">↳ Apply fix: change to "main.py"</div>
+              </div>
+            </div>
+            <div class="ei">
+              <span class="ebadge bw">WARN</span>
+              <div>
+                <div class="eloc">line 9 · metadata.tags</div>
+                <div class="emsg">Field <span style="font-family:monospace">tags</span> is empty — recommended for registry discoverability.</div>
+                <div class="efix">↳ Infer tags from prompt context</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">extension.yaml — inline diagnostics</div>
+          <div class="yaml-box err" style="margin-bottom:12px">
+            <div class="cl"><span class="ln">1</span><span class="lc"><span class="yk">apiVersion</span>: <span class="ys">hactu8.owasp.org/v1</span></span></div>
+            <div class="cl"><span class="ln">2</span><span class="lc"><span class="yk">kind</span>: <span class="ys">Extension</span></span></div>
+            <div class="cl"><span class="ln">3</span><span class="lc"><span class="yk">metadata</span>:</span></div>
+            <div class="cl"><span class="ln">4</span><span class="lc">&nbsp;&nbsp;<span class="yk">name</span>: <span class="ys">llm04-data-poisoning-test</span></span></div>
+            <div class="cl"><span class="ln">5</span><span class="lc">&nbsp;&nbsp;<span class="yk">category</span>: <span class="ys">test</span></span></div>
+            <div class="cl el"><span class="ln">6</span><span class="lc">&nbsp;&nbsp;<span class="yk">version</span>: <span class="ys esq">"v1.0"</span><span class="einline">✕ invalid semver</span></span></div>
+            <div class="cl"><span class="ln">7</span><span class="lc">&nbsp;&nbsp;<span class="yk">author</span>: <span class="ys">mroxberry</span></span></div>
+            <div class="cl"><span class="ln">8</span><span class="lc">&nbsp;&nbsp;<span class="yk">description</span>: <span class="ys">Automated test suite for LLM04:2025</span></span></div>
+            <div class="cl wl"><span class="ln">9</span><span class="lc">&nbsp;&nbsp;<span class="yk">tags</span>: <span class="ys wsq">[]</span><span class="winline">⚠ empty — add tags</span></span></div>
+            <div class="cl"><span class="ln">10</span><span class="lc">&nbsp;&nbsp;<span class="yk">owasp_ref</span>: <span class="ys">LLM04:2025</span></span></div>
+            <div class="cl"><span class="ln">11</span><span class="lc"><span class="yk">spec</span>:</span></div>
+            <div class="cl"><span class="ln">12</span><span class="lc">&nbsp;&nbsp;<span class="yk">language</span>: <span class="ys">python</span></span></div>
+            <div class="cl"><span class="ln">13</span><span class="lc">&nbsp;&nbsp;<span class="yk">template_id</span>: <span class="ys">owasp-llm-test-v1.2</span></span></div>
+            <div class="cl el"><span class="ln">14</span><span class="lc">&nbsp;&nbsp;<span class="yk">entrypoint</span>: <span class="ys esq">"run.py"</span><span class="einline">✕ file not found</span></span></div>
+            <div class="cl"><span class="ln">15</span><span class="lc">&nbsp;&nbsp;<span class="yk">inputs</span>:</span></div>
+            <div class="cl"><span class="ln">16</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;- <span class="yk">name</span>: <span class="ys">target_endpoint</span></span></div>
+            <div class="cl"><span class="ln">17</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yk">type</span>: <span class="ys">string</span></span></div>
+            <div class="cl"><span class="ln">18</span><span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yk">required</span>: <span class="yn">true</span></span></div>
+          </div>
+
+          <div class="asec" style="margin-bottom:12px">
+            <div class="sec-head">Correction context → LLM (iteration 2)</div>
+            <div class="correction-box">
+<span style="color:var(--txt3)"># Validation errors from iteration 1 — fix these:</span><br>
+<span style="color:var(--red)">ERROR</span> metadata.version: must be semver (e.g. "1.0.0"), got "v1.0"<br>
+<span style="color:var(--red)">ERROR</span> spec.entrypoint: "run.py" not in file list; use "main.py"<br>
+<span style="color:var(--amber)">WARN &nbsp;</span> metadata.tags: empty array; infer from extension purpose<br>
+<span style="color:var(--txt3)"># Return corrected JSON only. Do not change other fields.</span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-g" onclick="setArchScreen(0)">← Back to Editor</button>
+            <button class="btn btn-g">Apply All Fixes Manually</button>
+            <button class="btn btn-p">Retry Generation →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+      <div class="panel-header">
+        <span class="panel-title">IAC Copilot</span>
+        <div class="panel-icons"><span class="panel-icon">🗑</span><span class="panel-icon">⚙</span><span class="panel-icon">⤢</span></div>
+      </div>
+      <div class="ptabs">
+        <div class="ptab active">Assist</div>
+        <div class="ptab">OWASP</div>
+        <div class="ptab">Project</div>
+        <div class="ptab">Checklists</div>
+      </div>
+      <div class="panel-body">
+        <div class="copilot-warn">
+          <div class="copilot-warn-title">MODEL PROVIDER NOT CONFIGURED</div>
+          <div class="copilot-warn-sub">Select a provider and model in Settings to enable responses.</div>
+          <button class="copilot-action">Open Settings</button>
+        </div>
+        <div style="font-size:10px;color:var(--txt3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Data Sources (0)</div>
+        <div id="cp-builder" style="display:none">
+          <div class="ctx-block">
+            <div class="ctx-label">Builder context</div>
+            <div class="ctx-row">Mode <span class="ctx-val">Builder</span></div>
+            <div class="ctx-row">Template <span class="ctx-val">OWASP LLM Test Suite</span></div>
+            <div class="ctx-row">Category <span style="background:#201500;color:var(--amber);border:1px solid #3a2500;font-size:9px;padding:1px 5px;border-radius:3px">TEST</span></div>
+            <div class="ctx-row">OWASP ref <span class="ctx-val-g">LLM04:2025</span></div>
+          </div>
+        </div>
+        <div id="cp-arch">
+          <div class="ctx-block">
+            <div class="ctx-label">Architect context</div>
+            <div class="ctx-row">Mode <span class="ctx-val">Architect</span></div>
+            <div class="ctx-row">Template <span class="ctx-val">OWASP LLM Test Suite</span></div>
+            <div class="ctx-row">Category <span style="background:#201500;color:var(--amber);border:1px solid #3a2500;font-size:9px;padding:1px 5px;border-radius:3px">TEST</span></div>
+            <div class="ctx-row">Fields <span class="ctx-val-g">4 defined</span></div>
+            <div class="ctx-row">Scaffold <span class="ctx-val-g">main.py stub</span></div>
+          </div>
+        </div>
+        <div id="cp-fail" style="display:none">
+          <div class="ctx-block">
+            <div class="ctx-label">Generation state</div>
+            <div class="ctx-row">Iteration <span class="ctx-val-a">2 / 3</span></div>
+            <div class="ctx-row">Status <span class="ctx-val-a">⚠ Correcting</span></div>
+            <div class="ctx-row">Errors <span class="ctx-val-r">2 errors</span></div>
+            <div class="ctx-row">Warnings <span class="ctx-val-a">1 warning</span></div>
+          </div>
+          <div style="margin-top:10px;background:var(--err-bg);border:1px solid var(--err-border);border-radius:5px;padding:8px">
+            <div style="font-size:9px;color:var(--err-txt);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Blocking errors</div>
+            <div style="font-size:9px;color:var(--txt3);line-height:1.9">• version: invalid semver<br>• entrypoint: file not found</div>
+          </div>
+        </div>
+      </div>
+      <div class="copilot-bottom">
+        <input class="copilot-input" placeholder="Ask about your documents…">
+        <div class="send-btn">↗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentMode = 1; // 0=builder, 1=architect
+let currentBuilderScreen = 0;
+let currentArchScreen = 0;
+
+function setMode(n) {
+  currentMode = n;
+  ['mb0','mb1'].forEach((id,i) => document.getElementById(id).classList.toggle('active', i===n));
+  document.getElementById('builder-tabs').style.display = n===0 ? 'flex' : 'none';
+  document.getElementById('arch-tabs').style.display = n===1 ? 'flex' : 'none';
+  // Show/hide screens
+  ['bs0','bs1','bs2','bs3'].forEach(id => document.getElementById(id).classList.remove('active'));
+  ['as0','as1'].forEach(id => document.getElementById(id).classList.remove('active'));
+  if (n===0) { setBuilderScreen(currentBuilderScreen); }
+  else { setArchScreen(currentArchScreen); }
+  // Copilot
+  document.getElementById('cp-builder').style.display = n===0 ? 'block' : 'none';
+  document.getElementById('cp-arch').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('cp-fail').style.display = 'none';
+}
+
+function setBuilderScreen(n) {
+  currentBuilderScreen = n;
+  ['bs0','bs1','bs2','bs3'].forEach((id,i) => document.getElementById(id).classList.toggle('active', i===n));
+  ['bt0','bt1','bt2','bt3'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('active','done');
+    if (i===n) el.classList.add('active');
+    else if (i<n) el.classList.add('done');
+    const num = el.querySelector('.step-num');
+    if (i<n) { num.style.background='#0a2018'; num.style.borderColor='var(--accent2)'; num.style.color='var(--accent)'; num.textContent='✓'; }
+    else if (i===n) { num.style.background='var(--accent2)'; num.style.borderColor='var(--accent2)'; num.style.color='#fff'; num.textContent=i+1; }
+    else { num.style.background='var(--bg3)'; num.style.borderColor='var(--border2)'; num.style.color='var(--txt3)'; num.textContent=i+1; }
+  });
+}
+
+function setArchScreen(n) {
+  currentArchScreen = n;
+  ['as0','as1'].forEach((id,i) => document.getElementById(id).classList.toggle('active', i===n));
+  ['at0','at1'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('active','done');
+    if (i===n) el.classList.add('active');
+    else if (i<n) el.classList.add('done');
+    const num = el.querySelector('.step-num');
+    if (i<n) { num.style.background='#0a2018'; num.style.borderColor='var(--accent2)'; num.style.color='var(--accent)'; num.textContent='✓'; }
+    else if (i===n) { num.style.background='var(--accent2)'; num.style.borderColor='var(--accent2)'; num.style.color='#fff'; num.textContent=i+1; }
+    else { num.style.background='var(--bg3)'; num.style.borderColor='var(--border2)'; num.style.color='var(--txt3)'; num.textContent=i+1; }
+  });
+  document.getElementById('cp-fail').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('cp-arch').style.display = n===0 ? 'block' : 'none';
+}
+
+function selectCard(el) {
+  document.querySelectorAll('.tcard').forEach(c => {
+    c.classList.remove('sel');
+    const m = c.querySelector('.cmeta');
+    m.querySelectorAll('.sel-check').forEach(s => { s.previousSibling?.remove(); s.remove(); });
+  });
+  el.classList.add('sel');
+  const m = el.querySelector('.cmeta');
+  const sep = document.createTextNode(' · ');
+  const chk = document.createElement('span');
+  chk.className = 'sel-check';
+  chk.textContent = '✓ Selected';
+  m.appendChild(sep);
+  m.appendChild(chk);
+}
+
+function enterFullscreen() {
+  const root = document.documentElement;
+  if (root.requestFullscreen) {
+    root.requestFullscreen();
+    return;
+  }
+  if (root.webkitRequestFullscreen) {
+    root.webkitRequestFullscreen();
+  }
+}
+
+// Init
+setMode(1);
+setArchScreen(0);
+</script>
+</body>
+</html>
