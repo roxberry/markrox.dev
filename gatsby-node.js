@@ -126,7 +126,7 @@ module.exports.createPages = async ({ graphql, actions, reporter }) => {
   // Make tag pages
   tags.forEach(tag => {
     createPage({
-      path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
+      path: `/tags/${tag.fieldValue.toLowerCase().replace(/\s+/g, '-')}/`,
       component: tagTemplate,
       context: {
         tag: tag.fieldValue,
