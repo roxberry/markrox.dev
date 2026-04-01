@@ -1,12 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
-
-// Utilities
-import kebabCase from "lodash/kebabCase"
-
-// Components
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
+
+// Utilities
+const tagSlug = (tag) => tag.toLowerCase().replace(/\s+/g, '-')
+
+
 
 const TagsPage = ({
   data: {
@@ -23,7 +23,7 @@ const TagsPage = ({
       <ul>
         {group.map((tag, i) => (
           <li key={tag.fieldValue + i.toString()}>
-            <Link to={`/tags/${kebabCase(tag.fieldValue)}/`}>
+            <Link to={`/tags/${tagSlug(tag.fieldValue)}/`}>
               {tag.fieldValue} ({tag.totalCount})
             </Link>
           </li>

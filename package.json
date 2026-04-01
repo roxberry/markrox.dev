@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "license": "0BSD",
     "scripts": {
-        "develop": "gatsby clean && gatsby develop",
-        "start": "gatsby develop",
-        "build": "gatsby clean && gatsby build",
-        "build:incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=false gatsby build",
-        "serve": "gatsby clean && gatsby serve",
+        "develop": "NODE_OPTIONS='--disable-warning=DEP0040' gatsby clean && NODE_OPTIONS='--disable-warning=DEP0040' gatsby develop",
+        "start": "NODE_OPTIONS='--disable-warning=DEP0040' gatsby develop",
+        "build": "NODE_OPTIONS='--disable-warning=DEP0040' gatsby clean && NODE_OPTIONS='--disable-warning=DEP0040' gatsby build",
+        "build:incremental": "NODE_OPTIONS='--disable-warning=DEP0040' GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=false gatsby build",
+        "serve": "NODE_OPTIONS='--disable-warning=DEP0040' gatsby clean && NODE_OPTIONS='--disable-warning=DEP0040' gatsby serve",
         "clean": "gatsby clean",
         "install-browsers": "node node_modules/puppeteer/install.mjs || true && npx playwright install chromium || true"
     },
@@ -58,5 +58,8 @@
     },
     "bugs": {
         "url": "https://github.com/roxberry/markrox.dev/issues"
+    },
+    "devDependencies": {
+        "baseline-browser-mapping": "^2.10.13"
     }
 }

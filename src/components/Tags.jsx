@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Link, graphql, useStaticQuery } from "gatsby"
-import kebabCase from "lodash/kebabCase"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Tags = () => {
@@ -22,6 +21,8 @@ const Tags = () => {
     }
   `)
 
+    const tagSlug = (tag) => tag.toLowerCase().replace(/\s+/g, '-')
+
     const allTags = data.allMarkdownRemark.group
         .sort((a, b) => a.fieldValue.toLowerCase().localeCompare(b.fieldValue.toLowerCase()))
 
@@ -41,7 +42,7 @@ const Tags = () => {
                     <li key={tag.fieldValue}>
                         <FontAwesomeIcon className="fa-li" icon={['fas', 'tags']} size="xs" />
                         <Link
-                            to={`/tags/${kebabCase(tag.fieldValue)}/`}
+                            to={`/tags/${tagSlug(tag.fieldValue)}/`}
                             className="category-item"
                             activeClassName="active"
                         >
@@ -69,7 +70,7 @@ const Tags = () => {
                     <li key={tag.fieldValue}>
                         <FontAwesomeIcon className="fa-li" icon={['fas', 'tags']} size="xs" />
                         <Link
-                            to={`/tags/${kebabCase(tag.fieldValue)}/`}
+                            to={`/tags/${tagSlug(tag.fieldValue)}/`}
                             className="category-item"
                             activeClassName="active"
                         >
