@@ -48,15 +48,54 @@ This mattered because real workflows are not single-turn prompts. Users need dra
 - Progress updates during background execution
 - Consistent behavior across Teams and Chainlit
 
+The progression of delivery surfaces looked roughly like this.
+
+```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
+flowchart LR
+  subgraph Local[Local Iteration]
+    Chainlit[Chainlit UX]
+    Docker[Docker Compose Stack]
+    LocalServices[Valkey + Seq + MCP Host + Orchestrator]
+    Chainlit --> Docker --> LocalServices
+  end
+
+  subgraph Cloud[Cloud Platform]
+    ACA[Azure Container Apps]
+    APIM[API Management]
+    KV[Key Vault]
+    Foundry[Azure AI Foundry]
+    ACA --> APIM
+    ACA --> KV
+    ACA --> Foundry
+  end
+
+  subgraph Validation[Interaction Validation]
+    Playground[M365 Agent Playground]
+    Cards[Adaptive Cards and Bot UX]
+    Playground --> Cards
+  end
+
+  subgraph Delivery[Live Delivery]
+    Teams[Microsoft Teams]
+    Beta[Beta Users]
+    Teams --> Beta
+  end
+
+  Local --> Cloud --> Validation --> Delivery
+```
+
 ## Orchestration Is the Product
 
 The most important design choice was treating orchestration as the core product rather than treating the model as the product.
 
 Instead of one general-purpose agent, the system used role-oriented agents with clearer responsibilities.
 
-- A support agent handled early guardrail checks using an LLM to evaluate the incoming request and decide how to route it. Simple operational requests were sent directly to the responder. Requests that required structured intake were routed to triage.
-- A triage agent handled requests that needed a workplan: structured operational intent that defined what fields to collect, what MCP tools to invoke, what policies applied, and what verbiage to use. Triage drove the conversational field collection before handing off to the responder.
-- A responder agent executed the work through deterministic steps, tool calls, and retry or escalation paths.
+- A support agent handled early guardrail and routing checks. It could use the model provider when classification or policy evaluation was needed, then decide whether the request should short-circuit, move into structured intake, or proceed directly to execution.
+- A triage agent handled requests that needed a workplan. It used Cached Augmented Generation to select and apply the right cached workplan: structured operational intent that defined what fields to collect, what MCP tools to invoke, what policies applied, and what verbiage to use. Triage drove the conversational field collection and prepared the request for execution.
+- A responder agent executed approved work through deterministic steps, MCP tool calls, and retry or escalation paths. It could also use the model provider where generation or reasoning was useful, but its center of gravity was bounded execution against tools and run state.
+
+This was not a design where only one agent touched LLMs. All three agents could use the model provider layer. The separation was about operational responsibility: support optimized for guardrails and routing, triage optimized for CAG-backed intake and workplan handling, and responder optimized for tool-backed execution.
 
 The support agent also produced a context object passed forward to subsequent agents. Rather than re-deriving context at each stage, agents downstream could rely on a structured, shared representation of the interaction, making handoffs cleaner and leaving room for the context to carry additional state as the platform grows.
 
@@ -68,6 +107,39 @@ That separation made the system easier to reason about. It also made it easier t
 - It made approval boundaries explicit.
 - It created cleaner handoffs between conversation and action.
 - It allowed the system to fail more gracefully when external dependencies were slow or incomplete.
+
+At a high level, the orchestration tier looked like this.
+
+```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
+flowchart LR
+  User[User Conversation] --> Surface[Teams or Chainlit]
+  Surface --> Orchestrator[Orchestrator Host]
+
+  subgraph Agents[Role-Oriented Agents]
+    Support[Support Agent]
+    Triage[Triage Agent]
+    Responder[Responder Agent]
+    Support --> Triage --> Responder
+  end
+
+  Orchestrator --> Support
+  Support --> Context[Shared Context Object]
+  Context --> Triage
+  Context --> Responder
+
+  Support --> Guardrails[Guardrails and Routing]
+  Triage --> Workplans[Cached Workplans]
+  Triage --> Intake[CAG and Field Collection]
+  Support --> ModelProvider[Model Provider Layer]
+  Triage --> ModelProvider
+  Responder --> ModelProvider
+  Responder --> MCPTools[MCP Tools and Resources]
+  Responder --> RunState[Valkey Run State]
+
+  RunState --> Events[Lifecycle Events and Progress]
+  ModelProvider --> Models[Small and Large Models]
+```
 
 ## Stateful Runs Turn Conversation into Execution
 
@@ -94,6 +166,33 @@ The orchestration layer discovers and invokes tools, prompts, and resources thro
 That separation mattered for several reasons: credentials and implementation details stay isolated, capabilities can be versioned and updated independently, and the same host can serve multiple agent workflows across different domains without requiring changes to orchestration logic.
 
 This is where the architecture started to feel less like a single application and more like a reusable platform primitive. The same host that served operational support workflows can equally serve internal reference data e.g. locations, events, schedules, or any domain-specific knowledge a client wants to make available to the agent layer without rebuilding the orchestration stack around it.
+
+The model context host was intended to grow as a client-owned integration plane.
+
+```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
+flowchart LR
+  Orchestrator[Orchestrator Host] --> MCPHost[Model Context Host]
+
+  subgraph Current[Current MCP Servers]
+    Internal[Internal Knowledge and Reference Data]
+    ITSM[ITSM and Ticketing]
+    Files[Credentialed File and Document Access]
+  end
+
+  subgraph Phase2[Phase 2 MCP Expansion]
+    Hospitality[Hospitality and Reservations]
+    Events[Events and Schedules]
+    Ops[Additional Client Operations]
+  end
+
+  MCPHost --> Internal
+  MCPHost --> ITSM
+  MCPHost --> Files
+  MCPHost -.-> Hospitality
+  MCPHost -.-> Events
+  MCPHost -.-> Ops
+```
 
 ## Workplans, Cached Augmented Generation, and Smaller Models
 
@@ -136,6 +235,18 @@ Several parts of this architecture felt meaningfully different from a typical ch
 
 None of these choices alone is revolutionary, but I think together they create a more disciplined approach to building agent systems that have to operate in live environments.
 
+### Why LLMs and MCP Mattered, Despite Existing Non-LLM Solutions
+
+It is reasonable to ask whether this architecture was achievable without LLMs or MCP. In one sense, yes. We already have non-LLM solutions for workflow orchestration, approval chains, state machines, rules engines, integration middleware, and form-driven operational intake. Those systems are real, useful, and in many domains still the right answer.
+
+But that observation does not refute the architectural choices here. It changes the comparison. The relevant question is not whether a similar system could have existed before. The relevant question is whether the same level of conversational flexibility, reusable integration, and operational readiness could have been delivered to live beta use in roughly three months without a much larger amount of bespoke logic.
+
+My view is no.
+
+Without LLMs, the platform could still have been built, but the interaction layer would have required more rigid forms, narrower branching logic, more handcrafted intent classification, and less graceful recovery when users changed direction mid-conversation. Without MCP, the platform could still have exposed tools and back-end systems, but through a more custom integration model with tighter coupling between orchestration logic and client capabilities.
+
+So the argument is not that LLMs and MCP made the platform theoretically possible. The argument is that they materially improved the implementation curve. LLMs reduced the amount of deterministic intake logic that had to be authored up front. MCP reduced the amount of custom plumbing required to expose reusable tools, prompts, and resources behind a stable interface. That combination made it practical to reach governed, operationally useful software faster, without collapsing into a brittle demo.
+
 ## From Architecture to Live Use
 
 The most useful validation was not internal elegance. It was getting the system into a live operational surface.
@@ -143,6 +254,100 @@ The most useful validation was not internal elegance. It was getting the system 
 Moving from a local Docker stack through Azure provisioning and into an active beta deployment changed the quality of feedback at each step. Real user interaction exposed the importance of interruption handling, state continuity, messaging tone, approval loops, and back-end reliability in ways that local iteration could only partially surface.
 
 That transition reinforced a simple point: the closer agent systems get to real users, the more architecture decisions around UX, state, and governance matter.
+
+## Conceptual Layout
+
+Taken together, the platform can be viewed as a set of cooperating tiers.
+
+```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
+flowchart TB
+  subgraph UX[Interaction Surfaces]
+    Chainlit[Chainlit]
+    Playground[M365 Agent Playground]
+    Teams[Teams]
+  end
+
+  subgraph Control[Orchestration and State]
+    Orchestrator[Orchestrator Host]
+    Support[Support Agent]
+    Triage[Triage Agent]
+    Responder[Responder Agent]
+    RunState[Valkey Run State]
+    Workplans[Cached Workplans]
+  end
+
+  subgraph Intelligence[Model Layer]
+    ModelProvider[Model Provider]
+    SmallModels[phi4 or gpt-5.4-mini]
+    LargeModels[Larger Models When Needed]
+  end
+
+  subgraph Integration[Integration Plane]
+    MCPHost[Model Context Host]
+    Internal[Internal Systems]
+    ITSM[ITSM]
+    Future[Future Domain MCPs]
+  end
+
+  subgraph Platform[Operational Platform]
+    ACA[Container Apps]
+    APIM[API Management]
+    KV[Key Vault]
+    Seq[Seq]
+    Foundry[Azure AI Foundry]
+  end
+
+  UX --> Orchestrator
+  Orchestrator --> Support --> Triage --> Responder
+  Orchestrator --> RunState
+  Triage --> Workplans
+  Responder --> ModelProvider --> SmallModels
+  ModelProvider --> LargeModels
+  Responder --> MCPHost --> Internal
+  MCPHost --> ITSM
+  MCPHost -.-> Future
+  Orchestrator --> ACA
+  ACA --> APIM
+  ACA --> KV
+  ACA --> Seq
+  ACA --> Foundry
+```
+
+## Generalized Interaction Flows
+
+At runtime, the interaction patterns generally fall into a small number of paths.
+
+```mermaid
+%%{init: {"theme": "dark", "flowchart" : { "curve" : "basis" } } }%%
+flowchart TD
+  Start[Incoming User Message] --> Support[Support Agent]
+  Support --> Decision{What kind of request is this?}
+
+  Decision -->|Short conversational answer| ShortCircuit[Short-Circuit Response]
+  ShortCircuit --> Example[Examples: Weather, quick lookup, simple guidance]
+  Example --> Reply[Respond to User]
+
+  Decision -->|Needs structured intake| Triage[Triage Agent]
+  Triage --> Workplan[Select Workplan and Collect Fields]
+  Workplan --> Approval{Approval required?}
+  Approval -->|Yes| Preview[Preview and Approval Loop]
+  Preview --> Responder[Responder Agent]
+  Approval -->|No| Responder
+  Responder --> Ticket[Create or Update Ticket / Execute Workflow]
+  Ticket --> Progress[Progress Updates and Final Result]
+
+  Decision -->|Known direct operational request| Responder
+  Responder --> Direct[Direct Interaction Path]
+  Direct --> Action{Action type}
+  Action -->|List| List[List entities or status]
+  Action -->|Show| Show[Show item details]
+  Action -->|Other safe command| Command[Execute bounded action]
+  List --> Reply
+  Show --> Reply
+  Command --> Reply
+  Progress --> Reply
+```
 
 ## Lessons Learned
 
