@@ -42,7 +42,7 @@ const Header = () => {
 
                 <ul className="menu">
                     <li>
-                        <Link to="/tags/applied-ai" className="header-menu-item" activeClassName="active">Applied AI</Link>
+                        <Link to="/tags/appliedai" className="header-menu-item" activeClassName="active">Applied AI</Link>
                     </li>
                     <li>
                         <Link to="/projects" className="header-menu-item" activeClassName="active">Projects</Link>
